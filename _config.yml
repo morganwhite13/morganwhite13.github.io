@@ -1,0 +1,33 @@
+# Site settings
+title: Alex Chen - Software Developer
+email: alex.chen@email.com
+description: >-
+  Computer Science student passionate about web development, 
+  machine learning, and building solutions that make a difference.
+baseurl: "" # leave empty for username.github.io
+url: "https://morganwhite13.github.io" # change to your actual URL
+
+# Social media
+github_username: morganwhite13
+linkedin_username: morganwhite13
+twitter_username: morganwhite13
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Navigation
+header_pages:
+  - index.md
+  - projects.md
+  - about.md
+  - blog.md
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
