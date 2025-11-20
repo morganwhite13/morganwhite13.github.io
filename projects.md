@@ -59,6 +59,23 @@ A full-stack web application for tracking income, expenses, and financial goals.
 
 ---
 
+## 🤖 Autonomous Robot Jar Collection System
+
+**Tech Stack:** Webots R2025a, Java, Computer Vision, Robotics, Sensor Fusion
+
+Built a fully autonomous mobile robot system that navigates a 20×20 meter warehouse, detects honey jars using color-based computer vision, manipulates objects with a gripper, and places them in designated storage areas. The robot combines multiple sensor modalities (camera, compass, distance sensors, touch sensor) with real-time path planning to autonomously complete complex manipulation tasks.
+
+**Key Achievements:**
+- 100% success rate collecting 4 objects without human intervention
+- ±3° heading accuracy and ±10cm position accuracy in 20m arena
+- Multi-layer object detection with fallback logic for robust operation
+- Real-time sensor fusion combining vision, compass, and distance data
+- 800+ lines of optimized Java controller code
+
+[View Detailed Project](/projects/robot-project/) | [View on GitHub](https://github.com/yourusername/robot-collection-system)
+
+---
+
 ## 🎮 Pathfinding Visualizer
 
 **Tech Stack:** JavaScript, HTML5 Canvas, CSS
