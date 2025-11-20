@@ -5,12 +5,12 @@ description: >-
   Computer Science student passionate about web development, 
   machine learning, and building solutions that make a difference.
 baseurl: "" # leave empty for username.github.io
-url: "https://morganwhite13.github.io" # change to your actual URL
+url: "https://yourusername.github.io" # change to your actual URL
 
 # Social media
-github_username: morganwhite13
-linkedin_username: morganwhite13
-twitter_username: morganwhite13
+github_username: alexchen
+linkedin_username: alexchen
+twitter_username: alexchen
 
 # Build settings
 theme: minima
