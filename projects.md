@@ -10,6 +10,41 @@ Here are some of the projects I've built. Each one taught me something new and p
 
 ---
 
+## 🤖 Autonomous Robot Jar Collection System
+
+**Tech Stack:** Webots R2025a, Java, Computer Vision, Robotics, Sensor Fusion
+
+Built a fully autonomous mobile robot system that navigates a 20×20 meter warehouse, detects honey jars using color-based computer vision, manipulates objects with a gripper, and places them in designated storage areas. The robot combines multiple sensor modalities (camera, compass, distance sensors, touch sensor) with real-time path planning to autonomously complete complex manipulation tasks.
+
+**Key Achievements:**
+- 100% success rate collecting 4 objects without human intervention
+- ±3° heading accuracy and ±10cm position accuracy in 20m arena
+- Multi-layer object detection with fallback logic for robust operation
+- Real-time sensor fusion combining vision, compass, and distance data
+- 800+ lines of optimized Java controller code
+
+[View Detailed Project](/projects/robot-project/) | [View on GitHub](https://github.com/yourusername/robot-collection-system)
+
+---
+
+## 🎬 YouTube Views Prediction Using Neural Networks
+
+**Tech Stack:** Python, TensorFlow/Keras, YouTube Data API, NLTK, NLP, Deep Learning
+
+Developed a multi-input deep learning system that predicts YouTube video view counts by analyzing textual content (titles, descriptions, channel names), channel authority metrics, temporal features, and content categories. Built six progressive model variations to empirically determine feature importance, culminating in a bidirectional LSTM architecture that processes multiple data streams simultaneously.
+
+**Key Achievements:**
+- Multi-input neural network with 5 text embedding branches and numerical features
+- Bidirectional LSTM layers capture forward/backward context in video metadata
+- Integrated YouTube Data API with intelligent caching and rate limit management
+- Comprehensive NLP pipeline with NLTK tokenization and stopword removal
+- Tested across 400+ videos with multiple dataset collection strategies
+- Demonstrated clear impact of title patterns, channel size, and temporal factors on performance
+
+[View Detailed Project](/projects/youtube-predictor/) | [View on GitHub](https://github.com/yourusername/youtube-view-predictor)
+
+---
+
 ## 🚀 Real-Time Collaborative Code Editor
 
 **Tech Stack:** React, Node.js, Socket.io, Monaco Editor, PostgreSQL
@@ -56,23 +91,6 @@ A full-stack web application for tracking income, expenses, and financial goals.
 - Monthly budget planning tools
 
 [View on GitHub](https://github.com/yourusername/finance-tracker)
-
----
-
-## 🤖 Autonomous Robot Jar Collection System
-
-**Tech Stack:** Webots R2025a, Java, Computer Vision, Robotics, Sensor Fusion
-
-Built a fully autonomous mobile robot system that navigates a 20×20 meter warehouse, detects honey jars using color-based computer vision, manipulates objects with a gripper, and places them in designated storage areas. The robot combines multiple sensor modalities (camera, compass, distance sensors, touch sensor) with real-time path planning to autonomously complete complex manipulation tasks.
-
-**Key Achievements:**
-- 100% success rate collecting 4 objects without human intervention
-- ±3° heading accuracy and ±10cm position accuracy in 20m arena
-- Multi-layer object detection with fallback logic for robust operation
-- Real-time sensor fusion combining vision, compass, and distance data
-- 800+ lines of optimized Java controller code
-
-[View Detailed Project](/projects/robot-project/) | [View on GitHub](https://github.com/yourusername/robot-collection-system)
 
 ---
 
