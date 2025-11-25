@@ -38,97 +38,20 @@ Developed a multi-input deep learning system that predicts YouTube video view co
 - Bidirectional LSTM layers capture forward/backward context in video metadata
 - Integrated YouTube Data API with intelligent caching and rate limit management
 - Comprehensive NLP pipeline with NLTK tokenization and stopword removal
-- Tested across 400+ videos with multiple dataset collection strategies
-- Demonstrated clear impact of title patterns, channel size, and temporal factors on performance
-
-[View Detailed Project](/projects/youtube-predictor/) | [View on GitHub](https://github.com/yourusername/youtube-view-predictor)
+- Tested...
 
 ---
 
-## 🚀 Real-Time Collaborative Code Editor
+## 📈 Predicting Stock Price Changes Using Reddit Sentiment
 
-**Tech Stack:** React, Node.js, Socket.io, Monaco Editor, PostgreSQL
+**Tech Stack:** Python, TensorFlow/Keras, NLTK, NLP, Deep Learning, Financial Modeling
 
-A web-based code editor that allows multiple users to write and execute code together in real-time. Features include syntax highlighting for 10+ languages, live cursors, and integrated chat.
+Developed a multi-input Recurrent Neural Network (RNN) to predict a stock's daily price percentage change. [cite_start]The model fuses time-series financial data (Yahoo Finance) with real-time sentiment analysis of stock-related posts scraped from Reddit[cite: 611, 649]. [cite_start]By applying VADER sentiment analysis to post titles and bodies, the model learns the correlation between investor sentiment and market volatility[cite: 661, 662].
 
-**Key Features:**
-- Real-time synchronization using WebSockets
-- User authentication and session management
-- Code execution in sandboxed environment
-- Syntax highlighting and auto-completion
+**Key Achievements:**
+- [cite_start]Multi-input RNN architecture with three distinct branches (Title, Body, and Numerical Features)[cite: 500].
+- [cite_start]Integration of three major real-time APIs (yfinance, PRAW, NLTK) for cohesive data collection[cite: 518].
+- [cite_start]Sentiment-enhanced feature engineering that explicitly targets social factors in financial prediction[cite: 612, 652].
+- [cite_start]Used LSTM layers to process the sequential nature of both text and time-series data[cite: 501].
 
-[View on GitHub](https://github.com/yourusername/collab-editor) | [Live Demo](https://collab-editor.demo.com)
-
----
-
-## 🤖 Movie Recommendation System
-
-**Tech Stack:** Python, Scikit-learn, Flask, Pandas, React
-
-Built a content-based and collaborative filtering recommendation engine that suggests movies based on user preferences and viewing history. Achieved 87% accuracy on test dataset.
-
-**Key Features:**
-- Hybrid recommendation algorithm
-- RESTful API for predictions
-- Interactive frontend for exploring recommendations
-- Visualization of recommendation patterns
-
-[View on GitHub](https://github.com/yourusername/movie-recommender) | [Read More](/blog/2024/11/building-recommendation-system)
-
----
-
-## 📊 Personal Finance Tracker
-
-**Tech Stack:** Django, PostgreSQL, Chart.js, Bootstrap
-
-A full-stack web application for tracking income, expenses, and financial goals. Includes data visualization, budget alerts, and export functionality.
-
-**Key Features:**
-- Secure user authentication
-- Interactive charts and analytics
-- Category-based expense tracking
-- CSV import/export functionality
-- Monthly budget planning tools
-
-[View on GitHub](https://github.com/yourusername/finance-tracker)
-
----
-
-## 🎮 Pathfinding Visualizer
-
-**Tech Stack:** JavaScript, HTML5 Canvas, CSS
-
-An interactive visualization tool for graph traversal and pathfinding algorithms including Dijkstra's, A*, BFS, and DFS. Users can draw obstacles and watch algorithms find the shortest path.
-
-**Key Features:**
-- Real-time algorithm visualization
-- Multiple algorithm implementations
-- Interactive grid with obstacles
-- Speed control and step-through mode
-
-[View on GitHub](https://github.com/yourusername/pathfinding-viz) | [Live Demo](https://yourusername.github.io/pathfinding-viz)
-
----
-
-## 🌐 Weather Dashboard
-
-**Tech Stack:** React, OpenWeather API, Tailwind CSS
-
-A responsive weather dashboard that displays current conditions and forecasts for multiple cities. Features location detection and favorite cities management.
-
-**Key Features:**
-- Real-time weather data
-- 5-day forecast
-- Location-based detection
-- Clean, responsive UI
-
-[View on GitHub](https://github.com/yourusername/weather-dashboard) | [Live Demo](https://weather.demo.com)
-
----
-
-## Open Source Contributions
-
-I also contribute to open-source projects. Some of my contributions include:
-- **Project XYZ:** Added feature for bulk data processing (PR #456)
-- **Library ABC:** Fixed critical bug in authentication flow (PR #789)
-- **Framework DEF:** Improved documentation with examples (PR #123)
+[View Detailed Project](/projects/stock-predictor/) | [View on GitHub](https://github.com/yourusername/stock-predictor-nn)
