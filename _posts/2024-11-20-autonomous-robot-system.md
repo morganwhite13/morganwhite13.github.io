@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Building an Autonomous Warehouse Robot: From Concept to Complete System"
-date: 2024-11-20 09:00:00 -0500
+date: 2021-12-20 09:00:00 -0500
 categories: robotics computer-vision systems-design
 ---
 
