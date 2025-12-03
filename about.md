@@ -36,6 +36,6 @@ Carleton University, Ottawa, ON, Canada | Graduated 2024
 I am actively seeking full-time roles as an **AI Developer**, **Machine Learning Engineer**, or **Data Scientist**. I thrive in environments where I can leverage my research background and proven record of delivering efficient, high-impact technical solutions.
 
 Feel free to connect or review my code:
-* **Email:** [your-email@example.com](morgan13white@icloud.com)
-* **LinkedIn:** [linkedin.com/in/your-profile-url](https://www.linkedin.com/in/morgan-white-95b245237)
-* **GitHub:** [github.com/yourusername](https://github.com/morganwhite13)
+* **Email:** [morgan13white@icloud.com](morgan13white@icloud.com)
+* **LinkedIn:** [https://www.linkedin.com/in/morgan-white-95b245237](https://www.linkedin.com/in/morgan-white-95b245237)
+* **GitHub:** [https://github.com/morganwhite13](https://github.com/morganwhite13)
