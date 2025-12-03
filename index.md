@@ -22,9 +22,7 @@ I combine a strong theoretical foundation in algorithms and mathematics with the
 
 ## Featured Projects
 
-Check out my [projects page](/projects) to see my work, including:
-* **Agent Elimination in MARL:** A research project investigating cooperation in autonomous agents using Unity.
-* **Government Data Automation:** An NLP tool processing 90,000+ rows of product data.
+Check out my [projects page](/projects) to see my work.
 
 Visit my [GitHub](https://github.com/morganwhite13) to explore my code.
 
