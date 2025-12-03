@@ -4,67 +4,38 @@ title: About
 permalink: /about/
 ---
 
-# About Me
+# About Morgan White
 
-Hi! I'm Alex Chen, a Computer Science student at State University expected to graduate in May 2025. I'm passionate about building software that solves real problems and makes people's lives easier.
+I'm a recent Computer Science Honours graduate from Carleton University, specializing in **Artificial Intelligence and Machine Learning**. My work focuses on developing and deploying intelligent, data-driven systems that solve real-world problems and significantly improve operational efficiency.
 
-## My Journey
+## My Impact
 
-My journey into programming started in high school when I built my first website. Since then, I've been hooked on the creative problem-solving aspect of software development. I love the moment when a complex algorithm finally works or when a user interface comes together perfectly.
+My career journey has been shaped by roles that demand both deep academic rigor and practical engineering discipline:
 
-During my time at university, I've taken courses in:
-- Data Structures & Algorithms
-- Database Systems
-- Machine Learning
-- Software Engineering
-- Computer Networks
-- Operating Systems
+* **AI Developer at the Canadian Food Inspection Agency (CFIA):** I engineered an NLP-based classification solution that automated the processing of over 90,000 product data rows. This system achieved high accuracy and resulted in a **80% reduction in manual data collection workload** for analysts, allowing them to shift focus to higher-value analysis.
+* **Honours Research:** I designed a custom **Multi-Agent Reinforcement Learning (MARL)** environment using **Unity ML-Agents** to investigate cooperative agent behaviors under social dilemmas. My research involved implementing and comparing advanced algorithms, including **PPO** and **SAC**, providing insights into how elimination mechanisms influence group dynamics.
+* **Teaching Assistant:** As a TA for **Programming Paradigms (Haskell/Prolog)** and **Introduction to AI**, I mentored students in core computer science principles, from functional programming concepts to complex heuristic search algorithms.
 
-## What Drives Me
+## Technical Expertise
 
-I'm motivated by projects that have real impact. Whether it's building a tool that saves developers time, creating an app that helps people manage their finances, or contributing to open-source software used by thousands, I want my work to matter.
+I possess a strong, specialized technical skillset:
 
-## Beyond Code
-
-When I'm not coding, you'll find me:
-- Reading tech blogs and staying current with industry trends
-- Contributing to open-source projects
-- Playing basketball or hiking
-- Experimenting with new technologies and frameworks
-- Attending local tech meetups
-
-## Current Focus
-
-Right now, I'm deepening my knowledge in:
-- Cloud architecture (AWS, Azure)
-- System design and scalability
-- Advanced React patterns
-- Machine learning deployment
-
-## Experience
-
-**Software Engineering Intern** - TechCorp Inc. (Summer 2024)
-- Developed RESTful APIs serving 10,000+ daily requests
-- Reduced query response time by 40% through database optimization
-- Collaborated with cross-functional teams using Agile methodologies
-
-**Teaching Assistant** - State University (2023-2024)
-- Assisted in teaching "Introduction to Programming" course
-- Held weekly office hours and graded assignments
-- Mentored 30+ students on programming fundamentals
+* **AI & ML:** Reinforcement Learning (MARL, PPO, SAC), Natural Language Processing (NLP), Scikit-learn, TensorFlow/PyTorch, Statistical Modeling.
+* **Languages:** Python (Primary), Java, C++, Haskell, Prolog, SQL.
+* **Tools & Concepts:** Git, Version Control, Unity ML-Agents, Algorithm Design, Data Structures, Agile Methodologies.
 
 ## Education
 
-**Bachelor of Science in Computer Science**  
-State University | Expected Graduation: May 2025  
-GPA: 3.8/4.0  
-Relevant Coursework: Data Structures, Algorithms, Machine Learning, Database Systems
+**Bachelor of Computer Science Honours, Artificial Intelligence and Machine Learning Stream**  
+Carleton University, Ottawa, ON, Canada | Graduated 2024
+* **CGPA:** 10.92/12.0 (A- Average)
+* **Scholarships:** Recipient of the Harry S. Southam Scholarship and President's Scholarship, and recognized on the Dean's Honour List (2020-2022).
 
 ## Let's Work Together
 
-I'm actively seeking full-time software engineering positions starting in June 2025. I'm particularly interested in roles involving full-stack development, backend systems, or machine learning.
+I am actively seeking full-time roles as an **AI Developer**, **Machine Learning Engineer**, or **Data Scientist**. I thrive in environments where I can leverage my research background and proven record of delivering efficient, high-impact technical solutions.
 
-Feel free to reach out:
-- **Email:** alex.chen@email.com
-- **LinkedIn:** [linkedin.com/in/alexchen](https://linkedin.com/in/alexchen)
-- **GitHub:** [github.com/alexchen](https://github.com/alexchen)
+Feel free to connect or review my code:
+* **Email:** [your-email@example.com](morgan13white@icloud.com)
+* **LinkedIn:** [linkedin.com/in/your-profile-url](https://www.linkedin.com/in/morgan-white-95b245237)
+* **GitHub:** [github.com/yourusername](https://github.com/morganwhite13)
