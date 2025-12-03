@@ -3,28 +3,36 @@ layout: home
 title: Home
 ---
 
-# Welcome! I'm Alex Chen 👋
+# Welcome! I'm Morgan White 👋
 
-I'm a Computer Science student at State University with a passion for building elegant solutions to complex problems. I specialize in full-stack web development and machine learning, and I'm currently seeking software engineering opportunities.
+I'm a Computer Science Graduate (Honours) from Carleton University, specializing in **Artificial Intelligence and Machine Learning**. I am passionate about bridging the gap between advanced research and practical industry solutions, ranging from Multi-Agent Reinforcement Learning (MARL) to automated data processing tools.
 
 ## What I Do
 
-I build web applications that are fast, accessible, and user-friendly. My recent work includes developing a real-time collaboration tool, implementing machine learning models for predictive analytics, and contributing to open-source projects.
+I build intelligent systems that optimize workflows and solve complex behavioral problems. My recent work includes developing NLP classification tools for the **Canadian Food Inspection Agency** that reduced manual data entry by 80%, and conducting Honours research on cooperative agent behaviors using **Unity ML-Agents**.
+
+I combine a strong theoretical foundation in algorithms and mathematics with the ability to execute production-ready code.
 
 ## Technical Skills
 
-**Languages:** Python, JavaScript, Java, C++, SQL  
-**Frameworks:** React, Node.js, Express, Flask, Django  
-**Tools:** Git, Docker, AWS, PostgreSQL, MongoDB  
-**Specialties:** Full-stack development, REST APIs, Machine Learning, Algorithm Design
+**Languages:** Python, Java, C++, C#, Prolog, SQL
+**AI & ML:** Unity ML-Agents, Reinforcement Learning (PPO, SAC, POCA), NLP (TF-IDF, Lemmatization), Scikit-learn, Pandas
+**Concepts:** Functional Programming, Multi-Agent Systems, Game Theory, Agile Development
+**Tools:** Git & GitHub, Version Control
 
 ## Featured Projects
 
-Check out my [projects page](/projects) to see what I've been working on, or visit my [GitHub](https://github.com/yourusername) to explore my code.
+Check out my [projects page](/projects) to see my work, including:
+* **Agent Elimination in MARL:** A research project investigating cooperation in autonomous agents using Unity.
+* **Government Data Automation:** An NLP tool processing 90,000+ rows of product data.
+
+Visit my [GitHub](https://github.com/morganwhite13) to explore my code.
 
 ## Let's Connect
 
-I'm always interested in new opportunities and collaborations. Feel free to reach out via [email](mailto:alex.chen@email.com) or connect with me on [LinkedIn](https://linkedin.com/in/alexchen).
+I am actively seeking opportunities in **AI Development**, **Machine Learning Engineering**, and **Data Science**.
+
+Feel free to reach out via [email](morgan13white@icloud.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/morgan-white-95b245237).
 
 ---
 
