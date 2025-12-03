@@ -23,7 +23,7 @@ Built a fully autonomous mobile robot system that navigates a 20×20 meter wareh
 - Real-time sensor fusion combining vision, compass, and distance data
 - 800+ lines of optimized Java controller code
 
-[View Detailed Project](/projects/robot-project/) | [View on GitHub](https://github.com/yourusername/robot-collection-system)
+[View Detailed Project](/projects/robot-project/)
 
 ---
 
@@ -38,7 +38,8 @@ Developed a multi-input deep learning system that predicts YouTube video view co
 - Bidirectional LSTM layers capture forward/backward context in video metadata
 - Integrated YouTube Data API with intelligent caching and rate limit management
 - Comprehensive NLP pipeline with NLTK tokenization and stopword removal
-- Tested...
+
+[View Detailed Project](/projects/youtube-predictor/)
 
 ---
 
@@ -54,7 +55,7 @@ Developed a multi-input Recurrent Neural Network (RNN) to predict a stock's dail
 - [cite_start]Sentiment-enhanced feature engineering that explicitly targets social factors in financial prediction[cite: 612, 652].
 - [cite_start]Used LSTM layers to process the sequential nature of both text and time-series data[cite: 501].
 
-[View Detailed Project](/projects/stock-predictor/) | [View on GitHub](https://github.com/yourusername/stock-predictor-nn)
+[View Detailed Project](/projects/stock-predictor/)
 
 ---
 
@@ -70,5 +71,5 @@ A native iOS application for tracking and reviewing entertainment media. Feature
 - Built a secure navigation flow with admin authentication logic.
 - Integrated `UIImagePickerController` for handling user-generated media.
 
-[View Detailed Project](/projects/morgans-reviews/) | [View on GitHub](https://github.com/yourusername/morgans-reviews)
+[View Detailed Project](/projects/morgans-reviews/)
 
