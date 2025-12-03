@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Project Deep Dive: Predicting Stock Changes with Reddit Sentiment"
-date: 2025-04-25 10:00:00 -0500
+date: 2024-04-25 10:00:00 -0500
 categories: machine-learning nlp finance deep-learning
 ---
 
