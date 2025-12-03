@@ -16,8 +16,11 @@ I combine a strong theoretical foundation in algorithms and mathematics with the
 ## Technical Skills
 
 **Languages:** Python, Java, C++, C#, Prolog, SQL
+
 **AI & ML:** Unity ML-Agents, Reinforcement Learning (PPO, SAC, POCA), NLP (TF-IDF, Lemmatization), Scikit-learn, Pandas
+
 **Concepts:** Functional Programming, Multi-Agent Systems, Game Theory, Agile Development
+
 **Tools:** Git & GitHub, Version Control
 
 ## Featured Projects
