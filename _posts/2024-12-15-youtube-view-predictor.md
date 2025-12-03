@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Predicting YouTube Views with Deep Learning: What I Learned"
-date: 2024-12-15 10:00:00 -0500
+date: 2023-12-15 10:00:00 -0500
 categories: machine-learning nlp deep-learning
 ---
 
