@@ -9,7 +9,7 @@ permalink: /projects/marl-elimination/
 An honours research project investigating whether agent elimination mechanisms can improve cooperation in Multi-Agent Reinforcement Learning (MARL) environments where individual greediness is rewarded but group cooperation is optimal. Built a custom Unity ML-Agents environment with configurable elimination rules, testing how agents balance self-interest against the threat of being eliminated by peers.
 
 **Tech Stack:** Unity ML-Agents, C#, Python, Proximal Policy Optimization (PPO), Soft Actor-Critic (SAC)  
-**Status:** ✅ Research Complete - Published Honours Thesis  
+**Status:** ✅ Research Complete - Published Honours Project  
 **Supervisor:** Dr. Zinovi Rabinovich, Carleton University  
 **GitHub:** [View Source Code](#)
 
@@ -71,7 +71,7 @@ Inspired by the 2011 film *Limitless*, where Bradley Cooper's character gains su
 
 **Arena Layout:**
 - 40×40 unit bounded area
-- Multiple agents (4-8 configurable)
+- Multiple agents (1-10 configurable)
 - Good food (green, +1 reward)
 - Bad food (red, -1 reward)
 - Laser weapons with elimination mechanics
@@ -100,7 +100,7 @@ Configuration Options:
 
 **Traditional FoodCollector:** Simple grid sensor for food detection
 
-**Our Enhanced System:** 20+ normalized observations
+**The Enhanced System:** 20+ normalized observations
 
 ```csharp
 public override void CollectObservations(VectorSensor sensor)
@@ -286,7 +286,7 @@ num_layers: 2
 ## Key Technical Achievements
 
 ✅ **Custom Unity Environment** - Modified FoodCollector with 2,000+ lines of C# code  
-✅ **Configurable Elimination Rules** - 1-4 agents to eliminate, freeze vs. permanent  
+✅ **Configurable Elimination Rules** - 1-9 agents to eliminate, freeze vs. permanent  
 ✅ **Advanced Observation Space** - 20+ normalized features including agent states  
 ✅ **Hit Tracking System** - Distributed HashSet tracking unique shooters  
 ✅ **Resource Respawn Logic** - Density-based food regeneration (Harvest-inspired)  
@@ -391,7 +391,7 @@ num_layers: 2
 **Final Decision:** Abandon MeltingPot, switch to Unity
 
 **Impact:** 
-- Lost 50% of research timeline
+- Lost 75% of research timeline
 - Rebuilt environment from scratch
 - **Lesson learned:** Prioritize tool maturity and community support
 
@@ -404,7 +404,6 @@ num_layers: 2
 **Training Times:**
 - PPO: ~8 hours for 500K steps
 - SAC: ~24 hours for 500K steps
-- Limited GPU access (personal laptop)
 
 **Solution:** 
 - Reduced episode length initially
@@ -743,39 +742,6 @@ This project built on:
    - Exploration strategies
 
 **Full citations in project report.**
-
----
-
-## Experimental Data Visualizations
-
-### Figure 1: Elimination Threshold Comparison
-**Finding:** Individual elimination (1 agent) outperformed group elimination
-
-**Implications:**
-- Coordination overhead reduces efficiency
-- Quick elimination beats democratic consensus
-- Suggests humans' group punishment evolved for different reasons than RL optimization
-
-### Figure 2: Algorithm Performance
-**Finding:** SAC > PPO > POCA for cumulative reward
-
-**Trade-offs:**
-- SAC: Best performance, 3× training time
-- PPO: Good performance, fast training
-- POCA: Cooperative architecture, but didn't leverage shared value well
-
-### Figure 3: Freeze vs. Eliminate
-**Finding:** Permanent elimination more effective than temporary freezing
-
-**Interpretation:** 
-- Frozen agents seek revenge → escalation
-- Similar to recidivism in criminal justice
-- Temporary punishment without rehabilitation fails
-
-### Figure 4: Resource Scarcity
-**Finding:** Marginal cooperation improvement in sparse conditions
-
-**Future Work:** Test extreme scarcity (2-3 food) to force cooperation
 
 ---
 
