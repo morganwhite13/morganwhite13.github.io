@@ -16,6 +16,12 @@ An autonomous mobile robot built in Webots that uses computer vision, sensor fus
 
 ---
 
+## Video Demo
+
+<iframe width="100%" height="450" src="https://www.youtube.com/embed/kO9e8dzjCfg" title="Robot Project Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+---
+
 ## The Challenge
 
 Design and implement a fully autonomous robot system that can:
@@ -305,3 +311,4 @@ If I were to extend this project, I would:
 ## Takeaway
 
 This project demonstrates end-to-end robotics development: from hardware design and sensor selection, through algorithm development and testing, to successful autonomous operation. It showcases my ability to work with complex systems, solve real-time constraints, and deliver a functional solution to a challenging problem.
+
