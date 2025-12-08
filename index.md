@@ -36,5 +36,3 @@ I am actively seeking opportunities in **AI Development**, **Machine Learning En
 Feel free to reach out via [email](morgan13white@icloud.com) or connect with me on [LinkedIn](https://www.linkedin.com/in/morgan-white-95b245237).
 
 ---
-
-## Recent Blog Posts
