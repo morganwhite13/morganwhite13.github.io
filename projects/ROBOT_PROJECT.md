@@ -139,10 +139,10 @@ Multi-layered detection prevents false positives and ensures robust operation.
 
 | Metric | Value |
 |--------|-------|
-| Success Rate | 100% (4/4 jars collected) |
+| Success Rate | 100% (5/5 jars collected) |
 | Navigation Accuracy | ±3° (heading), ±10cm (position) |
-| Gripper Engagement Time | ~3 seconds per object |
-| Total Mission Time | ~5-7 minutes |
+| Gripper Engagement Time | ~10 seconds per object |
+| Total Mission Time | ~13-15 minutes |
 | Sensor Update Rate | 32-64 fps |
 | Control Frequency | 30-31 Hz |
 | Waypoint Count | 30+ total |
@@ -311,4 +311,5 @@ If I were to extend this project, I would:
 ## Takeaway
 
 This project demonstrates end-to-end robotics development: from hardware design and sensor selection, through algorithm development and testing, to successful autonomous operation. It showcases my ability to work with complex systems, solve real-time constraints, and deliver a functional solution to a challenging problem.
+
 
