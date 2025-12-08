@@ -4,8 +4,6 @@ title: Can Agent Elimination Improve Cooperation in MARL?
 permalink: /projects/marl-elimination/
 ---
 
-# Can Agent Elimination Improve Cooperation in Multi-Agent Reinforcement Learning?
-
 ## Quick Summary
 
 An honours research project investigating whether agent elimination mechanisms can improve cooperation in Multi-Agent Reinforcement Learning (MARL) environments where individual greediness is rewarded but group cooperation is optimal. Built a custom Unity ML-Agents environment with configurable elimination rules, testing how agents balance self-interest against the threat of being eliminated by peers.
