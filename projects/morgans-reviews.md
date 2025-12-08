@@ -4,8 +4,6 @@ title: Morgan's Reviews - iOS Entertainment Tracker
 permalink: /projects/morgans-reviews/
 ---
 
-# Morgan's Reviews iOS App
-
 ## Quick Summary
 
 A native iOS application designed to track and review entertainment media (movies, games, TV shows) without spoilers. Built using Swift and UIKit, the app features a custom-built interactive rating system, a secure admin interface for content management, and dynamic table views for organizing reviews.
