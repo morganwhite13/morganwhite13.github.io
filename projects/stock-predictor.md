@@ -4,8 +4,6 @@ title: Predicting Stock Price Changes Using Reddit Sentiment
 permalink: /projects/stock-predictor/
 ---
 
-# Predicting Stock Price Changes Using Reddit Sentiment
-
 ## Quick Summary
 
 A multi-input Recurrent Neural Network that predicts daily stock price percentage changes by fusing real-time financial data with sentiment analysis of Reddit posts. The system scrapes stock discussions from financial subreddits, applies VADER sentiment analysis, and combines this social signal with Yahoo Finance data to capture how investor sentiment drives market movements.
