@@ -4,8 +4,6 @@ title: Autonomous Robot Jar Collection System
 permalink: /projects/robot-project/
 ---
 
-# Autonomous Robot Jar Collection System
-
 ## Quick Summary
 
 An autonomous mobile robot built in Webots that uses computer vision, sensor fusion, and pathfinding algorithms to navigate a 20×20 meter warehouse, locate honey jars, collect them, and place them in designated storage areas—all without human intervention.
@@ -311,5 +309,6 @@ If I were to extend this project, I would:
 ## Takeaway
 
 This project demonstrates end-to-end robotics development: from hardware design and sensor selection, through algorithm development and testing, to successful autonomous operation. It showcases my ability to work with complex systems, solve real-time constraints, and deliver a functional solution to a challenging problem.
+
 
 
