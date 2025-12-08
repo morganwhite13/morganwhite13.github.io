@@ -47,15 +47,17 @@ Developed an advanced deep learning system that predicts YouTube video view coun
 
 ## 📈 Predicting Stock Price Changes Using Reddit Sentiment
 
-**Tech Stack:** Python, TensorFlow/Keras, NLTK, NLP, Deep Learning, Financial Modeling
+**Tech Stack:** Python, TensorFlow/Keras, PRAW (Reddit API), yfinance, NLTK, VADER Sentiment
 
-Developed a multi-input Recurrent Neural Network (RNN) to predict a stock's daily price percentage change. The model fuses time-series financial data (Yahoo Finance) with real-time sentiment analysis of stock-related posts scraped from Reddit. By applying VADER sentiment analysis to post titles and bodies, the model learns the correlation between investor sentiment and market volatility.
+Developed a multi-input Recurrent Neural Network that predicts daily stock price percentage changes by fusing real-time financial data with sentiment analysis of Reddit posts. The model scrapes stock discussions from financial subreddits (r/stocks, r/options, r/investing), applies VADER sentiment analysis to capture crowd psychology, and combines this social signal with Yahoo Finance data to understand how investor sentiment drives market movements.
 
 **Key Achievements:**
 - Multi-input RNN architecture with three distinct branches (Title, Body, and Numerical Features)
-- Integration of three major real-time APIs (yfinance, PRAW, NLTK) for cohesive data collection
-- Sentiment-enhanced feature engineering that explicitly targets social factors in financial prediction
-- Used LSTM layers to process the sequential nature of both text and time-series data
+- VADER sentiment analysis optimized for social media text (handles slang, emojis, negations)
+- Date-synchronized data fusion correlating Reddit posts with same-day price movements
+- Integration of two real-time APIs (PRAW, yfinance) for cohesive data collection
+- LSTM layers process sequential nature of both social media text and financial time series
+- Dual sentiment scoring (title + body separately) to capture nuanced investor psychology
 
 [View Detailed Project](/projects/stock-predictor/)
 
