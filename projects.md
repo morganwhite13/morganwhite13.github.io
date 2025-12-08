@@ -27,6 +27,25 @@ Built a fully autonomous mobile robot system that navigates a 20×20 meter wareh
 
 ---
 
+## 🧠 Agent Elimination in Multi-Agent Reinforcement Learning
+
+**Tech Stack:** Unity ML-Agents, C#, Python, PPO, SAC, POCA
+
+Honours research project investigating whether agent elimination mechanisms can improve cooperation in Multi-Agent Reinforcement Learning environments. Built a custom Unity environment with configurable elimination rules (1-4 agents to eliminate, freeze vs. permanent), testing how agents balance self-interest against collective benefit in resource-sharing dilemmas. Deployed three RL algorithms (PPO, SAC, POCA) across 500K training steps to analyze emergent cooperative behavior.
+
+**Key Achievements:**
+- Custom Unity ML-Agents environment with 2,000+ lines of C# code
+- Configurable elimination mechanics (freeze, permanent, group consensus)
+- Advanced observation space with 20+ normalized features tracking agent states
+- Hit tracking system using distributed HashSet for unique shooter detection
+- Density-based food respawn logic inspired by DeepMind's Harvest environment
+- Three RL algorithms tested: PPO (baseline), SAC (best performance), POCA (cooperation-focused)
+- Published honours thesis with 10+ experimental graphs analyzing cooperation dynamics
+
+[View Detailed Project](/projects/marl-elimination/)
+
+---
+
 ## 🎬 YouTube Views Prediction Using Neural Networks
 
 **Tech Stack:** Python, TensorFlow/Keras, YouTube Data API, NLTK, NLP, Transformer Architecture
