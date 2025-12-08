@@ -27,38 +27,6 @@ Built a fully autonomous mobile robot system that navigates a 20×20 meter wareh
 
 ---
 
-## 🎬 YouTube Views Prediction Using Neural Networks
-
-**Tech Stack:** Python, TensorFlow/Keras, YouTube Data API, NLTK, NLP, Deep Learning
-
-Developed a multi-input deep learning system that predicts YouTube video view counts by analyzing textual content (titles, descriptions, channel names), channel authority metrics, temporal features, and content categories. Built six progressive model variations to empirically determine feature importance, culminating in a bidirectional LSTM architecture that processes multiple data streams simultaneously.
-
-**Key Achievements:**
-- Multi-input neural network with 5 text embedding branches and numerical features
-- Bidirectional LSTM layers capture forward/backward context in video metadata
-- Integrated YouTube Data API with intelligent caching and rate limit management
-- Comprehensive NLP pipeline with NLTK tokenization and stopword removal
-
-[View Detailed Project](/projects/youtube-predictor/)
-
----
-
-## 📈 Predicting Stock Price Changes Using Reddit Sentiment
-
-**Tech Stack:** Python, TensorFlow/Keras, NLTK, NLP, Deep Learning, Financial Modeling
-
-Developed a multi-input Recurrent Neural Network (RNN) to predict a stock's daily price percentage change. [cite_start]The model fuses time-series financial data (Yahoo Finance) with real-time sentiment analysis of stock-related posts scraped from Reddit[cite: 611, 649]. [cite_start]By applying VADER sentiment analysis to post titles and bodies, the model learns the correlation between investor sentiment and market volatility[cite: 661, 662].
-
-**Key Achievements:**
-- [cite_start]Multi-input RNN architecture with three distinct branches (Title, Body, and Numerical Features)[cite: 500].
-- [cite_start]Integration of three major real-time APIs (yfinance, PRAW, NLTK) for cohesive data collection[cite: 518].
-- [cite_start]Sentiment-enhanced feature engineering that explicitly targets social factors in financial prediction[cite: 612, 652].
-- [cite_start]Used LSTM layers to process the sequential nature of both text and time-series data[cite: 501].
-
-[View Detailed Project](/projects/stock-predictor/)
-
----
-
 ## 📱 Morgan's Reviews - iOS App
 
 **Tech Stack:** Swift, UIKit, MVC Pattern, Mobile Development
