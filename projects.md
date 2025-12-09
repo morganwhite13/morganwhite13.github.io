@@ -99,3 +99,19 @@ Developed a multi-input Recurrent Neural Network that predicts daily stock price
 
 [View Detailed Project](/projects/stock-predictor/)
 
+---
+
+📱 Morgan's Reviews - iOS Entertainment Review App
+Tech Stack: Swift, UIKit, Xcode, iOS SDK
+A native iOS review application featuring dual interfaces for reviewers and readers. Built with custom UI components including a star rating system with VoiceOver accessibility, secure authentication flows, and dynamic table view management. The app demonstrates comprehensive iOS development skills including delegation patterns, navigation controller management, image handling, and sophisticated state management across multiple view controllers.
+Key Achievements:
+
+Custom reusable star rating component with accessibility support
+Dual authentication system separating reviewer and user experiences
+CRUD operations with smart unwind segue logic for create/update/delete
+UIImagePickerController integration for photo library access
+600+ lines of production Swift code across 7 view controllers
+Real-time form validation and save button state management
+Pre-loaded with 7 diverse entertainment reviews
+
+[View Detailed Project](/projects/review-app/)
