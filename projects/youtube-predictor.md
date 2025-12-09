@@ -282,18 +282,18 @@ ReduceLROnPlateau(factor=0.5, patience=3)
 ## Performance Results
 
 ### Model Evaluation
-The model was trained and rigorously evaluated on a **Combined Dataset** of **$552$ videos** (a mix of random, popular, and categorical channels), providing a comprehensive benchmark for performance.
+The model was trained and rigorously evaluated on a **Combined Dataset** of **552 videos** (a mix of random, popular, and categorical channels), providing a comprehensive benchmark for performance.
 
 | Metric | Value |
 | :--- | :--- |
-| **Dataset Size** | $552$ videos |
-| **Training Time** | $0$ hours, $5$ minutes, $6$ seconds (over $50$ epochs with Early Stopping) |
-| **MAE (Log Scale)** | $\mathbf{1.7300}$ |
-| **MAE (Actual View Count)** | $9,696,210$ views |
-| **Mean Absolute Percentage Error (MAPE)** | $239.11\%$ |
+| **Dataset Size** | 552 videos |
+| **Training Time** | 0 hours, 5 minutes, 6 seconds (over 50 epochs with Early Stopping) |
+| **MAE (Log Scale)** | \mathbf{1.7300} |
+| **MAE (Actual View Count)** | 9,696,210 views |
+| **Mean Absolute Percentage Error (MAPE)** | 239.11% |
 
 **Analysis:**
-The **Mean Absolute Error on the logarithmic scale ($\text{MAE}_{\text{log}}$)** is the primary metric for view prediction, as it reflects the model's core ability to predict the *order of magnitude* of views, effectively handling the massive variance inherent in YouTube data. The $\text{MAE}_{\text{log}}$ of **$1.73$** is a robust indicator of the model's performance in this complex domain. The high $\text{MAE}_{\text{actual}}$ and $\text{MAPE}$ values are expected outcomes when exponentiating log-predictions back to the real view scale, particularly when evaluating against high-variance data (where a minor log error becomes a multi-million view error).
+The **Mean Absolute Error on the logarithmic scale 1.7300** is the primary metric for view prediction, as it reflects the model's core ability to predict the *order of magnitude* of views, effectively handling the massive variance inherent in YouTube data. The MAE log of **1.73** is a robust indicator of the model's performance in this complex domain. The high actual MAE and MAPE values are expected outcomes when exponentiating log-predictions back to the real view scale, particularly when evaluating against high-variance data (where a minor log error becomes a multi-million view error).
 
 ---
 
@@ -302,10 +302,10 @@ The model demonstrates its ability to generate predictions based on content and 
 
 | Video Title | Channel | Subscribers | Predicted Views |
 | :--- | :--- | :--- | :--- |
-| "I Survived 100 Days in Canada" | Adventure Time | $1,000,000$ | $273,361$ |
-| "\$1 VS \$1,000 Water" | Money Man | $500,000$ | $563,794$ |
-| "Worlds Craziest Invention" | Sir Science | $100,000$ | $458,558$ |
-| "How to make a website in 10 minutes" | Coding Guru | $5,000$ | $241,339$ |
+| "I Survived 100 Days in Canada" | Adventure Time | 1,000,000 | 273,361 |
+| "\$1 VS \$1,000 Water" | Money Man | 500,000 | 563,794 |
+| "Worlds Craziest Invention" | Sir Science | 100,000 | 458,558 |
+| "How to make a website in 10 minutes" | Coding Guru | 5,000 | 241,339 |
 
 ---
 
