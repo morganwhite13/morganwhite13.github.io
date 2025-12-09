@@ -46,6 +46,25 @@ Honours research project investigating whether agent elimination mechanisms can 
 
 ---
 
+## 🔍 MARL Robustness for Agent Blindness in VMAS
+
+**Tech Stack:** Python, PyTorch, TorchRL, VMAS, MAPPO, Multi-Agent Deep RL
+
+Research project investigating how swarm agents handle partial observability through random "blindness" events where agents lose sensory input unpredictably. Built 6 custom blindness scenarios in VMAS (Vectorized Multi-Agent Simulator) ranging from single-agent temporary blindness to multi-agent persistent blindness. Applied MAPPO with extensive hyperparameter tuning across 50+ experiments, achieving 86% performance improvement through optimal configuration (normalization + clip=0.3 + batch=100 + epochs=30).
+
+**Key Achievements:**
+- 6 custom probabilistic blindness scenarios with configurable duration and frequency
+- MAPPO implementation with centralized critic and decentralized execution
+- Advantage normalization critical for handling observation variance (essential finding)
+- Extensive hyperparameter study across 7 dimensions (clip, batch size, epochs, probability, duration, agents)
+- Demonstrated graceful performance degradation up to 30% blindness probability threshold
+- Optimal agent count discovery: 5-7 agents balance redundancy vs. coordination overhead
+- 1,500+ lines of Python with automated experimentation and visualization
+
+[View Detailed Project](/projects/vmas-blindness/)
+
+---
+
 ## 🎬 YouTube Views Prediction Using Neural Networks
 
 **Tech Stack:** Python, TensorFlow/Keras, YouTube Data API, NLTK, NLP, Transformer Architecture
