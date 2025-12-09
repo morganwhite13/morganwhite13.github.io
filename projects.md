@@ -99,18 +99,3 @@ Developed a multi-input Recurrent Neural Network that predicts daily stock price
 
 [View Detailed Project](/projects/stock-predictor/)
 
----
-
-## 📱 Morgan's Reviews - iOS App
-
-**Tech Stack:** Swift, UIKit, MVC Pattern, Mobile Development
-
-A native iOS application for tracking and reviewing entertainment media. Features a custom-built interactive star rating system, table view data management, and an admin authentication flow for content management. Designed to provide a spoiler-free environment for sharing honest reviews on movies and games.
-
-**Key Achievements:**
-- Developed a custom `@IBDesignable` UI control for star ratings with accessibility support
-- Implemented the Model-View-Controller (MVC) architectural pattern
-- Built a secure navigation flow with admin authentication logic
-- Integrated `UIImagePickerController` for handling user-generated media
-
-[View Detailed Project](/projects/morgans-reviews/)
