@@ -288,7 +288,7 @@ The model was trained and rigorously evaluated on a **Combined Dataset** of **55
 | :--- | :--- |
 | **Dataset Size** | 552 videos |
 | **Training Time** | 0 hours, 5 minutes, 6 seconds (over 50 epochs with Early Stopping) |
-| **MAE (Log Scale)** | \mathbf{1.7300} |
+| **MAE (Log Scale)** | 1.7300 |
 | **MAE (Actual View Count)** | 9,696,210 views |
 | **Mean Absolute Percentage Error (MAPE)** | 239.11% |
 
