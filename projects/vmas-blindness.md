@@ -31,24 +31,6 @@ A Multi-Agent Reinforcement Learning research project investigating how swarm ag
 
 ---
 
-## Project Context: The Partnership Challenge
-
-**Original Plan:** Group project with assigned partner
-
-**Reality:** Partner became unresponsive after initial proposal
-- Last communication: April 6th
-- Multiple contact attempts: texts, emails, calls—all ignored
-- No code shared, no collaboration
-
-**Decision:** Complete project individually with reduced scope
-- Shifted from full research investigation to focused hyperparameter study
-- Maintained core scientific question: robustness to blindness
-- Successfully delivered results despite constraints
-
-**Lesson Learned:** Adaptability and individual accountability in research
-
----
-
 ## System Architecture
 
 ### VMAS Framework Selection
@@ -547,34 +529,7 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 
 ---
 
-### Experiment 9: Other VMAS Scenarios
-
-**Setup:** Tested on: Wheel, Give Way, Ball Passage, Multi Give Way  
-**Goal:** Test generalization of blind-robust policies
-
-**Results:** ❌ **Failed to learn in other scenarios**
-
-| Scenario | Raw Reward | Learning |
-|----------|------------|----------|
-| Balance (trained) | ~380 | ✅ Success |
-| Wheel | ~50 | ❌ No learning |
-| Give Way | ~30 | ❌ No learning |
-| Ball Passage | ~40 | ❌ No learning |
-| Multi Give Way | ~35 | ❌ No learning |
-
-**Possible Causes:**
-1. **Blindness implementation mismatch:** Observation structure differs across scenarios
-2. **Policy overfitting:** Balance-specific strategies don't transfer
-3. **Insufficient training:** Other scenarios may need more iterations
-4. **Bug in blindness logic:** May not correctly zero observations in new scenarios
-
-**Conclusion:** Policies are **scenario-specific**, not general blind-robust controllers
-
-**Future Work:** Curriculum learning (train on multiple scenarios simultaneously)
-
----
-
-### Experiment 10: Best Combined Hyperparameters
+### Experiment 9: Best Combined Hyperparameters
 
 **Setup:** Combine all improvements from previous experiments
 
