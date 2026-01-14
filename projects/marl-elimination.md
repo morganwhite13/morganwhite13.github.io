@@ -11,7 +11,7 @@ An honours research project investigating whether agent elimination mechanisms c
 **Tech Stack:** Unity ML-Agents, C#, Python, Proximal Policy Optimization (PPO), Soft Actor-Critic (SAC)  
 **Status:** ✅ Research Complete - Published Honours Project  
 **Supervisor:** Dr. Zinovi Rabinovich, Carleton University  
-**GitHub:** [View Source Code](#)
+**GitHub:** [View Source Code](https://github.com/morganwhite13/Agent-Elimination-in-Multi-Agent-Reinforcement-Learning)
 
 ---
 
