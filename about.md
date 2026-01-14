@@ -39,3 +39,4 @@ Feel free to connect or review my code:
 * **Email:** [morgan13white@icloud.com](morgan13white@icloud.com)
 * **LinkedIn:** [https://www.linkedin.com/in/morgan-white-95b245237](https://www.linkedin.com/in/morgan-white-95b245237)
 * **GitHub:** [https://github.com/morganwhite13](https://github.com/morganwhite13)
+* **Resume:** [Download PDF](./Morgans Work Resume.pdf)
