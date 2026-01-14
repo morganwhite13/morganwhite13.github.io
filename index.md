@@ -113,6 +113,7 @@ I'm actively seeking opportunities in:
 **Email:** [morgan13white@icloud.com](mailto:morgan13white@icloud.com)  
 **LinkedIn:** [morgan-white-95b245237](https://www.linkedin.com/in/morgan-white-95b245237)  
 **GitHub:** [morganwhite13](https://github.com/morganwhite13)
+* **Resume:** [Download PDF](./Morgans Work Resume.pdf)
 
 ---
 
