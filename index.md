@@ -115,6 +115,7 @@ I'm actively seeking opportunities in:
 **GitHub:** [morganwhite13](https://github.com/morganwhite13)
 **Resume:** [Download PDF](./Morgans Work Resume.pdf)
 
+
 ---
 
 *"The goal is not to build machines that think like humans, but to build systems that augment human capabilities and solve problems we couldn't solve alone."*
