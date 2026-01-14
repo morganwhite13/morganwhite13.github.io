@@ -10,7 +10,7 @@ An advanced deep learning system that predicts YouTube video view counts by anal
 
 **Tech Stack:** Python, TensorFlow/Keras, YouTube Data API, NLTK, Transformer Architecture  
 **Status:** ✅ Complete and Operational  
-**GitHub:** [View Source Code](#)
+**GitHub:** [View Source Code](https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks)
 
 ---
 
