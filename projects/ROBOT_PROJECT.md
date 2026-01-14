@@ -10,7 +10,7 @@ An autonomous mobile robot built in Webots that uses computer vision, sensor fus
 
 **Tech Stack:** Webots R2025a, Java, Computer Vision, Robotics  
 **Status:** ✅ Complete and Operational  
-**GitHub:** [View Source Code](#)
+**GitHub:** [View Source Code](https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System)
 
 ---
 
@@ -309,6 +309,7 @@ If I were to extend this project, I would:
 ## Takeaway
 
 This project demonstrates end-to-end robotics development: from hardware design and sensor selection, through algorithm development and testing, to successful autonomous operation. It showcases my ability to work with complex systems, solve real-time constraints, and deliver a functional solution to a challenging problem.
+
 
 
 
