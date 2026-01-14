@@ -10,6 +10,7 @@ url: "https://morganwhite13.github.io" # change to your actual URL
 # Social media
 github_username: morganwhite13
 linkedin_username: morgan-white-95b245237
+resume_pdf: /Morgans Work Resume.pdf
 
 # Build settings
 theme: minima
