@@ -12,7 +12,6 @@ A Multi-Agent Reinforcement Learning research project investigating how swarm ag
 
 **Tech Stack:** Python, PyTorch, TorchRL, VMAS, MAPPO, Multi-Agent Deep RL  
 **Status:** ✅ Complete - Course Capstone Project  
-**Course:** COMP 4900 - Topics in Computer Science (Carleton University)  
 **GitHub:** [View Source Code](#)
 
 ---
@@ -927,27 +926,6 @@ lmbda = 0.9
 ```
 
 ---
-
-## Academic Context
-
-### Course Information
-
-**COMP 4900 - Special Topics in Computer Science**
-- 4th year elective
-- Winter 2024 semester
-- Carleton University, Ottawa, Ontario
-
-**Project Requirements:**
-- Originally designed as group project
-- Research-focused with novel contribution
-- Final presentation + code submission
-
-### Related Coursework
-
-This project built on:
-- **COMP 4905** - Honours Project (MARL with elimination, prior semester)
-- **COMP 4107** - Neural Networks (deep RL foundations)
-- **COMP 3106** - Artificial Intelligence (RL basics)
 
 ### References & Prior Work
 
