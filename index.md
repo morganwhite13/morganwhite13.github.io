@@ -110,6 +110,7 @@ I'm actively seeking opportunities in:
 - **Research & Development** — Advancing the state of multi-agent learning and cooperative AI
 - **Robotics & Autonomous Systems** — Developing perception and planning algorithms
 
+**Resume:** [Download PDF](./Morgans Work Resume.pdf)
 **Email:** [morgan13white@icloud.com](mailto:morgan13white@icloud.com)  
 **LinkedIn:** [morgan-white-95b245237](https://www.linkedin.com/in/morgan-white-95b245237)  
 **GitHub:** [morganwhite13](https://github.com/morganwhite13)
