@@ -1,0 +1,23 @@
+name: Check site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-proof:
+    runs-on: ubuntu-latest
+    env:
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build site
+        run: bundle exec jekyll build
+      - name: Check internal links
+        run: bundle exec htmlproofer _site --disable-external --ignore-missing-alt

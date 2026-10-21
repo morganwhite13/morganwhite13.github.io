@@ -5,7 +5,7 @@ description: >-
   Computer Science Honours Graduate passionate about software development, 
   machine learning, and building solutions that make a difference.
 baseurl: "" # leave empty for username.github.io
-url: "https://morganwhite13.github.io" # change to your actual URL
+url: "https://morganwhite13.github.io"
 
 # Social media
 github_username: morganwhite13
@@ -16,10 +16,10 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Navigation
 header_pages:
-  - index.md
   - projects.md
   - about.md
 
@@ -29,3 +29,4 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+  - README.md

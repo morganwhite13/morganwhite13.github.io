@@ -4,8 +4,6 @@ title: Improving MARL Robustness for Agent Blindness in VMAS
 permalink: /projects/vmas-blindness/
 ---
 
-# Improving MARL Robustness for Agent Blindness in VMAS
-
 ## Quick Summary
 
 A Multi-Agent Reinforcement Learning research project investigating how swarm agents handle partial observability through random "blindness" events. Built custom blindness scenarios in VMAS (Vectorized Multi-Agent Simulator) where agents lose sensory input unpredictably, testing whether cooperative strategies can emerge despite information loss. Applied MAPPO (Multi-Agent Proximal Policy Optimization) with extensive hyperparameter tuning to achieve robust performance even when agents randomly lose observations.

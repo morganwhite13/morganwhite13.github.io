@@ -17,7 +17,7 @@ A native iOS review application built in Swift that allows a reviewer to create,
 
 ## Video Demo
 
-<iframe width="100%" height="450" src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Robot Project Demo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="450" src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Morgan's Reviews iOS App Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ---
 
