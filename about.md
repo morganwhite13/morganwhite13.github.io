@@ -2,6 +2,7 @@
 layout: page
 title: About
 permalink: /about/
+description: "About Morgan White: AI developer, Carleton University Computer Science Honours graduate, background, education and contact details."
 ---
 
 # About Morgan White

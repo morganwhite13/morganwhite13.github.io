@@ -2,6 +2,7 @@
 layout: page
 title: Autonomous Robot Jar Collection System
 permalink: /projects/robot-project/
+description: "An autonomous Webots robot that uses computer vision, sensor fusion and path planning to find, collect and store honey jars in a 20×20 m warehouse."
 ---
 
 ## Quick Summary
@@ -16,7 +17,7 @@ An autonomous mobile robot built in Webots that uses computer vision, sensor fus
 
 ## Video Demo
 
-<iframe width="100%" height="450" src="https://www.youtube.com/embed/kO9e8dzjCfg" title="Robot Project Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="video-embed"><iframe src="https://www.youtube.com/embed/kO9e8dzjCfg" title="Autonomous Robot Jar Collection Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 ---
 

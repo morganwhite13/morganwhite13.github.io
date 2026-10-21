@@ -1,6 +1,7 @@
 ---
 layout: home
 title: Home
+description: "Morgan White, Computer Science Honours graduate from Carleton University specializing in AI and machine learning: multi-agent reinforcement learning, NLP and applied ML projects."
 ---
 
 # Welcome! I'm Morgan White 👋

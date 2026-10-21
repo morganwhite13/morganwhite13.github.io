@@ -2,6 +2,7 @@
 layout: page
 title: Projects
 permalink: /projects/
+description: "Projects by Morgan White spanning multi-agent reinforcement learning, robotics, deep learning for prediction and iOS development."
 ---
 
 # My Projects

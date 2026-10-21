@@ -2,6 +2,7 @@
 layout: page
 title: Morgan's Reviews - iOS Entertainment Review App
 permalink: /projects/review-app/
+description: "A native Swift/UIKit iOS app for writing and browsing entertainment reviews, with a custom accessible star rating control."
 ---
 
 ## Quick Summary
@@ -17,7 +18,7 @@ A native iOS review application built in Swift that allows a reviewer to create,
 
 ## Video Demo
 
-<iframe width="100%" height="450" src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Morgan's Reviews iOS App Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="video-embed"><iframe src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Morgan's Reviews iOS App Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 ---
 

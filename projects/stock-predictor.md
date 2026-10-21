@@ -2,6 +2,7 @@
 layout: page
 title: Predicting Stock Price Changes Using Reddit Sentiment
 permalink: /projects/stock-predictor/
+description: "A multi-input RNN that predicts daily stock price changes by combining Yahoo Finance data with VADER sentiment from Reddit posts."
 ---
 
 ## Quick Summary

@@ -2,6 +2,7 @@
 layout: page
 title: Improving MARL Robustness for Agent Blindness in VMAS
 permalink: /projects/vmas-blindness/
+description: "Research on how MAPPO-trained swarm agents in VMAS cope with random sensor blindness, with custom scenarios and a hyperparameter study."
 ---
 
 ## Quick Summary
