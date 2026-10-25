@@ -20,18 +20,19 @@ jobs:
       LANG: C.UTF-8
       LC_ALL: C.UTF-8
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
       - name: Build site
         run: bundle exec jekyll build
-      # LinkedIn and ScienceDirect block automated requests, and the site's own
-      # URLs are covered by the internal check, so those are skipped
+      # LinkedIn and ScienceDirect block automated requests, nlp.stanford.edu times
+      # out from CI runners, and the site's own URLs are covered by the internal
+      # check, so those are skipped
       - name: Check external links
         run: >-
           bundle exec htmlproofer _site
           --ignore-status-codes 429
-          --ignore-urls "/linkedin\.com/,/sciencedirect\.com/,/morganwhite13\.github\.io/"
+          --ignore-urls "/linkedin\.com/,/sciencedirect\.com/,/nlp\.stanford\.edu/,/morganwhite13\.github\.io/"
           --typhoeus '{"followlocation": true, "connecttimeout": 15, "timeout": 30}'

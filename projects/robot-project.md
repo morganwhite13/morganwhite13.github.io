@@ -54,7 +54,7 @@ The robot is built on a Pioneer 3-DX platform equipped with:
 **Key Specs:**
 - Max speed: 5 m/s
 - Arena: 20m × 20m
-- Jars collected: 4 (scalable)
+- Jars collected: 5 (scalable)
 - Obstacles handled: 30 cardboard boxes
 
 ---

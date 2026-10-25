@@ -282,7 +282,7 @@ ReduceLROnPlateau(factor=0.5, patience=3)
 ## Performance Results
 
 ### Model Evaluation
-The model was trained and rigorously evaluated on a **Combined Dataset** of **552 videos** (a mix of random, popular, and categorical channels), providing a comprehensive benchmark for performance.
+The model was trained on a **Combined Dataset** of **552 videos** (a mix of random, popular, and categorical channels) and evaluated on a held-out 20% test split.
 
 | Metric | Value |
 | :--- | :--- |
@@ -293,7 +293,7 @@ The model was trained and rigorously evaluated on a **Combined Dataset** of **55
 | **Mean Absolute Percentage Error (MAPE)** | 239.11% |
 
 **Analysis:**
-The **Mean Absolute Error on the logarithmic scale 1.7300** is the primary metric for view prediction, as it reflects the model's core ability to predict the *order of magnitude* of views, effectively handling the massive variance inherent in YouTube data. The MAE log of **1.73** is a robust indicator of the model's performance in this complex domain. The high actual MAE and MAPE values are expected outcomes when exponentiating log-predictions back to the real view scale, particularly when evaluating against high-variance data (where a minor log error becomes a multi-million view error).
+The **log-scale MAE of 1.73** is the more meaningful metric here, because view counts span several orders of magnitude and a handful of viral videos dominate any error measured in raw views (hence the very large raw MAE and MAPE). Even on the log scale, the error is large: predictions are often off by a multiple of the true count, not a few percent. With only 552 videos and no baseline to compare against (for example, a model that predicts from subscriber count alone), these results show the pipeline works end to end, not that the text features add predictive power. A bigger dataset and a simple baseline would be the next step.
 
 ---
 
@@ -309,8 +309,8 @@ The model demonstrates its ability to generate predictions based on content and 
 
 ---
 
-### Feature Importance (Learned)
-Based on attention weights within the Transformer blocks and ablation studies performed on the model architecture, the relative importance of features is:
+### Feature Importance (Expected)
+The features in rough order of expected importance, based on the model's design and observed predictions (this ranking wasn't measured with a formal ablation study):
 
 1.  **Video Title** - Most critical feature; its semantic comprehension via Transformer and GloVe embeddings drives the initial prediction potential.
 2.  **Subscriber Count** - Channel authority acts as a significant multiplier for potential views.
@@ -650,6 +650,6 @@ This project builds on established research in:
 
 ## Takeaway
 
-This project demonstrates end-to-end machine learning development: from data collection through API integration, advanced NLP preprocessing, state-of-the-art Transformer architecture, sophisticated feature engineering, to a production-ready prediction system. It showcases my ability to work with complex neural architectures, implement cutting-edge deep learning techniques, and deliver practical solutions to real-world prediction challenges.
+This project covers end-to-end machine learning development: data collection through the YouTube API, NLP preprocessing, a multi-input neural architecture, feature engineering and evaluation. It also taught me that on a small, high-variance dataset the honest result is a modest one, and that a baseline comparison matters as much as the model.
 
 The system successfully predicts YouTube view counts by learning complex interactions between textual content, channel authority, temporal patterns, and content categories—providing actionable insights for content creators in an increasingly competitive digital landscape.

@@ -44,7 +44,7 @@
     A mobile robot that navigates a 20×20 m simulated warehouse, finds honey jars with
     colour-based vision, picks them up and stores them, with no human input.
   highlights:
-    - Collected all 4 jars in every trial
+    - Collected all 5 jars in every trial
     - ±3° heading and ±10 cm position accuracy using compass-based navigation
     - Fuses camera, compass, distance and touch sensors, with fallback detection logic
 
