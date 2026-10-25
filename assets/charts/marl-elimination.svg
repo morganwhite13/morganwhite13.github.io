@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" role="img" aria-labelledby="t d">
+<title id="t">Cumulative reward at 500K steps by agents needed to eliminate</title>
+<desc id="d">No elimination: ~12,000; 1 agent: ~11,500; 2 agents: ~10,000; 3 agents: ~9,500; 4 agents: ~9,000</desc>
+<style>
+  .title { font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #111; }
+  .label, .value { font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #333; }
+  .bar { fill: #8fb3e3; }
+  .bar.hi { fill: #1f5fae; }
+  @media (prefers-color-scheme: dark) {
+    .title { fill: #e3e5e8; }
+    .label, .value { fill: #c9ccd1; }
+    .bar { fill: #3d5f8f; }
+    .bar.hi { fill: #7cb0f5; }
+  }
+</style>
+<text class="title" x="0" y="20">Cumulative reward at 500K steps by agents needed to eliminate</text>
+<text class="label" x="0" y="53">No elimination</text>
+<rect class="bar hi" x="0" y="58" width="456" height="20" rx="3"/>
+<text class="value" x="464" y="73">~12,000</text>
+<text class="label" x="0" y="105">1 agent</text>
+<rect class="bar" x="0" y="110" width="437" height="20" rx="3"/>
+<text class="value" x="445" y="125">~11,500</text>
+<text class="label" x="0" y="157">2 agents</text>
+<rect class="bar" x="0" y="162" width="380" height="20" rx="3"/>
+<text class="value" x="388" y="177">~10,000</text>
+<text class="label" x="0" y="209">3 agents</text>
+<rect class="bar" x="0" y="214" width="361" height="20" rx="3"/>
+<text class="value" x="369" y="229">~9,500</text>
+<text class="label" x="0" y="261">4 agents</text>
+<rect class="bar" x="0" y="266" width="342" height="20" rx="3"/>
+<text class="value" x="350" y="281">~9,000</text>
+</svg>

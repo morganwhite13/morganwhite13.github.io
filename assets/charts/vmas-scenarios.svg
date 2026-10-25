@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 404" role="img" aria-labelledby="t d">
+<title id="t">Final reward by blindness scenario (MAPPO, default settings)</title>
+<desc id="d">Normal (no blindness): ~450; 1 agent, random 1 step: ~380; 1 agent, every step: ~320; 1 agent, random duration: ~280; Random agents, randomly: ~240; Random agents, random duration: ~180; All agents, every step: ~50</desc>
+<style>
+  .title { font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #111; }
+  .label, .value { font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #333; }
+  .bar { fill: #8fb3e3; }
+  .bar.hi { fill: #1f5fae; }
+  @media (prefers-color-scheme: dark) {
+    .title { fill: #e3e5e8; }
+    .label, .value { fill: #c9ccd1; }
+    .bar { fill: #3d5f8f; }
+    .bar.hi { fill: #7cb0f5; }
+  }
+</style>
+<text class="title" x="0" y="20">Final reward by blindness scenario (MAPPO, default settings)</text>
+<text class="label" x="0" y="53">Normal (no blindness)</text>
+<rect class="bar" x="0" y="58" width="456" height="20" rx="3"/>
+<text class="value" x="464" y="73">~450</text>
+<text class="label" x="0" y="105">1 agent, random 1 step</text>
+<rect class="bar" x="0" y="110" width="385" height="20" rx="3"/>
+<text class="value" x="393" y="125">~380</text>
+<text class="label" x="0" y="157">1 agent, every step</text>
+<rect class="bar" x="0" y="162" width="324" height="20" rx="3"/>
+<text class="value" x="332" y="177">~320</text>
+<text class="label" x="0" y="209">1 agent, random duration</text>
+<rect class="bar" x="0" y="214" width="284" height="20" rx="3"/>
+<text class="value" x="292" y="229">~280</text>
+<text class="label" x="0" y="261">Random agents, randomly</text>
+<rect class="bar" x="0" y="266" width="243" height="20" rx="3"/>
+<text class="value" x="251" y="281">~240</text>
+<text class="label" x="0" y="313">Random agents, random duration</text>
+<rect class="bar" x="0" y="318" width="182" height="20" rx="3"/>
+<text class="value" x="190" y="333">~180</text>
+<text class="label" x="0" y="365">All agents, every step</text>
+<rect class="bar" x="0" y="370" width="51" height="20" rx="3"/>
+<text class="value" x="59" y="385">~50</text>
+</svg>

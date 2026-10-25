@@ -14,8 +14,8 @@
     configurable elimination rules and compared PPO, SAC and POCA over 500K training steps.
   highlights:
     - Configurable elimination mechanics (freeze, permanent, group vote) for 1–4 agents
-    - Density-based food respawn inspired by DeepMind's Harvest environment
-    - SAC performed best; POCA was tested for its cooperation-focused credit assignment
+    - "Finding: elimination didn't deter greed; agents learned to eliminate early and harvest alone"
+    - SAC reached the highest reward of the three algorithms
 
 - title: MARL Robustness for Agent Blindness in VMAS
   url: /projects/vmas-blindness/

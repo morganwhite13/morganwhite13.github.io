@@ -45,6 +45,15 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   }
 }
 
+// Result charts (SVGs from scripts/make_charts.py)
+.chart {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: 0 0 $spacing-unit;
+}
+
 // Responsive 16:9 YouTube embeds
 .video-embed {
   position: relative;

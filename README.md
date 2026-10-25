@@ -20,7 +20,13 @@ bundle exec jekyll build
 bundle exec htmlproofer _site --disable-external
 ```
 
-This also runs in CI on every push and pull request.
+This also runs in CI on every push and pull request. A separate workflow checks external links weekly and on pull requests that change content.
+
+The result charts on the project pages are generated SVGs. To change them, edit the numbers in `scripts/make_charts.py` and run:
+
+```sh
+python3 scripts/make_charts.py
+```
 
 ## Layout
 
@@ -32,7 +38,8 @@ This also runs in CI on every push and pull request.
 | `projects/*.md` | One detailed write-up per project |
 | `_data/projects.yml` | Project list behind the home page cards, the projects page and the previous/next links |
 | `_layouts/`, `_includes/` | Overrides of the minima theme (project layout, project cards, head tags) |
-| `assets/` | Styles, resume PDF, icons and the social preview image |
+| `assets/` | Styles, resume PDF, icons, charts and the social preview image |
+| `scripts/make_charts.py` | Generates the SVG charts in `assets/charts/` |
 | `_config.yml` | Site settings, navigation and plugins |
 
 ## Adding a project

@@ -319,6 +319,8 @@ def train_environment_variables(env, description, norm=True,
 | Blind random agents random duration | ~180 | Extreme |
 | Blind all agents every step | ~50 | Nearly Impossible |
 
+![Bar chart of final reward by blindness scenario, falling from about 450 with no blindness to about 50 when all agents are blind every step](/assets/charts/vmas-scenarios.svg){: .chart}
+
 **Key Finding:** Agents can learn despite blindness, but performance degrades with:
 - Increased blindness frequency
 - Longer blindness duration
@@ -540,6 +542,8 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 | Best - Clip | True | 0.2 | 100 | 30 | ~480 |
 | Best - Batch | True | 0.3 | 200 | 30 | ~490 |
 | Best - Epochs | True | 0.3 | 100 | 20 | ~470 |
+
+![Bar chart of final reward: about 280 with the original settings and about 520 with the best combination (advantage normalization, clip 0.3, batch 100, 30 epochs); removing any one change drops it to 470–490](/assets/charts/vmas-tuning.svg){: .chart}
 
 **Key Finding:** Combined improvements yield **+86% performance** over baseline
 

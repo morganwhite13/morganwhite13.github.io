@@ -311,6 +311,8 @@ num_layers: 2
 - 3 Agents to Eliminate: ~9,500
 - 4 Agents to Eliminate: ~9,000
 
+![Bar chart of cumulative reward at 500K steps: about 12,000 with no elimination, falling to about 9,000 when 4 agents are needed to eliminate](/assets/charts/marl-elimination.svg){: .chart}
+
 **Why This Happened:**
 - Agents learned to eliminate each other **early**
 - Fewer agents → less overharvesting → more food respawns
@@ -330,6 +332,8 @@ num_layers: 2
 - **SAC:** ~11,800 cumulative reward (BEST)
 - **PPO:** ~10,500 cumulative reward
 - **POCA:** ~10,200 cumulative reward
+
+![Bar chart of cumulative reward by algorithm: SAC about 11,800, PPO about 10,500, POCA about 10,200](/assets/charts/marl-algorithms.svg){: .chart}
 
 **Why SAC Won:**
 - **Entropy maximization** → explored diverse elimination strategies
