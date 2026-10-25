@@ -9,6 +9,6 @@ Research, coursework and personal projects. Each one links to a detailed write-u
 
 <div class="project-list">
 {%- for project in site.data.projects -%}
-  {%- include project-card.html project=project highlights=true -%}
+  {%- include project-card.html project=project highlights=true heading_level=2 -%}
 {%- endfor -%}
 </div>

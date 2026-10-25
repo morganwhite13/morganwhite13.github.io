@@ -61,9 +61,12 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   }
 }
 
-// Wide tables and code blocks scroll instead of stretching the page
+// Wide tables scroll instead of stretching the page; max-content keeps the
+// border hugging the columns now that the table is a block box
 .post-content table {
   display: block;
+  width: max-content;
+  max-width: 100%;
   overflow-x: auto;
 }
 
@@ -272,5 +275,161 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   .pager-next {
     margin-left: auto;
     text-align: right;
+  }
+}
+
+// Dark mode, following the visitor's system setting
+@media (prefers-color-scheme: dark) {
+  $dark-bg: #131519;
+  $dark-surface: #1b1e23;
+  $dark-text: #e3e5e8;
+  $dark-muted: #a3a8ae;
+  $dark-border: #30343b;
+  $dark-link: #7cb0f5;
+
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: $dark-bg;
+    color: $dark-text;
+  }
+
+  a,
+  a:visited {
+    color: $dark-link;
+  }
+
+  a:hover {
+    color: lighten($dark-link, 10%);
+  }
+
+  .site-header {
+    border-top-color: $brand-color;
+    border-bottom-color: $dark-border;
+  }
+
+  .site-title,
+  .site-title:visited,
+  .site-nav .page-link,
+  .project-card-title a,
+  .project-card-title a:visited,
+  .post-content .project-card-title a,
+  .post-content .project-card-title a:visited {
+    color: $dark-text;
+  }
+
+  .site-nav {
+    background-color: $dark-bg;
+    border-color: $dark-border;
+
+    .menu-icon > svg path {
+      fill: $dark-muted;
+    }
+  }
+
+  .site-footer,
+  .post-content h2,
+  .post-content hr,
+  .project-pager {
+    border-color: $dark-border;
+  }
+
+  .footer-col-wrapper,
+  .project-card-meta,
+  .project-pager span,
+  .post-meta,
+  blockquote {
+    color: $dark-muted;
+  }
+
+  .svg-icon {
+    fill: $dark-muted;
+  }
+
+  blockquote {
+    border-left-color: $dark-border;
+  }
+
+  .project-card,
+  .toc,
+  .project-pager a {
+    background: $dark-surface;
+    border-color: $dark-border;
+  }
+
+  .project-pager a:hover {
+    border-color: $dark-link;
+  }
+
+  .tag-list li {
+    background: rgba($dark-link, 0.14);
+    color: lighten($dark-link, 8%);
+  }
+
+  .button,
+  .button:visited {
+    color: #fff;
+  }
+
+  .button-secondary,
+  .button-secondary:visited {
+    color: $dark-link;
+    border-color: $dark-link;
+  }
+
+  .button-secondary:hover {
+    background: rgba($dark-link, 0.12);
+    color: lighten($dark-link, 10%);
+  }
+
+  table {
+    color: $dark-text;
+    border-color: $dark-border;
+
+    tr:nth-child(even) {
+      background-color: $dark-surface;
+    }
+
+    th {
+      background-color: lighten($dark-surface, 4%);
+      border-color: $dark-border;
+    }
+
+    td {
+      border-color: $dark-border;
+    }
+  }
+
+  code,
+  pre {
+    background-color: $dark-surface;
+    border-color: $dark-border;
+  }
+
+  // Code blocks: clear minima's light token colours, then apply a dark palette
+  .highlight,
+  .highlighter-rouge .highlight {
+    background: $dark-surface;
+  }
+
+  .highlight [class] {
+    color: inherit;
+    background-color: transparent;
+  }
+
+  .highlight {
+    .c, .c1, .cm, .cs, .cp, .ch, .cpf { color: #8b949e; }
+    .k, .kc, .kd, .kn, .kp, .kr, .ow { color: #ff7b72; }
+    .kt, .nc, .nn { color: #ffa657; }
+    .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sa, .dl { color: #a5d6ff; }
+    .sr, .ss { color: #7ee787; }
+    .m, .mi, .mf, .mh, .mo, .il, .nb, .bp, .no { color: #79c0ff; }
+    .nf, .fm, .nd { color: #d2a8ff; }
+    .na, .nv, .vc, .vg, .vi, .nt { color: #7ee787; }
+    .err, .gr, .gt { color: #ffa198; }
+    .gd { color: #ffa198; background-color: rgba(248, 81, 73, 0.15); }
+    .gi { color: #7ee787; background-color: rgba(46, 160, 67, 0.15); }
   }
 }

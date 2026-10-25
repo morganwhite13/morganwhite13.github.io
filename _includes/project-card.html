@@ -1,8 +1,9 @@
 {%- assign p = include.project -%}
+{%- assign level = include.heading_level | default: 3 -%}
 <article class="project-card">
-  <h3 class="project-card-title">
+  <h{{ level }} class="project-card-title">
     <a href="{{ p.url | relative_url }}">{% if p.emoji %}<span aria-hidden="true">{{ p.emoji }}</span> {% endif %}{{ p.title }}</a>
-  </h3>
+  </h{{ level }}>
   {%- if p.when %}<p class="project-card-meta">{{ p.when }}</p>{% endif %}
   <p>{{ p.summary }}</p>
   {%- if include.highlights and p.highlights %}
