@@ -16,7 +16,7 @@ An autonomous mobile robot built in Webots that uses computer vision, sensor fus
 
 ## Video Demo
 
-<div class="video-embed"><iframe src="https://www.youtube.com/embed/kO9e8dzjCfg" title="Autonomous Robot Jar Collection Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="video-embed" data-url="https://youtu.be/kO9e8dzjCfg"><iframe src="https://www.youtube.com/embed/kO9e8dzjCfg" title="Autonomous Robot Jar Collection Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 ---
 

@@ -22,7 +22,6 @@ linkedin_username: morgan-white-95b245237
 # Build settings
 theme: minima
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
 

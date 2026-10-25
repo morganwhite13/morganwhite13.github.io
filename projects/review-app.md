@@ -17,7 +17,7 @@ A native iOS review application built in Swift that allows a reviewer to create,
 
 ## Video Demo
 
-<div class="video-embed"><iframe src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Morgan's Reviews iOS App Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="video-embed" data-url="https://youtu.be/sYmV_4kQiN8"><iframe src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Morgan's Reviews iOS App Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 ---
 

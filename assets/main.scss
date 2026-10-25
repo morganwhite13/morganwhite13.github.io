@@ -589,3 +589,75 @@ $dark-link: #7cb0f5;
 :root[data-theme="light"] {
   color-scheme: light;
 }
+
+// Print: drop site chrome and interactive bits, keep text black on white,
+// and show where links go
+@media print {
+  .site-header .site-nav,
+  .theme-toggle,
+  .hero-links,
+  .toc,
+  .project-pager,
+  .breadcrumb,
+  .video-embed iframe,
+  .site-footer .social-media-list {
+    display: none !important;
+  }
+
+  // The embedded player can't print, so print its address instead
+  .video-embed {
+    padding-top: 0;
+  }
+
+  .video-embed::before {
+    content: "Video: " attr(data-url);
+  }
+
+  // Dark ink whichever theme was on screen
+  .site-title,
+  .site-title:visited,
+  h1, h2, h3, h4,
+  .project-card-title a,
+  .post-content .project-card-title a {
+    color: #000 !important;
+  }
+
+  a,
+  a:visited {
+    color: #1f5fae !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 11pt;
+  }
+
+  .site-header {
+    border-top: 0;
+  }
+
+  .post-content a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    word-break: break-all;
+  }
+
+  .project-card,
+  .glance,
+  pre,
+  table,
+  img {
+    break-inside: avoid;
+  }
+
+  .project-card,
+  .glance {
+    background: #fff !important;
+    border-color: #999 !important;
+  }
+
+  .glance {
+    border-left-color: #1f5fae !important;
+  }
+}
