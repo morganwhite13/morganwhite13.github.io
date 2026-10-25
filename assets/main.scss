@@ -45,6 +45,46 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   }
 }
 
+// Links in running text are underlined so they don't rely on colour alone
+.post-content p a,
+.post-content li a,
+.post-content td a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+// Code blocks: a light palette that meets WCAG AA contrast (minima's
+// default token colours don't). Dark mode overrides these below.
+.highlighter-rouge .highlight,
+.highlight {
+  background: #f6f8fa;
+}
+
+.post-content code {
+  background-color: #f6f8fa;
+}
+
+.highlight [class] {
+  color: inherit;
+  background-color: transparent;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.highlight {
+  .c, .c1, .cm, .cs, .cp, .ch, .cpf { color: #57606a; font-style: italic; }
+  .k, .kc, .kd, .kn, .kp, .kr, .ow { color: #cf222e; }
+  .kt, .nc, .nn { color: #953800; }
+  .s, .s1, .s2, .sb, .sc, .sd, .se, .sh, .si, .sx, .sa, .dl { color: #0a3069; }
+  .sr, .ss { color: #116329; }
+  .m, .mi, .mf, .mh, .mo, .il, .nb, .bp, .no { color: #0550ae; }
+  .nf, .fm, .nd { color: #8250df; }
+  .na, .nv, .vc, .vg, .vi, .nt { color: #116329; }
+  .err, .gr, .gt { color: #a40e26; }
+  .gd { color: #82071e; background-color: #ffebe9; }
+  .gi { color: #116329; background-color: #dafbe1; }
+}
+
 // Result charts (SVGs from scripts/make_charts.py)
 .chart {
   display: block;
