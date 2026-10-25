@@ -626,25 +626,12 @@ This project builds on established research in:
 - Prior work: Text + image features
 - **Innovation:** Text + numerical + temporal + categorical fusion
 
-### Practical Applications
+### Possible Applications
 
-**For Content Creators:**
-- Test multiple title variations before publishing
-- Understand impact of posting schedule
-- Optimize descriptions for discoverability
-- Strategic planning based on channel growth
-
-**For YouTube Platform:**
-- Improve recommendation algorithms
-- Detect trending content early
-- Optimize creator analytics dashboards
-- Revenue prediction for ad sales
-
-**For Researchers:**
-- Benchmark for view prediction tasks
-- Testbed for feature engineering techniques
-- Case study in multi-input neural architectures
-- Example of API-driven machine learning
+With more data and a validated baseline, a model like this could help content creators:
+- Compare title variations before publishing
+- Understand the impact of posting schedule
+- Plan content around channel growth
 
 ---
 

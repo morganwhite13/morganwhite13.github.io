@@ -934,7 +934,7 @@ lmbda = 0.9
 
 **Key Papers:**
 
-1. **Bettini et al. (2023)** - "VMAS: A Vectorized Multi-Agent Simulator for Collective Robot Learning"
+1. **Bettini et al. (2022)** - "VMAS: A Vectorized Multi-Agent Simulator for Collective Robot Learning"
    - Framework foundation
    - Balance scenario design
 

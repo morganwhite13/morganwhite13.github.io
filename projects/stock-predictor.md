@@ -690,9 +690,8 @@ nltk.download('punkt')          # Tokenization
 - [Source: ScienceDirect Review](https://www.sciencedirect.com/science/article/pii/S2590291124000615)
 
 **Stock Price Prediction Using LSTM:**
-- Netflix 3-year prediction using LSTM
-- MSE: 0.168 on single-stock model
-- Our approach: Multi-stock with sentiment (more complex task)
+- Netflix 3-year prediction using LSTM on price history alone
+- A useful reference design, though its error isn't directly comparable to this project's (different target and data)
 - [Source: ProjectPro](https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571)
 
 **VADER Sentiment Analysis:**
@@ -701,14 +700,13 @@ nltk.download('punkt')          # Tokenization
 - Handles emoji, slang, capitalization, punctuation
 - [Source: VADER GitHub](https://github.com/cjhutto/vaderSentiment)
 
-### Novel Contributions
+### What This Project Adds
 
-**Our Innovation:**
 - Multi-input architecture separating titles and bodies
 - Date-synchronized fusion of Reddit and financial data
 - Dual sentiment analysis (title + body separately)
-- Multi-stock training for better generalization
-- Real-time data collection from multiple APIs
+- Training across multiple stocks rather than one
+- Live data collection from multiple APIs
 
 ---
 

@@ -733,7 +733,7 @@ This project built on:
    - Influence modeling and cooperation rewards
    - Inspired penalty structure
 
-3. **Guckelsberger et al. (2018)** - "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"
+3. **Yu et al. (2022)** - "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"
    - Validated PPO for MARL baseline
    - Convergence properties
 
