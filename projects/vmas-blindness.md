@@ -303,19 +303,38 @@ def train_environment_variables(env, description, norm=True,
 
 ## Experimental Results
 
-> **Known issues in the code.** A later review of the training script found bugs that affect several of the experiments below, so treat these numbers as preliminary until they're re-run:
-> - The "blind all agents" scenario picks a random agent per slot with replacement, so it blinds about two of the three agents per step, not all of them.
-> - The blindness-probability and blindness-duration sweeps (Experiments 6 and 7) wrap each new blindness setting on top of the previous ones instead of starting from a clean environment, so later settings also carry the earlier blindness.
-> - Each step's random blindness choice is shared by all 30 parallel environments, and blind countdowns aren't reset between episodes.
+> **Known issues in the original code.** A later review of the training script found bugs that affect several of the experiments below:
+> - The "blind all agents" scenario picked a random agent per slot with replacement, so it blinded about two of the three agents per step, not all of them.
+> - The blindness-probability and blindness-duration sweeps (Experiments 6 and 7) wrapped each new blindness setting on top of the previous ones instead of starting from a clean environment, so later settings also carried the earlier blindness.
+> - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> The fixes that can be made without a re-run are in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS).
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiment 1 below has been re-run with the fixed code over 3 seeds; the other experiments are the original results and still need re-running.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
 **Setup:** 7 environments, 25 iterations, no normalization, clip=0.2
 
-**Results:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
+
+| Environment | Final Reward |
+|-------------|--------------|
+| Normal (no blindness) | 49.2 ± 4.8 |
+| Blind 1 random agent with probability 0.1 | 40.5 ± 11.6 |
+| Blind each agent with probability 0.1 | 37.8 ± 15.6 |
+| Blind 1 random agent for 1–10 steps (probability 0.1) | 34.2 ± 16.1 |
+| Blind each agent for 1–10 steps (probability 0.1) | 10.7 ± 9.2 |
+| Blind 1 random agent every step | 5.5 ± 12.9 |
+| Blind all agents every step | −11.8 ± 1.9 |
+
+![Line chart of reward over 25 training iterations for the seven blindness scenarios, averaged over 3 seeds with shaded spread. No blindness ends highest at about 49; blinding all agents stays flat at about −12; the other scenarios fall in between, with wide overlapping spreads](/assets/charts/vmas-exp1-rerun.png){: .chart .chart-wide}
+
+**Key Finding:** No blindness does best, and blinding every agent prevents learning entirely. Occasional, short blindness costs relatively little; persistent blindness (every step, or several agents for several steps) hurts much more. The spread between seeds is as large as the gaps between the middle scenarios, so their exact order isn't meaningful, and most curves are still rising at 25 iterations.
+
+The re-run's rewards are on a different scale from the original single-seed results (about 50 rather than about 450 for no blindness). It used pinned library versions; the original runs may have used different versions or reported reward differently.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 | Environment | Final Reward | Difficulty |
 |-------------|--------------|------------|
@@ -325,16 +344,9 @@ def train_environment_variables(env, description, norm=True,
 | Blind 1 agent random duration | ~280 | Hard |
 | Blind random agents randomly | ~240 | Very Hard |
 | Blind random agents random duration | ~180 | Extreme |
-| Blind all agents every step | ~50 | Nearly Impossible |
+| Blind all agents every step (about 2 of 3 agents in practice) | ~50 | Nearly Impossible |
 
-![Bar chart of final reward by blindness scenario, falling from about 450 with no blindness to about 50 in the "all agents" scenario, which in practice blinds about two of the three agents each step](/assets/charts/vmas-scenarios.svg){: .chart}
-
-**Key Finding:** Agents can learn despite blindness, but performance degrades with:
-- Increased blindness frequency
-- Longer blindness duration
-- More agents affected simultaneously
-
-**Surprising Result:** Random 1-step blindness performs reasonably well (380/450 = 84% of baseline) → suggests robust cooperative strategies
+</details>
 
 ---
 

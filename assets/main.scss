@@ -94,6 +94,12 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   margin: 0 0 $spacing-unit;
 }
 
+// Raster plots (e.g. matplotlib output) can use the full column width
+.chart-wide {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
 // Responsive 16:9 YouTube embeds
 .video-embed {
   position: relative;

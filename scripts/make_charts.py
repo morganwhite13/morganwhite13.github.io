@@ -11,19 +11,6 @@ from xml.sax.saxutils import escape
 OUT = Path(__file__).resolve().parent.parent / "assets" / "charts"
 
 CHARTS = {
-    "vmas-scenarios": {
-        "title": "Final reward by blindness scenario (MAPPO, default settings)",
-        "bars": [
-            ("Normal (no blindness)", 450),
-            ("1 agent, random 1 step", 380),
-            ("1 agent, every step", 320),
-            ("1 agent, random duration", 280),
-            ("Random agents, randomly", 240),
-            ("Random agents, random duration", 180),
-            ("\"All agents\", every step (about 2 of 3 in practice)", 50),
-        ],
-        "highlight": [],
-    },
     "vmas-tuning": {
         "title": "Final reward after hyperparameter tuning",
         "bars": [
