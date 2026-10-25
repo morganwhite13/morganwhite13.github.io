@@ -20,7 +20,15 @@ bundle exec jekyll build
 bundle exec htmlproofer _site --disable-external
 ```
 
-This also runs in CI on every push and pull request. A separate workflow checks external links weekly and on pull requests that change content.
+To run the accessibility audit (axe-core, WCAG 2 A/AA, light and dark mode) on the built site:
+
+```sh
+npm ci
+npx playwright install chromium
+npm run check:a11y
+```
+
+Both checks run in CI on every push and pull request. A separate workflow checks external links weekly and on pull requests that change content.
 
 The result charts on the project pages are generated SVGs. To change them, edit the numbers in `scripts/make_charts.py` and run:
 
@@ -40,6 +48,7 @@ python3 scripts/make_charts.py
 | `_layouts/`, `_includes/` | Overrides of the minima theme (project layout, project cards, head tags) |
 | `assets/` | Styles, resume PDF, icons, charts and the social preview image |
 | `scripts/make_charts.py` | Generates the SVG charts in `assets/charts/` |
+| `scripts/check-a11y.js` | Accessibility audit of the built site |
 | `_config.yml` | Site settings, navigation and plugins |
 
 ## Adding a project
