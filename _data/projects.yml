@@ -16,6 +16,10 @@
     - Configurable elimination mechanics (freeze, permanent, group vote) for 1–4 agents
     - "Finding: elimination didn't deter greed; agents learned to eliminate early and harvest alone"
     - SAC reached the highest reward of the three algorithms
+  glance:
+    problem: In a social dilemma, grabbing resources pays off for each agent but hurts the group. Can the threat of being eliminated by peers make agents cooperate?
+    approach: A Harvest-style Unity ML-Agents environment where agents can freeze or permanently eliminate others by shooting them, trained with PPO, SAC and POCA for 500K steps.
+    result: No. The no-elimination baseline scored highest (about 12,000 vs 9,000–11,500); agents learned to eliminate each other early and then harvest alone. SAC was the strongest algorithm.
 
 - title: MARL Robustness for Agent Blindness in VMAS
   url: /projects/vmas-blindness/
@@ -32,6 +36,10 @@
     - Six probabilistic blindness scenarios with configurable duration and frequency
     - Advantage normalization turned out to be essential under observation loss
     - Performance degraded gracefully up to a 30% blindness probability
+  glance:
+    problem: Robot swarms need to keep cooperating when some agents' sensors fail.
+    approach: Six "blindness" scenarios in VMAS that randomly zero out agents' observations, trained with MAPPO in TorchRL, plus a 50+ run hyperparameter study.
+    result: Tuning raised final reward from about 280 to about 520 (+86%), and agents kept 73% of their no-blindness reward at a 20% blindness probability and 59% at 30%. Single seed per configuration.
 
 - title: Autonomous Robot Jar Collection System
   url: /projects/robot-project/
@@ -47,6 +55,10 @@
     - Collected all 5 jars in every trial
     - ±3° heading and ±10 cm position accuracy using compass-based navigation
     - Fuses camera, compass, distance and touch sensors, with fallback detection logic
+  glance:
+    problem: Find, pick up and store jars in a 20×20 m warehouse using only the robot's own sensors.
+    approach: Colour-threshold vision, compass-based navigation, distance and touch sensing, and a phased mission planner, written in Java for Webots.
+    result: All 5 jars collected in every trial, with ±3° heading and ±10 cm position accuracy.
 
 - title: YouTube Views Prediction with Transformers
   url: /projects/youtube-predictor/
@@ -61,6 +73,10 @@
     - Multi-head attention over title and description text
     - Predicts in log space to cover view counts from 1K to 100M+
     - Learned interactions such as title × description and text × subscribers
+  glance:
+    problem: Predict how many views a YouTube video will get from its title, description, channel and timing.
+    approach: A multi-input neural network over the video's text fields plus subscriber count and age, trained on 552 videos collected with the YouTube Data API.
+    result: Log-scale MAE of 1.73 on a held-out 20% split, so predictions capture rough scale rather than exact counts. No baseline comparison yet.
 
 - title: Stock Price Changes from Reddit Sentiment
   url: /projects/stock-predictor/
@@ -76,6 +92,10 @@
     - Separate branches for post titles, post bodies and numerical features
     - Reddit posts matched to same-day price movements
     - Data pipelines built on the Reddit (PRAW) and Yahoo Finance APIs
+  glance:
+    problem: Does Reddit sentiment help predict a stock's daily price change?
+    approach: A multi-input LSTM over post titles and bodies, VADER sentiment and engagement features, joined with same-day price changes from Yahoo Finance.
+    result: A working end-to-end pipeline. The reported errors are optimistic because the random train/validation split leaks shared targets; the page explains how a fair test would work.
 
 - title: Morgan's Reviews iOS App
   url: /projects/review-app/
@@ -91,3 +111,7 @@
     - Reusable star-rating control with VoiceOver support
     - Create, update and delete flows driven by unwind segues
     - Photo library integration for review images
+  glance:
+    problem: A review app with two modes, one for a signed-in reviewer and one for readers.
+    approach: Swift and UIKit in an MVC structure, a custom star-rating control with VoiceOver support, and unwind segues for create, edit and delete.
+    result: A working iPhone and iPad app with seven pre-loaded reviews, in about 620 lines of Swift.

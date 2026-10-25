@@ -230,6 +230,51 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
 }
 
 // Project write-ups
+.glance {
+  margin-bottom: $spacing-unit;
+  padding: $spacing-unit * 0.75;
+  border-left: 4px solid $brand-color;
+  border-radius: 4px;
+  background: lighten($brand-color, 52%);
+
+  .glance-heading {
+    @include relative-font-size(1.1);
+    margin: 0 0 $spacing-unit / 2;
+    font-weight: 600;
+  }
+
+  dl {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 6px 16px;
+    margin: 0;
+  }
+
+  dt {
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  .glance-links {
+    margin: $spacing-unit / 2 0 0;
+    font-weight: 600;
+  }
+
+  @include media-query($on-palm) {
+    dl {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    dd {
+      margin-bottom: 8px;
+    }
+  }
+}
+
 .breadcrumb {
   margin-bottom: $spacing-unit / 3;
   font-size: $small-font-size;
@@ -366,6 +411,11 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   .project-pager a {
     background: $dark-surface;
     border-color: $dark-border;
+  }
+
+  .glance {
+    background: $dark-surface;
+    border-left-color: $dark-link;
   }
 
   .project-pager a:hover {

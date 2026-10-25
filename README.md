@@ -54,4 +54,4 @@ python3 scripts/make_charts.py
    ---
    ```
 
-2. Add an entry to `_data/projects.yml` with the same `url`. Set `featured: true` to show it on the home page.
+2. Add an entry to `_data/projects.yml` with the same `url`. Set `featured: true` to show it on the home page, and fill in `glance` (`problem`, `approach`, `result`) for the "At a glance" box at the top of the write-up.

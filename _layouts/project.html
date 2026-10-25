@@ -19,6 +19,26 @@ layout: default
     <h1 class="post-title">{{ page.title | escape }}</h1>
   </header>
 
+  {%- assign project = projects[index] -%}
+  {%- if project.glance %}
+  <section class="glance" aria-labelledby="glance-heading">
+    <h2 id="glance-heading" class="glance-heading">At a glance</h2>
+    <dl>
+      <dt>Problem</dt>
+      <dd>{{ project.glance.problem }}</dd>
+      <dt>Approach</dt>
+      <dd>{{ project.glance.approach }}</dd>
+      <dt>Result</dt>
+      <dd>{{ project.glance.result }}</dd>
+      <dt>Tech</dt>
+      <dd>{{ project.tech | join: ", " }}</dd>
+    </dl>
+    {%- if project.repo %}
+    <p class="glance-links"><a href="{{ project.repo }}">Source code on GitHub</a></p>
+    {%- endif %}
+  </section>
+  {%- endif %}
+
   {%- assign sections = content | split: '<h2 id="' -%}
   {%- if sections.size > 4 %}
   <nav class="toc" aria-label="Contents">

@@ -131,8 +131,8 @@ class BlindOneRandomAgentIfProbabilityForJSteps(Transform):
 ### 1. MAPPO (Multi-Agent Proximal Policy Optimization)
 
 **Why MAPPO?**
-- State-of-the-art for cooperative MARL benchmarks
-- Outperforms many off-policy methods (MADDPG, QMIX)
+- A strong, widely used baseline on cooperative MARL benchmarks (Yu et al., 2022, "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games")
+- Competitive with off-policy methods such as MADDPG and QMIX in that study
 - Stable training with centralized critic, decentralized execution
 - Parameter sharing enables swarm-like behavior
 
@@ -960,6 +960,6 @@ This project demonstrates that Multi-Agent Reinforcement Learning systems can be
 
 The research highlights critical gaps in MARL tooling (VMAS documentation, library compatibility) that consume researcher time, underscoring the need for better infrastructure in the MARL community. Despite these challenges and the constraint of working solo on a group project, the systematic hyperparameter study provides actionable insights for building robust multi-agent systems.
 
-Most importantly, this work validates that **robustness can be learned, not just engineered**—agents discover emergent compensation strategies when teammates go blind, suggesting promising avenues for deploying cooperative AI in real-world scenarios where sensor reliability cannot be guaranteed.
+Most importantly, the results suggest that **robustness can be learned, not just engineered**—agents discover emergent compensation strategies when teammates go blind, suggesting promising avenues for deploying cooperative AI in real-world scenarios where sensor reliability cannot be guaranteed.
 
-The 86% performance improvement through hyperparameter optimization (normalization + optimal clip/batch/epochs) proves that careful tuning is not just beneficial but **essential** for MARL in stochastic environments with partial observability. This finding has direct implications for practitioners building real autonomous systems.
+The 86% performance improvement through hyperparameter optimization (normalization + optimal clip/batch/epochs) shows how much tuning matters for MARL in stochastic environments with partial observability. Each configuration was trained once with a fixed random seed, so repeating the runs across several seeds would be the next step to confirm the size of the effect. This finding has direct implications for practitioners building real autonomous systems.
