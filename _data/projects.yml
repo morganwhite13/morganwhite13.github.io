@@ -1,0 +1,121 @@
+# Project list shared by the home page (featured: true) and the projects page.
+# Order here is the display order. repo_label (default "Source code")
+# names the repo link for projects whose repo holds documentation only.
+
+- title: Agent Elimination in Multi-Agent Reinforcement Learning
+  url: /projects/marl-elimination/
+  emoji: 🧠
+  when: Honours project, Fall 2024
+  featured: true
+  tech: [Unity ML-Agents, C#, Python, PPO, SAC, POCA]
+  repo: https://github.com/morganwhite13/Agent-Elimination-in-Multi-Agent-Reinforcement-Learning
+  summary: >-
+    Honours research asking whether letting agents eliminate each other makes them cooperate
+    in a resource-sharing social dilemma. I built a custom Unity ML-Agents environment with
+    configurable elimination rules and compared PPO, SAC and POCA over 500K training steps.
+  highlights:
+    - Configurable elimination mechanics (freeze, permanent, group vote) for 1–4 agents
+    - "Finding: elimination didn't deter greed; agents learned to eliminate early and harvest alone"
+    - Compared PPO, SAC and POCA, and documented why the comparison isn't like-for-like
+  glance:
+    problem: In a social dilemma, grabbing resources pays off for each agent but hurts the group. Can the threat of being eliminated by peers make agents cooperate?
+    approach: A Harvest-style Unity ML-Agents environment where agents can freeze or permanently eliminate others by shooting them, trained with PPO, SAC and POCA for 500K steps.
+    result: No. The no-elimination baseline scored highest (about 12,000 vs 9,000–11,500); agents learned to eliminate each other early and then harvest alone. A code review later found that firing carried no penalty (the penalty is never applied), which made early elimination cheap.
+
+- title: MARL Robustness for Agent Blindness in VMAS
+  url: /projects/vmas-blindness/
+  emoji: 🔍
+  when: Course research project
+  featured: true
+  tech: [Python, PyTorch, TorchRL, VMAS, MAPPO]
+  repo: https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS
+  summary: >-
+    How well do swarm agents cooperate when they randomly lose their sensors? I built six
+    "blindness" scenarios in VMAS and trained MAPPO across 50+ experiments, then re-ran the
+    key ones over 3 seeds after a code review.
+  highlights:
+    - Six probabilistic blindness scenarios with configurable duration and frequency
+    - Advantage normalization turned out to be essential under observation loss
+    - Hyperparameter study over clip range, batch size, epochs, blindness probability and duration
+  glance:
+    problem: Robot swarms need to keep cooperating when some agents' sensors fail.
+    approach: Six "blindness" scenarios in VMAS that randomly zero out agents' observations, trained with MAPPO in TorchRL, plus a 50+ run hyperparameter study.
+    result: After fixing bugs found in a code review, a 3-seed re-run confirms the core result. Agents still learn under occasional blindness (40 ± 12 reward vs 49 ± 5 with none), while blinding every agent prevents learning (−12). Tuned PPO settings beat the defaults by about a third (45 ± 7 vs 34 ± 16), well short of the original single-seed +86%.
+
+- title: Autonomous Robot Jar Collection System
+  url: /projects/robot-project/
+  emoji: 🤖
+  when: Fall 2021, updated 2025
+  featured: true
+  tech: [Webots, Java, Computer Vision, Sensor Fusion]
+  repo: https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System
+  summary: >-
+    A mobile robot that navigates a 20×20 m simulated warehouse, finds honey jars with
+    colour-based vision, picks them up and stores them, with no human input.
+  highlights:
+    - Collected all 5 jars in every trial
+    - ±3° heading and ±10 cm position accuracy using compass-based navigation
+    - Camera-based jar detection with fallback search logic, plus touch-sensor grasp checks
+  glance:
+    problem: Find, pick up and store jars in a 20×20 m simulated warehouse with no human input.
+    approach: Colour-threshold vision and a touch sensor to find and grab jars, plus hand-tuned waypoint routes driven with the compass and the simulator's position data, in a phased Java controller for Webots.
+    result: All 5 jars collected in every trial, with ±3° heading and ±10 cm position accuracy.
+
+- title: YouTube Views Prediction with Neural Networks
+  url: /projects/youtube-predictor/
+  emoji: 🎬
+  when: Course project (Intro to AI)
+  featured: true
+  tech: [Python, TensorFlow, Bidirectional LSTMs, YouTube Data API, NLTK]
+  repo: https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks
+  summary: >-
+    Predicts a video's view count from its title, description, channel, category, subscriber
+    count and age. I collected the data through the YouTube API and built the model up in six
+    stages, adding one input at a time, with a bidirectional LSTM per text field.
+  highlights:
+    - Data collection with five sampling strategies, caching and English-only filtering
+    - Six model stages to compare what each input adds
+    - What-if predictions that vary one input at a time
+  glance:
+    problem: Predict how many views a YouTube video will get from its title, description, channel, category, subscriber count and age.
+    approach: Data collected with the YouTube Data API, NLTK preprocessing, and a Keras multi-input model with a bidirectional LSTM for each text field, built up in six stages.
+    result: The full pipeline runs end to end, from API collection to what-if predictions. Test error wasn't recorded, and the write-up explains what I'd change first (log-scale target, a baseline, a smaller model).
+
+- title: Stock Price Changes from Reddit Sentiment
+  url: /projects/stock-predictor/
+  emoji: 📈
+  when: Winter 2024
+  featured: false
+  tech: [Python, TensorFlow, PRAW, yfinance, VADER]
+  repo: https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment
+  repo_label: Documentation
+  summary: >-
+    A multi-input LSTM network that predicts daily stock price changes by combining Yahoo
+    Finance data with VADER sentiment scores of posts from r/stocks, r/options and r/investing.
+  highlights:
+    - Separate branches for post titles, post bodies and numerical features
+    - Reddit posts matched to same-day price movements
+    - Data pipelines built on the Reddit (PRAW) and Yahoo Finance APIs
+  glance:
+    problem: Does Reddit sentiment help predict a stock's daily price change?
+    approach: A multi-input LSTM over post titles and bodies, VADER sentiment and engagement features, joined with same-day price changes from Yahoo Finance.
+    result: A working end-to-end pipeline. The reported errors are optimistic because the random train/validation split leaks shared targets; the page explains how a fair test would work.
+
+- title: Morgan's Reviews iOS App
+  url: /projects/review-app/
+  emoji: 📱
+  when: "2019"
+  featured: false
+  tech: [Swift, UIKit, Xcode]
+  repo: https://github.com/morganwhite13/Review-App
+  summary: >-
+    A native iOS app for publishing and browsing reviews of movies, shows and games, with a
+    signed-in reviewer mode for creating, editing and deleting reviews.
+  highlights:
+    - Reusable star-rating control with VoiceOver support
+    - Create, update and delete flows driven by unwind segues
+    - Photo library integration for review images
+  glance:
+    problem: A review app with two modes, one for a signed-in reviewer and one for readers.
+    approach: Swift and UIKit in an MVC structure, a custom star-rating control with VoiceOver support, and unwind segues for create, edit and delete.
+    result: A working iPhone and iPad app with seven pre-loaded reviews, in about 620 lines of Swift.

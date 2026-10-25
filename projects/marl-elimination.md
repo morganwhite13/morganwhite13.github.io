@@ -1,7 +1,7 @@
 ---
-layout: page
 title: Can Agent Elimination Improve Cooperation in MARL?
 permalink: /projects/marl-elimination/
+description: "Honours research on whether agent elimination mechanisms improve cooperation in multi-agent reinforcement learning, using a custom Unity ML-Agents environment."
 ---
 
 ## Quick Summary
@@ -9,7 +9,7 @@ permalink: /projects/marl-elimination/
 An honours research project investigating whether agent elimination mechanisms can improve cooperation in Multi-Agent Reinforcement Learning (MARL) environments where individual greediness is rewarded but group cooperation is optimal. Built a custom Unity ML-Agents environment with configurable elimination rules, testing how agents balance self-interest against the threat of being eliminated by peers.
 
 **Tech Stack:** Unity ML-Agents, C#, Python, Proximal Policy Optimization (PPO), Soft Actor-Critic (SAC)  
-**Status:** ✅ Research Complete - Published Honours Project  
+**Status:** ✅ Complete - Honours Project (Fall 2024)  
 **Supervisor:** Dr. Zinovi Rabinovich, Carleton University  
 **GitHub:** [View Source Code](https://github.com/morganwhite13/Agent-Elimination-in-Multi-Agent-Reinforcement-Learning)
 
@@ -285,7 +285,7 @@ num_layers: 2
 
 ## Key Technical Achievements
 
-✅ **Custom Unity Environment** - Modified FoodCollector with 2,000+ lines of C# code  
+✅ **Custom Unity Environment** - Modified Unity's FoodCollector example; about 1,000 lines of C# across 8 scripts  
 ✅ **Configurable Elimination Rules** - 1-9 agents to eliminate, freeze vs. permanent  
 ✅ **Advanced Observation Space** - 20+ normalized features including agent states  
 ✅ **Hit Tracking System** - Distributed HashSet tracking unique shooters  
@@ -311,7 +311,10 @@ num_layers: 2
 - 3 Agents to Eliminate: ~9,500
 - 4 Agents to Eliminate: ~9,000
 
+![Bar chart of cumulative reward at 500K steps: about 12,000 with no elimination, falling to about 9,000 when 4 agents are needed to eliminate](/assets/charts/marl-elimination.svg){: .chart}
+
 **Why This Happened:**
+- Firing cost nothing: the firing penalty is loaded from settings but never applied in the code. Combined with permanent elimination, removing rivals early was a cheap way to secure more food.
 - Agents learned to eliminate each other **early**
 - Fewer agents → less overharvesting → more food respawns
 - Small elimination penalty (-5) outweighed by increased food access
@@ -331,12 +334,16 @@ num_layers: 2
 - **PPO:** ~10,500 cumulative reward
 - **POCA:** ~10,200 cumulative reward
 
+![Bar chart of cumulative reward by algorithm: SAC about 11,800, PPO about 10,500, POCA about 10,200](/assets/charts/marl-algorithms.svg){: .chart}
+
 **Why SAC Won:**
 - **Entropy maximization** → explored diverse elimination strategies
 - **Replay buffer** → learned from past cooperation/defection patterns
 - **Off-policy** → didn't forget old strategies when environment changed
 
 **Drawback:** SAC trained 3× slower (critical limitation for research timeline)
+
+**Caveat:** This isn't a like-for-like comparison. The SAC config allows 2M steps (PPO and POCA 500K) and uses a smaller network without input normalization, POCA runs without curiosity, and the code never registers a multi-agent group, so POCA trains close to independent agents. Each algorithm was also run once, without a fixed seed.
 
 **Extrinsic Reward Stability:**
 - SAC: Stable from 100K steps
@@ -459,7 +466,7 @@ num_layers: 2
 ```
 Unity Project Structure (C# Scripts)
 ├── Agent Logic
-│   ├── FoodCollectorAgent.cs (500+ lines)
+│   ├── FoodCollectorAgent.cs (about 440 lines)
 │   │   ├── Observation collection
 │   │   ├── Action processing
 │   │   ├── Laser firing logic
@@ -470,7 +477,7 @@ Unity Project Structure (C# Scripts)
 │       └── Modular reward/penalty configuration
 │
 ├── Environment Management
-│   ├── FoodCollectorArea.cs (300+ lines)
+│   ├── FoodCollectorArea.cs (about 240 lines)
 │   │   ├── Agent spawning
 │   │   ├── Food spawning
 │   │   ├── Respawn coroutines
@@ -643,8 +650,8 @@ If I were to extend this research, I would:
 ## Files & Resources
 
 **Project Files:**
-- `FoodCollectorAgent.cs` - Main agent logic (500+ lines)
-- `FoodCollectorArea.cs` - Environment management (300+ lines)
+- `FoodCollectorAgent.cs` - Main agent logic (about 440 lines)
+- `FoodCollectorArea.cs` - Environment management (about 240 lines)
 - `AgentSettings.cs` - Configuration ScriptableObject
 - `FoodCollectorSettings.cs` - Global environment settings
 - `FoodLogic.cs` - Food item behavior
@@ -729,7 +736,7 @@ This project built on:
    - Influence modeling and cooperation rewards
    - Inspired penalty structure
 
-3. **Guckelsberger et al. (2018)** - "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"
+3. **Yu et al. (2022)** - "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games"
    - Validated PPO for MARL baseline
    - Convergence properties
 

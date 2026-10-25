@@ -1,10 +1,8 @@
 ---
-layout: page
 title: Improving MARL Robustness for Agent Blindness in VMAS
 permalink: /projects/vmas-blindness/
+description: "Research on how MAPPO-trained swarm agents in VMAS cope with random sensor blindness, with custom scenarios and a hyperparameter study."
 ---
-
-# Improving MARL Robustness for Agent Blindness in VMAS
 
 ## Quick Summary
 
@@ -133,8 +131,8 @@ class BlindOneRandomAgentIfProbabilityForJSteps(Transform):
 ### 1. MAPPO (Multi-Agent Proximal Policy Optimization)
 
 **Why MAPPO?**
-- State-of-the-art for cooperative MARL benchmarks
-- Outperforms many off-policy methods (MADDPG, QMIX)
+- A strong, widely used baseline on cooperative MARL benchmarks (Yu et al., 2022, "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games")
+- Competitive with off-policy methods such as MADDPG and QMIX in that study
 - Stable training with centralized critic, decentralized execution
 - Parameter sharing enables swarm-like behavior
 
@@ -305,11 +303,38 @@ def train_environment_variables(env, description, norm=True,
 
 ## Experimental Results
 
+> **Known issues in the original code.** A later review of the training script found bugs that affect several of the experiments below:
+> - The "blind all agents" scenario picked a random agent per slot with replacement, so it blinded about two of the three agents per step, not all of them.
+> - The blindness-probability and blindness-duration sweeps (Experiments 6 and 7) wrapped each new blindness setting on top of the previous ones instead of starting from a clean environment, so later settings also carried the earlier blindness.
+> - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
+> - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
+>
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1 and 9 below have been re-run with the fixed code over 3 seeds; the other experiments are the original results and still need re-running.
+
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
 **Setup:** 7 environments, 25 iterations, no normalization, clip=0.2
 
-**Results:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
+
+| Environment | Final Reward |
+|-------------|--------------|
+| Normal (no blindness) | 49.2 ± 4.8 |
+| Blind 1 random agent with probability 0.1 | 40.5 ± 11.6 |
+| Blind each agent with probability 0.1 | 37.8 ± 15.6 |
+| Blind 1 random agent for 1–10 steps (probability 0.1) | 34.2 ± 16.1 |
+| Blind each agent for 1–10 steps (probability 0.1) | 10.7 ± 9.2 |
+| Blind 1 random agent every step | 5.5 ± 12.9 |
+| Blind all agents every step | −11.8 ± 1.9 |
+
+![Line chart of reward over 25 training iterations for the seven blindness scenarios, averaged over 3 seeds with shaded spread. No blindness ends highest at about 49; blinding all agents stays flat at about −12; the other scenarios fall in between, with wide overlapping spreads](/assets/charts/vmas-exp1-rerun.png){: .chart .chart-wide}
+
+**Key Finding:** No blindness does best, and blinding every agent prevents learning entirely. Occasional, short blindness costs relatively little; persistent blindness (every step, or several agents for several steps) hurts much more. The spread between seeds is as large as the gaps between the middle scenarios, so their exact order isn't meaningful, and most curves are still rising at 25 iterations.
+
+The re-run's rewards are on a different scale from the original single-seed results (about 50 rather than about 450 for no blindness). It used pinned library versions; the original runs may have used different versions or reported reward differently.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 | Environment | Final Reward | Difficulty |
 |-------------|--------------|------------|
@@ -319,14 +344,9 @@ def train_environment_variables(env, description, norm=True,
 | Blind 1 agent random duration | ~280 | Hard |
 | Blind random agents randomly | ~240 | Very Hard |
 | Blind random agents random duration | ~180 | Extreme |
-| Blind all agents every step | ~50 | Nearly Impossible |
+| Blind all agents every step (about 2 of 3 agents in practice) | ~50 | Nearly Impossible |
 
-**Key Finding:** Agents can learn despite blindness, but performance degrades with:
-- Increased blindness frequency
-- Longer blindness duration
-- More agents affected simultaneously
-
-**Surprising Result:** Random 1-step blindness performs reasonably well (380/450 = 84% of baseline) → suggests robust cooperative strategies
+</details>
 
 ---
 
@@ -441,7 +461,7 @@ def train_environment_variables(env, description, norm=True,
 ### Experiment 6: Blindness Probability Sensitivity
 
 **Setup:** Probability = [0.01, 0.05, 0.10, 0.20, 0.30, 0.50]  
-**Environment:** Blind 1 random agent for random duration
+**Environment:** Blind 1 random agent for random duration (affected by the stacking issue noted above)
 
 **Results (Normalized by Blindness Probability):**
 
@@ -473,7 +493,7 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 ### Experiment 7: Maximum Blindness Duration
 
 **Setup:** Max blind steps = [1, 2, 3, 5, 7, 10, 20]  
-**Environment:** P(blind) = 0.1 fixed
+**Environment:** P(blind) = 0.1 fixed (affected by the stacking issue noted above)
 
 **Results (Normalized):**
 
@@ -531,27 +551,21 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 
 ### Experiment 9: Best Combined Hyperparameters
 
-**Setup:** Combine all improvements from previous experiments
+**Setup:** Combine the best setting from each earlier experiment, then revert one change at a time, on the scenario where one random agent is blinded for 1–10 steps (probability 0.1)
 
-**Configurations Tested:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
 
-| Config | Norm | Clip | Batch | Epochs | Final Reward |
-|--------|------|------|-------|--------|--------------|
-| Original | False | 0.2 | 200 | 20 | ~280 |
-| **Best** | True | 0.3 | 100 | 30 | **~520** |
-| Best - Clip | True | 0.2 | 100 | 30 | ~480 |
-| Best - Batch | True | 0.3 | 200 | 30 | ~490 |
-| Best - Epochs | True | 0.3 | 100 | 20 | ~470 |
+| Config | Norm | Clip | Batch | Epochs | Final Reward | Original single seed |
+|--------|------|------|-------|--------|--------------|----------------------|
+| Original | False | 0.2 | 200 | 20 | 34.2 ± 16.1 | ~280 |
+| Reported best | True | 0.3 | 100 | 30 | 45.3 ± 6.8 | ~520 |
+| Best, but clip 0.2 | True | 0.2 | 100 | 30 | 46.1 ± 10.7 | ~480 |
+| Best, but batch 200 | True | 0.3 | 200 | 30 | **55.6 ± 1.8** | ~490 |
+| Best, but 20 epochs | True | 0.3 | 100 | 20 | 52.4 ± 6.8 | ~470 |
 
-**Key Finding:** Combined improvements yield **+86% performance** over baseline
+![Bar chart of mean final reward over 3 seeds: 34.2 with the original settings, 45.3 with the reported best combination, 46.1 with clip 0.2, 55.6 with batch 200 and 52.4 with 20 epochs](/assets/charts/vmas-tuning.svg){: .chart}
 
-**Optimal Hyperparameters:**
-```python
-normalize_advantage = True
-clip_epsilon = 0.3
-minibatch_size = 100
-num_epochs = 30
-```
+**Key Finding:** Tuning helps, but less than the original runs suggested. Every tuned setup beats the original settings on average (+32% for the reported best) and varies far less between seeds. The original +86% doesn't reproduce, and the "best" combination isn't the best: going back to batch 200 or 20 epochs did as well or better. With 3 seeds, the differences between the tuned setups are within noise; the gap to the original settings is the robust part.
 
 **Video Evidence:** Trained agents successfully balance platform and move ball to goal despite random multi-step blindness events
 
@@ -661,7 +675,7 @@ env = TransformedEnv(env, RewardSum(...))
 ### Main Components
 
 ```
-Morgans4900Project.py (1,500+ lines)
+MARL Robustness for Agent Blindness in VMAS.py (about 930 lines)
 ├── Imports & Setup
 │   ├── PyTorch, TorchRL, VMAS
 │   ├── Device configuration (GPU/CPU)
@@ -812,7 +826,7 @@ If I were to extend this research, I would:
 - Suggests potential for real autonomous systems
 
 **2. Hyperparameters Matter More Than Expected:**
-- Optimal config: +86% performance over default
+- Tuned settings beat the defaults by about a third on a 3-seed re-run, and cut the spread between seeds (the original single-seed runs reported +86%)
 - Normalization absolutely essential (not optional)
 - Clipping sweet spot (0.3) specific to stochasticity level
 
@@ -857,7 +871,7 @@ If I were to extend this research, I would:
 ## Files & Resources
 
 **Project Files:**
-- `Morgans4900Project.py` - Complete implementation (1,500+ lines)
+- `MARL Robustness for Agent Blindness in VMAS.py` - Complete implementation (about 930 lines)
 - `COMP 4900 Project doc.pdf` - Presentation slides and documentation
 - Training logs and plots (generated during experiments)
 
@@ -906,7 +920,7 @@ with torch.no_grad():
     )
 ```
 
-**Key Hyperparameters (Optimal):**
+**Key Hyperparameters (best in the 3-seed re-run of Experiment 9):**
 ```python
 # Sampling
 frames_per_batch = 6_000
@@ -916,7 +930,7 @@ num_vmas_envs = 30
 
 # Training
 num_epochs = 30          # ← Increased from 20
-minibatch_size = 100     # ← Decreased from 200
+minibatch_size = 200     # Unchanged (100 did no better in the re-run)
 lr = 3e-4
 
 # PPO
@@ -932,7 +946,7 @@ lmbda = 0.9
 
 **Key Papers:**
 
-1. **Bettini et al. (2023)** - "VMAS: A Vectorized Multi-Agent Simulator for Collective Robot Learning"
+1. **Bettini et al. (2022)** - "VMAS: A Vectorized Multi-Agent Simulator for Collective Robot Learning"
    - Framework foundation
    - Balance scenario design
 
@@ -958,6 +972,6 @@ This project demonstrates that Multi-Agent Reinforcement Learning systems can be
 
 The research highlights critical gaps in MARL tooling (VMAS documentation, library compatibility) that consume researcher time, underscoring the need for better infrastructure in the MARL community. Despite these challenges and the constraint of working solo on a group project, the systematic hyperparameter study provides actionable insights for building robust multi-agent systems.
 
-Most importantly, this work validates that **robustness can be learned, not just engineered**—agents discover emergent compensation strategies when teammates go blind, suggesting promising avenues for deploying cooperative AI in real-world scenarios where sensor reliability cannot be guaranteed.
+Most importantly, the results suggest that **robustness can be learned, not just engineered**—agents discover emergent compensation strategies when teammates go blind, suggesting promising avenues for deploying cooperative AI in real-world scenarios where sensor reliability cannot be guaranteed.
 
-The 86% performance improvement through hyperparameter optimization (normalization + optimal clip/batch/epochs) proves that careful tuning is not just beneficial but **essential** for MARL in stochastic environments with partial observability. This finding has direct implications for practitioners building real autonomous systems.
+Hyperparameter tuning mattered, but re-running it is the more useful lesson. The original single-seed runs reported +86%; repeating them over 3 seeds with the fixed code gave about +32%, and showed that the "best" combination wasn't actually the best. Single-seed hyperparameter comparisons in MARL are noisy enough to mislead, so several seeds per setting should be the default.

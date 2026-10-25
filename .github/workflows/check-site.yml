@@ -1,0 +1,33 @@
+name: Check site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-proof:
+    runs-on: ubuntu-latest
+    env:
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    steps:
+      - uses: actions/checkout@v5
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+      - name: Build site
+        run: bundle exec jekyll build
+      - name: Check internal links
+        run: bundle exec htmlproofer _site --disable-external
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Install accessibility check tools
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Check accessibility
+        run: npm run check:a11y

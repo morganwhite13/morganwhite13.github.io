@@ -1,0 +1,78 @@
+---
+layout: default
+---
+{%- comment -%}
+  Project write-up: minima's page layout plus a contents list built from the
+  page's h2 headings and previous/next links following _data/projects.yml.
+{%- endcomment -%}
+{%- assign projects = site.data.projects -%}
+{%- for p in projects -%}
+  {%- if p.url == page.url -%}
+    {%- assign index = forloop.index0 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<article class="post">
+
+  <header class="post-header">
+    <p class="breadcrumb"><a href="{{ '/projects/' | relative_url }}">← All projects</a></p>
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+  </header>
+
+  {%- assign project = projects[index] -%}
+  {%- if project.glance %}
+  <section class="glance" aria-labelledby="glance-heading">
+    <h2 id="glance-heading" class="glance-heading">At a glance</h2>
+    <dl>
+      <dt>Problem</dt>
+      <dd>{{ project.glance.problem }}</dd>
+      <dt>Approach</dt>
+      <dd>{{ project.glance.approach }}</dd>
+      <dt>Result</dt>
+      <dd>{{ project.glance.result }}</dd>
+      <dt>Tech</dt>
+      <dd>{{ project.tech | join: ", " }}</dd>
+    </dl>
+    {%- if project.repo %}
+    <p class="glance-links"><a href="{{ project.repo }}">{{ project.repo_label | default: "Source code" }} on GitHub</a></p>
+    {%- endif %}
+  </section>
+  {%- endif %}
+
+  {%- assign sections = content | split: '<h2 id="' -%}
+  {%- if sections.size > 4 %}
+  <nav class="toc" aria-label="Contents">
+    <details>
+      <summary>Contents</summary>
+      <ol>
+        {%- for section in sections offset: 1 -%}
+          {%- assign id = section | split: '"' | first -%}
+          {%- assign heading = section | remove_first: id | remove_first: '">' | split: '</h2>' | first | strip_html -%}
+          <li><a href="#{{ id }}">{{ heading }}</a></li>
+        {%- endfor -%}
+      </ol>
+    </details>
+  </nav>
+  {%- endif %}
+
+  <div class="post-content">
+    {%- comment -%} tabindex lets keyboard users scroll wide code blocks {%- endcomment -%}
+    {{ content | replace: '<pre class="highlight">', '<pre class="highlight" tabindex="0">' }}
+  </div>
+
+  {%- if index %}
+  {%- assign prev_index = index | minus: 1 -%}
+  {%- assign next_index = index | plus: 1 -%}
+  <nav class="project-pager" aria-label="More projects">
+    {%- if prev_index >= 0 -%}
+      {%- assign prev = projects[prev_index] -%}
+      <a class="pager-prev" href="{{ prev.url | relative_url }}"><span>Previous</span>{{ prev.title }}</a>
+    {%- endif -%}
+    {%- assign next = projects[next_index] -%}
+    {%- if next -%}
+      <a class="pager-next" href="{{ next.url | relative_url }}"><span>Next</span>{{ next.title }}</a>
+    {%- endif -%}
+  </nav>
+  {%- endif %}
+
+</article>

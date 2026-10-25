@@ -1,11 +1,19 @@
 # Site settings
-title: Morgan White - Software Developer
+title: Morgan White · AI Developer
 email: morgan13white@icloud.com
 description: >-
-  Computer Science Honours Graduate passionate about software development, 
-  machine learning, and building solutions that make a difference.
+  AI developer and Carleton University Computer Science Honours graduate
+  working on applied machine learning, NLP and multi-agent reinforcement learning.
+author: Morgan White
+
+# Structured data for search engines (jekyll-seo-tag)
+social:
+  name: Morgan White
+  links:
+    - https://github.com/morganwhite13
+    - https://www.linkedin.com/in/morgan-white-95b245237
 baseurl: "" # leave empty for username.github.io
-url: "https://morganwhite13.github.io" # change to your actual URL
+url: "https://morganwhite13.github.io"
 
 # Social media
 github_username: morganwhite13
@@ -14,14 +22,25 @@ linkedin_username: morgan-white-95b245237
 # Build settings
 theme: minima
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Navigation
 header_pages:
-  - index.md
   - projects.md
   - about.md
+
+# Project write-ups use the project layout (contents list and project links);
+# every page gets the social preview image
+defaults:
+  - scope:
+      path: "projects"
+    values:
+      layout: project
+  - scope:
+      path: ""
+    values:
+      image: /assets/social-card.png
 
 # Exclude from processing
 exclude:
@@ -29,3 +48,7 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+  - README.md
+  - package.json
+  - package-lock.json
+  - scripts

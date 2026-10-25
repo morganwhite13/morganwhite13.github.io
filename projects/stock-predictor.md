@@ -1,16 +1,16 @@
 ---
-layout: page
 title: Predicting Stock Price Changes Using Reddit Sentiment
 permalink: /projects/stock-predictor/
+description: "A multi-input RNN that predicts daily stock price changes by combining Yahoo Finance data with VADER sentiment from Reddit posts."
 ---
 
 ## Quick Summary
 
-A multi-input Recurrent Neural Network that predicts daily stock price percentage changes by fusing real-time financial data with sentiment analysis of Reddit posts. The system scrapes stock discussions from financial subreddits, applies VADER sentiment analysis, and combines this social signal with Yahoo Finance data to capture how investor sentiment drives market movements.
+A multi-input Recurrent Neural Network that predicts daily stock price percentage changes by fusing real-time financial data with sentiment analysis of Reddit posts. The system scrapes stock discussions from financial subreddits, applies VADER sentiment analysis, and combines this social signal with Yahoo Finance data to test whether investor sentiment helps predict market movements.
 
 **Tech Stack:** Python, TensorFlow/Keras, PRAW (Reddit API), yfinance, NLTK, VADER Sentiment  
 **Status:** ✅ Complete and Operational  
-**GitHub:** [View Source Code](https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment)
+**GitHub:** [View Documentation](https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment) (README and architecture notes; the code isn't in the public repository)
 
 ---
 
@@ -267,10 +267,7 @@ X_body_pad = [seq + [0] * (max_len_body - len(seq))
 - **Validation MSE:** 0.1785
 
 **Analysis:**
-- Model learns cross-stock patterns
-- Better generalization across different companies
-- Captures market-wide sentiment trends
-- Lower validation error indicates good generalization
+- Validation error is lower than training error, which is unusual. Part of this is dropout (active during training, off during validation), but see the caveat below: the split also lets near-duplicate examples into the validation set.
 
 ### Experiment 2: Single-Stock Deep Dive
 
@@ -285,22 +282,21 @@ X_body_pad = [seq + [0] * (max_len_body - len(seq))
 - **Validation MSE:** 0.0024
 
 **Analysis:**
-- Much higher overfitting (validation >> training)
-- Model memorizes AAPL-specific patterns
-- Doesn't generalize well to new AAPL posts
-- **Key Insight:** Diversity in stocks is more important than depth in single stock
+- Validation error is about 25× *lower* than training error. That is not a sign of a good model: it is the classic signature of data leakage between the training and validation sets (explained below).
 
-### Feature Importance (Learned)
+### Caveat: How Much to Trust These Numbers
 
-Based on model weights and ablation studies:
+Looking back, the evaluation has a flaw worth being upfront about:
 
-1. **Post Body Content** (35%) - Detailed analysis drives predictions
-2. **Title Sentiment** (25%) - First impression matters
-3. **Body Sentiment** (20%) - Confirms or contradicts title
-4. **Karma Score** (10%) - Community validation signal
-5. **Comment Count** (5%) - Engagement level
-6. **Upvote Ratio** (3%) - Consensus vs. controversy
-7. **Date/Symbol** (2%) - Contextual metadata
+- **Leakage through shared targets.** The data is split randomly by post (`train_test_split`, 80/20). Every post about the same stock on the same day has the *same* target (that day's price change), so the validation set ends up with posts whose answers the model has effectively already seen in training. This is strongest in the AAPL-only run, where 100 posts cover a small number of trading days.
+- **No baseline.** The MSE values aren't compared to a trivial predictor, such as always predicting 0% change or the training mean, so they don't show whether sentiment adds any signal.
+- **Same-day timing.** Posts are matched to the price change of the day they were written, so some posts may be *reacting* to the move rather than predicting it.
+
+A fair test would split by date (train on earlier days, validate on later ones), report the error of a naive baseline alongside the model's, and only use posts written before the market opens.
+
+### Features Used
+
+The model sees each post's title and body text, their VADER sentiment scores, and its karma score, comment count and upvote ratio. I haven't measured how much each feature contributes; an ablation study (retraining without each feature under a date-based split) would be the way to find out.
 
 ---
 
@@ -401,7 +397,7 @@ vocab_size = len(combined_vocab) + 1
 ### Main Components
 
 ```
-StockPredictorFinal.py (600+ lines)
+StockPredictorFinal.py
 ├── API Integration
 │   ├── Reddit API (PRAW) - Post scraping
 │   └── Yahoo Finance (yfinance) - Stock data
@@ -599,7 +595,9 @@ GlobalMaxPooling → 0.91 (captures "CRUSHING")
 
 ---
 
-## Real-World Application Example
+## Illustrative Example
+
+*This is a hypothetical walkthrough of how inputs flow through the model, not a recorded prediction.*
 
 ### Scenario: NVIDIA (NVDA) Earnings Week
 
@@ -628,11 +626,7 @@ predictions = model.predict([titles, bodies, features])
 average_prediction = np.mean(predictions)  # +2.8%
 ```
 
-**Actual Outcome:** NVDA +3.1% on earnings day
-
-**Model Success:** Predicted direction correctly, magnitude close
-
-**How Model Worked:**
+**How the Model Would Process It:**
 1. Title sentiment captured bullish tone
 2. Body sentiment showed some caution (tempers prediction)
 3. High karma/comments showed consensus (increases confidence)
@@ -644,8 +638,10 @@ average_prediction = np.mean(predictions)  # +2.8%
 
 ## Files & Resources
 
+The public repository holds the README and architecture documentation. The files below made up the original project and aren't included there.
+
 **Project Files:**
-- `StockPredictorFinal.py` - Main implementation (600+ lines)
+- `StockPredictorFinal.py` - Main implementation
 - `COMP4107 Project Report.pdf` - Academic documentation
 - `predictions3.csv` - Training set predictions output
 - `predictions4.csv` - Validation set predictions output
@@ -696,9 +692,8 @@ nltk.download('punkt')          # Tokenization
 - [Source: ScienceDirect Review](https://www.sciencedirect.com/science/article/pii/S2590291124000615)
 
 **Stock Price Prediction Using LSTM:**
-- Netflix 3-year prediction using LSTM
-- MSE: 0.168 on single-stock model
-- Our approach: Multi-stock with sentiment (more complex task)
+- Netflix 3-year prediction using LSTM on price history alone
+- A useful reference design, though its error isn't directly comparable to this project's (different target and data)
 - [Source: ProjectPro](https://www.projectpro.io/article/stock-price-prediction-using-machine-learning-project/571)
 
 **VADER Sentiment Analysis:**
@@ -707,14 +702,13 @@ nltk.download('punkt')          # Tokenization
 - Handles emoji, slang, capitalization, punctuation
 - [Source: VADER GitHub](https://github.com/cjhutto/vaderSentiment)
 
-### Novel Contributions
+### What This Project Adds
 
-**Our Innovation:**
 - Multi-input architecture separating titles and bodies
 - Date-synchronized fusion of Reddit and financial data
 - Dual sentiment analysis (title + body separately)
-- Multi-stock training for better generalization
-- Real-time data collection from multiple APIs
+- Training across multiple stocks rather than one
+- Live data collection from multiple APIs
 
 ---
 
@@ -722,6 +716,6 @@ nltk.download('punkt')          # Tokenization
 
 This project demonstrates the power of combining multiple data modalities—structured financial time series and unstructured social media text—to predict market movements. By leveraging modern NLP techniques (VADER sentiment, LSTM sequence processing) and sophisticated neural architectures (multi-input RNNs), the system captures the human psychology behind stock price changes.
 
-While perfect stock prediction remains impossible (efficient market hypothesis), this project proves that social sentiment provides genuine signal above noise. The key insight: **markets are moved by people, and people talk before they trade.** By listening to those conversations and learning the patterns between sentiment and price, we can gain a statistical edge in understanding market dynamics.
+Stock prediction is notoriously hard (see the efficient market hypothesis), and this project doesn't show that Reddit sentiment beats the market. What it does show is a working pipeline for joining social media text with market data, and the evaluation lessons above: split by time, compare against a baseline, and watch for leakage when many examples share a target.
 
 The system showcases end-to-end machine learning engineering: API integration, data fusion, feature engineering, model architecture design, training, and evaluation—all in service of tackling one of the most challenging prediction problems in finance.
