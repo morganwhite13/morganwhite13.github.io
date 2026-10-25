@@ -411,7 +411,7 @@ embedding_matrix = create_embedding_matrix(
 ### Main Components
 
 ```
-projectTESTING.py (1,500+ lines)
+projectFinal.py (about 1,400 lines)
 ├── Data Collection Functions
 │   ├── getRandomChannelsVideos() - Distributed sampling
 │   ├── getPopularChannelsVideos() - Trending content
@@ -486,7 +486,7 @@ This project taught me:
 - Model evaluation metrics (MSE, MAE, MAPE)
 
 **Software Engineering**
-- Large codebase organization (1,500+ lines)
+- Large codebase organization (about 1,400 lines)
 - Modular function design
 - Data persistence strategies
 - Reproducible experiments
@@ -575,7 +575,7 @@ Even spacing in log space = proportional thinking!
 ## Files & Resources
 
 **Project Files:**
-- `projectTESTING.py` - Main implementation (1,500+ lines)
+- `projectFinal.py` - Main implementation (about 1,400 lines)
 - `COMP3106 Project Report.pdf` - Academic documentation
 - `*.json` - Cached dataset files (various collection methods)
 - `best_youtube_model.keras` - Trained model checkpoint
@@ -602,7 +602,7 @@ scikit-learn>=1.3.0
 1. Install dependencies: `pip install -r requirements.txt`
 2. Download GloVe embeddings and place in project directory
 3. Set YouTube API key in `API_KEY` variable
-4. Run: `python projectTESTING.py`
+4. Run: `python projectFinal.py`
 5. Model trains automatically and saves to `best_youtube_model.keras`
 
 ---

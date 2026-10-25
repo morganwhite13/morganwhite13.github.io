@@ -209,7 +209,7 @@ while (holding > 0 && robot.step(timeStep) != -1) {
 ### Main Components
 
 ```
-ProjectController3.java (800+ lines)
+ProjectController3.java (about 760 lines)
 ├── Initialization
 │   ├── Motor setup (wheels, gripper)
 │   ├── Sensor setup (camera, compass, distance)
@@ -289,7 +289,7 @@ If I were to extend this project, I would:
 
 **Project Files:**
 - `ProjectWorld2025.wbt` - Webots simulation world (complete 20×20m environment)
-- `ProjectController3.java` - Main controller (800+ lines of Java)
+- `ProjectController3.java` - Main controller (about 760 lines of Java)
 - `Pioneer3dx.proto` - Robot base definition
 - `Pioneer3Gripper.proto` - Gripper attachment
 

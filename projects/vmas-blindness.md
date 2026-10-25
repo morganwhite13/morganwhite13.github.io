@@ -663,7 +663,7 @@ env = TransformedEnv(env, RewardSum(...))
 ### Main Components
 
 ```
-Morgans4900Project.py (1,500+ lines)
+MARL Robustness for Agent Blindness in VMAS.py (about 930 lines)
 ├── Imports & Setup
 │   ├── PyTorch, TorchRL, VMAS
 │   ├── Device configuration (GPU/CPU)
@@ -859,7 +859,7 @@ If I were to extend this research, I would:
 ## Files & Resources
 
 **Project Files:**
-- `Morgans4900Project.py` - Complete implementation (1,500+ lines)
+- `MARL Robustness for Agent Blindness in VMAS.py` - Complete implementation (about 930 lines)
 - `COMP 4900 Project doc.pdf` - Presentation slides and documentation
 - Training logs and plots (generated during experiments)
 

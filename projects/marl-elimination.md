@@ -285,7 +285,7 @@ num_layers: 2
 
 ## Key Technical Achievements
 
-✅ **Custom Unity Environment** - Modified FoodCollector with 2,000+ lines of C# code  
+✅ **Custom Unity Environment** - Modified Unity's FoodCollector example; about 1,000 lines of C# across 8 scripts  
 ✅ **Configurable Elimination Rules** - 1-9 agents to eliminate, freeze vs. permanent  
 ✅ **Advanced Observation Space** - 20+ normalized features including agent states  
 ✅ **Hit Tracking System** - Distributed HashSet tracking unique shooters  
@@ -463,7 +463,7 @@ num_layers: 2
 ```
 Unity Project Structure (C# Scripts)
 ├── Agent Logic
-│   ├── FoodCollectorAgent.cs (500+ lines)
+│   ├── FoodCollectorAgent.cs (about 440 lines)
 │   │   ├── Observation collection
 │   │   ├── Action processing
 │   │   ├── Laser firing logic
@@ -474,7 +474,7 @@ Unity Project Structure (C# Scripts)
 │       └── Modular reward/penalty configuration
 │
 ├── Environment Management
-│   ├── FoodCollectorArea.cs (300+ lines)
+│   ├── FoodCollectorArea.cs (about 240 lines)
 │   │   ├── Agent spawning
 │   │   ├── Food spawning
 │   │   ├── Respawn coroutines
@@ -647,8 +647,8 @@ If I were to extend this research, I would:
 ## Files & Resources
 
 **Project Files:**
-- `FoodCollectorAgent.cs` - Main agent logic (500+ lines)
-- `FoodCollectorArea.cs` - Environment management (300+ lines)
+- `FoodCollectorAgent.cs` - Main agent logic (about 440 lines)
+- `FoodCollectorArea.cs` - Environment management (about 240 lines)
 - `AgentSettings.cs` - Configuration ScriptableObject
 - `FoodCollectorSettings.cs` - Global environment settings
 - `FoodLogic.cs` - Food item behavior
