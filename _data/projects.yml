@@ -1,5 +1,6 @@
 # Project list shared by the home page (featured: true) and the projects page.
-# Order here is the display order.
+# Order here is the display order. repo_label (default "Source code")
+# names the repo link for projects whose repo holds documentation only.
 
 - title: Agent Elimination in Multi-Agent Reinforcement Learning
   url: /projects/marl-elimination/
@@ -44,7 +45,7 @@
 - title: Autonomous Robot Jar Collection System
   url: /projects/robot-project/
   emoji: 🤖
-  when: Fall 2021
+  when: Fall 2021, updated 2025
   featured: true
   tech: [Webots, Java, Computer Vision, Sensor Fusion]
   repo: https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System
@@ -60,23 +61,25 @@
     approach: Colour-threshold vision, compass-based navigation, distance and touch sensing, and a phased mission planner, written in Java for Webots.
     result: All 5 jars collected in every trial, with ±3° heading and ±10 cm position accuracy.
 
-- title: YouTube Views Prediction with Transformers
+- title: YouTube Views Prediction with Neural Networks
   url: /projects/youtube-predictor/
   emoji: 🎬
+  when: Course project (Intro to AI)
   featured: true
-  tech: [Python, TensorFlow, YouTube Data API, NLTK]
+  tech: [Python, TensorFlow, Bidirectional LSTMs, YouTube Data API, NLTK]
   repo: https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks
   summary: >-
-    Predicts a video's view count from its title, description, channel size, category and
-    age, using a Transformer encoder over GloVe embeddings plus learned feature interactions.
+    Predicts a video's view count from its title, description, channel, category, subscriber
+    count and age. I collected the data through the YouTube API and built the model up in six
+    stages, adding one input at a time, with a bidirectional LSTM per text field.
   highlights:
-    - Multi-head attention over title and description text
-    - Predicts in log space to cover view counts from 1K to 100M+
-    - Learned interactions such as title × description and text × subscribers
+    - Data collection with five sampling strategies, caching and English-only filtering
+    - Six model stages to compare what each input adds
+    - What-if predictions that vary one input at a time
   glance:
-    problem: Predict how many views a YouTube video will get from its title, description, channel and timing.
-    approach: A multi-input neural network over the video's text fields plus subscriber count and age, trained on 552 videos collected with the YouTube Data API.
-    result: Log-scale MAE of 1.73 on a held-out 20% split, so predictions capture rough scale rather than exact counts. No baseline comparison yet.
+    problem: Predict how many views a YouTube video will get from its title, description, channel, category, subscriber count and age.
+    approach: Data collected with the YouTube Data API, NLTK preprocessing, and a Keras multi-input model with a bidirectional LSTM for each text field, built up in six stages.
+    result: The full pipeline runs end to end, from API collection to what-if predictions. Test error wasn't recorded, and the write-up explains what I'd change first (log-scale target, a baseline, a smaller model).
 
 - title: Stock Price Changes from Reddit Sentiment
   url: /projects/stock-predictor/
@@ -85,6 +88,7 @@
   featured: false
   tech: [Python, TensorFlow, PRAW, yfinance, VADER]
   repo: https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment
+  repo_label: Documentation
   summary: >-
     A multi-input LSTM network that predicts daily stock price changes by combining Yahoo
     Finance data with VADER sentiment scores of posts from r/stocks, r/options and r/investing.

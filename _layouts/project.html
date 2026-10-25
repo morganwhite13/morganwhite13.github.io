@@ -34,7 +34,7 @@ layout: default
       <dd>{{ project.tech | join: ", " }}</dd>
     </dl>
     {%- if project.repo %}
-    <p class="glance-links"><a href="{{ project.repo }}">Source code on GitHub</a></p>
+    <p class="glance-links"><a href="{{ project.repo }}">{{ project.repo_label | default: "Source code" }} on GitHub</a></p>
     {%- endif %}
   </section>
   {%- endif %}

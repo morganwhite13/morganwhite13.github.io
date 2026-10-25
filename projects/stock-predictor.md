@@ -10,7 +10,7 @@ A multi-input Recurrent Neural Network that predicts daily stock price percentag
 
 **Tech Stack:** Python, TensorFlow/Keras, PRAW (Reddit API), yfinance, NLTK, VADER Sentiment  
 **Status:** ✅ Complete and Operational  
-**GitHub:** [View Source Code](https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment)
+**GitHub:** [View Documentation](https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment) (README and architecture notes; the code isn't in the public repository)
 
 ---
 
@@ -397,7 +397,7 @@ vocab_size = len(combined_vocab) + 1
 ### Main Components
 
 ```
-StockPredictorFinal.py (600+ lines)
+StockPredictorFinal.py
 ├── API Integration
 │   ├── Reddit API (PRAW) - Post scraping
 │   └── Yahoo Finance (yfinance) - Stock data
@@ -638,8 +638,10 @@ average_prediction = np.mean(predictions)  # +2.8%
 
 ## Files & Resources
 
+The public repository holds the README and architecture documentation. The files below made up the original project and aren't included there.
+
 **Project Files:**
-- `StockPredictorFinal.py` - Main implementation (600+ lines)
+- `StockPredictorFinal.py` - Main implementation
 - `COMP4107 Project Report.pdf` - Academic documentation
 - `predictions3.csv` - Training set predictions output
 - `predictions4.csv` - Validation set predictions output
