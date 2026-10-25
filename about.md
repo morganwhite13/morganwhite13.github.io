@@ -43,7 +43,7 @@ I'm based in Hamilton, Ontario, and open to relocating.
 
 **Reinforcement learning:** Unity ML-Agents, TorchRL, VMAS, PPO, SAC, POCA, MAPPO, multi-agent systems, sequential social dilemmas
 
-**Robotics:** Webots, sensor fusion, colour-based object detection, path planning
+**Robotics:** Webots, sensor fusion, colour-based object detection, waypoint navigation
 
 **Tools:** Git and GitHub, TensorBoard, Xcode, REST APIs (YouTube, Reddit, Yahoo Finance), Agile
 

@@ -314,6 +314,7 @@ num_layers: 2
 ![Bar chart of cumulative reward at 500K steps: about 12,000 with no elimination, falling to about 9,000 when 4 agents are needed to eliminate](/assets/charts/marl-elimination.svg){: .chart}
 
 **Why This Happened:**
+- Firing cost nothing: the firing penalty is loaded from settings but never applied in the code. Combined with permanent elimination, removing rivals early was a cheap way to secure more food.
 - Agents learned to eliminate each other **early**
 - Fewer agents → less overharvesting → more food respawns
 - Small elimination penalty (-5) outweighed by increased food access
@@ -341,6 +342,8 @@ num_layers: 2
 - **Off-policy** → didn't forget old strategies when environment changed
 
 **Drawback:** SAC trained 3× slower (critical limitation for research timeline)
+
+**Caveat:** This isn't a like-for-like comparison. The SAC config allows 2M steps (PPO and POCA 500K) and uses a smaller network without input normalization, POCA runs without curiosity, and the code never registers a multi-agent group, so POCA trains close to independent agents. Each algorithm was also run once, without a fixed seed.
 
 **Extrinsic Reward Stability:**
 - SAC: Stable from 100K steps

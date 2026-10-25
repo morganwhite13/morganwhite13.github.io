@@ -1,12 +1,12 @@
 ---
 title: Autonomous Robot Jar Collection System
 permalink: /projects/robot-project/
-description: "An autonomous Webots robot that uses computer vision, sensor fusion and path planning to find, collect and store honey jars in a 20×20 m warehouse."
+description: "An autonomous Webots robot that uses computer vision, a compass and waypoint navigation to find, collect and store honey jars in a 20×20 m warehouse."
 ---
 
 ## Quick Summary
 
-An autonomous mobile robot built in Webots that uses computer vision, sensor fusion, and pathfinding algorithms to navigate a 20×20 meter warehouse, locate honey jars, collect them, and place them in designated storage areas—all without human intervention.
+An autonomous mobile robot built in Webots that uses computer vision, a compass and hand-tuned waypoint routes to navigate a 20×20 meter warehouse, locate honey jars, collect them, and place them in designated storage areas—all without human intervention.
 
 **Tech Stack:** Webots R2025a, Java, Computer Vision, Robotics  
 **Status:** ✅ Complete and Operational  
@@ -29,7 +29,7 @@ Design and implement a fully autonomous robot system that can:
 - Return collected items to a designated drop-off zone
 - Repeat this process for multiple objects
 
-All of this needed to work without GPS, pre-mapped routes, or external guidance systems.
+Jar detection and grasping rely on the robot's own camera and touch sensor. To move between the search area and the drop-off zone, the controller follows hand-tuned waypoint routes, using the compass and the robot's exact position from the simulator (the controller runs as a Webots Supervisor).
 
 ---
 
@@ -41,10 +41,10 @@ The robot is built on a Pioneer 3-DX platform equipped with:
 
 **Sensors:**
 - 64×64 RGB Camera with color-based object detection
-- 6 Ultrasonic Distance Sensors (obstacle avoidance)
+- 6 Ultrasonic Distance Sensors (enabled and logged for debugging; not yet used in control)
 - Compass (heading/orientation)
 - Touch Sensor (object contact detection)
-- Accelerometer (stability monitoring)
+- Accelerometer (present in the world model; not used by the controller)
 
 **Actuators:**
 - Differential drive motors (left & right wheels)
@@ -75,7 +75,7 @@ The robot's camera divides its field of view into three zones and counts colored
 - Target signature: R < 20, G < 20, B > 80
 - Guides robot during return phase
 
-### 2. Navigation & Pathfinding
+### 2. Waypoint Navigation
 
 The robot executes multiple phases with hardcoded waypoints optimized for the specific environment:
 
@@ -113,9 +113,7 @@ This ensures accuracy even when overshooting or dealing with compass noise.
 
 - **Vision** tells the robot where objects are
 - **Compass** confirms proper orientation
-- **Distance sensors** prevent collisions
 - **Touch sensor** validates contact
-- **Accelerometer** monitors stability
 
 Multi-layered detection prevents false positives and ensures robust operation.
 
@@ -127,8 +125,7 @@ Multi-layered detection prevents false positives and ensures robust operation.
 ✅ **Precision Navigation** - Turn accuracy within ±3°, distance accuracy within ±10cm  
 ✅ **Gripper Synchronization** - Timed sequences ensure proper grip establishment  
 ✅ **Sensor Fusion** - Combines multiple sensors for redundant perception  
-✅ **Real-Time Control** - 32ms control cycle with 64 fps camera processing  
-✅ **Obstacle Avoidance** - 6 distance sensors prevent collisions  
+✅ **Real-Time Control** - Sensors and motors updated every simulation step  
 ✅ **State Management** - Clean separation between collection, navigation, and placement phases  
 
 ---
@@ -196,11 +193,11 @@ while (holding > 0 && robot.step(timeStep) != -1) {
 
 ### Challenge: Large Coordinate Space Management
 
-**Problem:** 20m × 20m arena with floating-point precision issues
+**Problem:** Waypoints across a 20m × 20m arena are easier to tune in centimetres than in metres
 
-**Solution:** Convert all coordinates to centimeter units (×100) for integer-based comparisons
+**Solution:** Positions from the simulator are scaled to centimetres (×100) when routes are built and compared
 
-**Impact:** Eliminated rounding errors and improved navigation stability
+**Impact:** Waypoint coordinates are simpler to read and adjust by hand
 
 ---
 

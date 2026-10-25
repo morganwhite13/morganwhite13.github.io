@@ -303,6 +303,14 @@ def train_environment_variables(env, description, norm=True,
 
 ## Experimental Results
 
+> **Known issues in the code.** A later review of the training script found bugs that affect several of the experiments below, so treat these numbers as preliminary until they're re-run:
+> - The "blind all agents" scenario picks a random agent per slot with replacement, so it blinds about two of the three agents per step, not all of them.
+> - The blindness-probability and blindness-duration sweeps (Experiments 6 and 7) wrap each new blindness setting on top of the previous ones instead of starting from a clean environment, so later settings also carry the earlier blindness.
+> - Each step's random blindness choice is shared by all 30 parallel environments, and blind countdowns aren't reset between episodes.
+> - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
+>
+> The fixes that can be made without a re-run are in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS).
+
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
 **Setup:** 7 environments, 25 iterations, no normalization, clip=0.2
@@ -319,7 +327,7 @@ def train_environment_variables(env, description, norm=True,
 | Blind random agents random duration | ~180 | Extreme |
 | Blind all agents every step | ~50 | Nearly Impossible |
 
-![Bar chart of final reward by blindness scenario, falling from about 450 with no blindness to about 50 when all agents are blind every step](/assets/charts/vmas-scenarios.svg){: .chart}
+![Bar chart of final reward by blindness scenario, falling from about 450 with no blindness to about 50 in the "all agents" scenario, which in practice blinds about two of the three agents each step](/assets/charts/vmas-scenarios.svg){: .chart}
 
 **Key Finding:** Agents can learn despite blindness, but performance degrades with:
 - Increased blindness frequency
@@ -441,7 +449,7 @@ def train_environment_variables(env, description, norm=True,
 ### Experiment 6: Blindness Probability Sensitivity
 
 **Setup:** Probability = [0.01, 0.05, 0.10, 0.20, 0.30, 0.50]  
-**Environment:** Blind 1 random agent for random duration
+**Environment:** Blind 1 random agent for random duration (affected by the stacking issue noted above)
 
 **Results (Normalized by Blindness Probability):**
 
@@ -473,7 +481,7 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 ### Experiment 7: Maximum Blindness Duration
 
 **Setup:** Max blind steps = [1, 2, 3, 5, 7, 10, 20]  
-**Environment:** P(blind) = 0.1 fixed
+**Environment:** P(blind) = 0.1 fixed (affected by the stacking issue noted above)
 
 **Results (Normalized):**
 

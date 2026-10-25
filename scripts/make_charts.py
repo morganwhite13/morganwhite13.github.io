@@ -20,7 +20,7 @@ CHARTS = {
             ("1 agent, random duration", 280),
             ("Random agents, randomly", 240),
             ("Random agents, random duration", 180),
-            ("All agents, every step", 50),
+            ("\"All agents\", every step (about 2 of 3 in practice)", 50),
         ],
         "highlight": [],
     },
