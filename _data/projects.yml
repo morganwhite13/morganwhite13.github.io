@@ -1,0 +1,93 @@
+# Project list shared by the home page (featured: true) and the projects page.
+# Order here is the display order.
+
+- title: Agent Elimination in Multi-Agent Reinforcement Learning
+  url: /projects/marl-elimination/
+  emoji: 🧠
+  when: Honours project, Fall 2024
+  featured: true
+  tech: [Unity ML-Agents, C#, Python, PPO, SAC, POCA]
+  repo: https://github.com/morganwhite13/Agent-Elimination-in-Multi-Agent-Reinforcement-Learning
+  summary: >-
+    Honours research asking whether letting agents eliminate each other makes them cooperate
+    in a resource-sharing social dilemma. I built a custom Unity ML-Agents environment with
+    configurable elimination rules and compared PPO, SAC and POCA over 500K training steps.
+  highlights:
+    - Configurable elimination mechanics (freeze, permanent, group vote) for 1–4 agents
+    - Density-based food respawn inspired by DeepMind's Harvest environment
+    - SAC performed best; POCA was tested for its cooperation-focused credit assignment
+
+- title: MARL Robustness for Agent Blindness in VMAS
+  url: /projects/vmas-blindness/
+  emoji: 🔍
+  when: Course research project
+  featured: true
+  tech: [Python, PyTorch, TorchRL, VMAS, MAPPO]
+  repo: https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS
+  summary: >-
+    How well do swarm agents cooperate when they randomly lose their sensors? I built six
+    "blindness" scenarios in VMAS and trained MAPPO across 50+ experiments, improving
+    performance by 86% over the baseline configuration.
+  highlights:
+    - Six probabilistic blindness scenarios with configurable duration and frequency
+    - Advantage normalization turned out to be essential under observation loss
+    - Performance degraded gracefully up to a 30% blindness probability
+
+- title: Autonomous Robot Jar Collection System
+  url: /projects/robot-project/
+  emoji: 🤖
+  when: Fall 2021
+  featured: true
+  tech: [Webots, Java, Computer Vision, Sensor Fusion]
+  repo: https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System
+  summary: >-
+    A mobile robot that navigates a 20×20 m simulated warehouse, finds honey jars with
+    colour-based vision, picks them up and stores them, with no human input.
+  highlights:
+    - Collected all 4 jars in every trial
+    - ±3° heading and ±10 cm position accuracy using compass-based navigation
+    - Fuses camera, compass, distance and touch sensors, with fallback detection logic
+
+- title: YouTube Views Prediction with Transformers
+  url: /projects/youtube-predictor/
+  emoji: 🎬
+  featured: true
+  tech: [Python, TensorFlow, YouTube Data API, NLTK]
+  repo: https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks
+  summary: >-
+    Predicts a video's view count from its title, description, channel size, category and
+    age, using a Transformer encoder over GloVe embeddings plus learned feature interactions.
+  highlights:
+    - Multi-head attention over title and description text
+    - Predicts in log space to cover view counts from 1K to 100M+
+    - Learned interactions such as title × description and text × subscribers
+
+- title: Stock Price Changes from Reddit Sentiment
+  url: /projects/stock-predictor/
+  emoji: 📈
+  when: Winter 2024
+  featured: false
+  tech: [Python, TensorFlow, PRAW, yfinance, VADER]
+  repo: https://github.com/morganwhite13/Predicting-Stock-Price-Changes-Using-Reddit-Sentiment
+  summary: >-
+    A multi-input LSTM network that predicts daily stock price changes by combining Yahoo
+    Finance data with VADER sentiment scores of posts from r/stocks, r/options and r/investing.
+  highlights:
+    - Separate branches for post titles, post bodies and numerical features
+    - Reddit posts matched to same-day price movements
+    - Data pipelines built on the Reddit (PRAW) and Yahoo Finance APIs
+
+- title: Morgan's Reviews iOS App
+  url: /projects/review-app/
+  emoji: 📱
+  when: "2019"
+  featured: false
+  tech: [Swift, UIKit, Xcode]
+  repo: https://github.com/morganwhite13/Review-App
+  summary: >-
+    A native iOS app for publishing and browsing reviews of movies, shows and games, with a
+    signed-in reviewer mode for creating, editing and deleting reviews.
+  highlights:
+    - Reusable star-rating control with VoiceOver support
+    - Create, update and delete flows driven by unwind segues
+    - Photo library integration for review images

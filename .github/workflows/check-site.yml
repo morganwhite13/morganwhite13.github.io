@@ -20,4 +20,4 @@ jobs:
       - name: Build site
         run: bundle exec jekyll build
       - name: Check internal links
-        run: bundle exec htmlproofer _site --disable-external --ignore-missing-alt
+        run: bundle exec htmlproofer _site --disable-external

@@ -2,42 +2,67 @@
 layout: page
 title: About
 permalink: /about/
-description: "About Morgan White: AI developer, Carleton University Computer Science Honours graduate, background, education and contact details."
+description: "About Morgan White: AI developer and Carleton University Computer Science Honours graduate. Experience, skills, education and contact details."
 ---
 
-# About Morgan White
+I'm a Computer Science Honours graduate from Carleton University, where I studied in the **Artificial Intelligence and Machine Learning** stream. I like building machine learning systems that people actually use, and I'm especially interested in multi-agent reinforcement learning: how independent agents learn to cooperate, and how robust that cooperation is.
 
-I'm a recent Computer Science Honours graduate from Carleton University, specializing in **Artificial Intelligence and Machine Learning**. My work focuses on developing and deploying intelligent, data-driven systems that solve real-world problems and significantly improve operational efficiency.
+I'm based in Hamilton, Ontario, and open to relocating.
 
-## My Impact
+## Experience
 
-My career journey has been shaped by roles that demand both deep academic rigor and practical engineering discipline:
+### AI Developer, Canadian Food Inspection Agency
+*Ottawa · May 2024 – April 2025*
 
-* **AI Developer at the Canadian Food Inspection Agency (CFIA):** I engineered an NLP-based classification solution that automated the processing of over 90,000 product data rows. This system achieved high accuracy and resulted in a **80% reduction in manual data collection workload** for analysts, allowing them to shift focus to higher-value analysis.
-* **Honours Research:** I designed a custom **Multi-Agent Reinforcement Learning (MARL)** environment using **Unity ML-Agents** to investigate cooperative agent behaviors under social dilemmas. My research involved implementing and comparing advanced algorithms, including **PPO** and **SAC**, providing insights into how elimination mechanisms influence group dynamics.
-* **Teaching Assistant:** As a TA for **Programming Paradigms (Haskell/Prolog)** and **Introduction to AI**, I mentored students in core computer science principles, from functional programming concepts to complex heuristic search algorithms.
+- Built an AI tool that classifies 90,000+ rows of food product data. Analysts went from spending 80% of their time on data collection to 20%, freeing the rest for analysis.
+- Used lemmatization and TF-IDF vectorization to clean and represent the text, reaching over 80% precision, recall and F1.
+- Worked with the Foreign Competent Authority team to fit the tool into their workflow, and gave presentations and training to support adoption.
+- Offered contract extensions twice.
 
-## Technical Expertise
+*Python, scikit-learn, NLP, neural networks, Pandas, NumPy*
 
-I possess a strong, specialized technical skillset:
+### Teaching Assistant, Carleton University
+*Ottawa · Winter 2023 and Fall 2024*
 
-* **AI & ML:** Reinforcement Learning (MARL, PPO, SAC), Natural Language Processing (NLP), Scikit-learn, TensorFlow/PyTorch, Statistical Modeling.
-* **Languages:** Python (Primary), Java, C++, Haskell, Prolog, SQL.
-* **Tools & Concepts:** Git, Version Control, Unity ML-Agents, Algorithm Design, Data Structures, Agile Methodologies.
+- Ran weekly office hours for **Programming Paradigms** (Haskell, Prolog) and **Introduction to Artificial Intelligence** (heuristic search, reinforcement learning).
+- Graded quizzes and assignments with written feedback.
+
+### Programmer Analyst Co-op, Elections Canada
+*Ottawa · June – December 2022*
+
+- Refactored hard-coded settings in the EREG application into database-driven configuration, making it easier to maintain and adapt.
+- Worked with database developers and QA to integrate new features and fix bugs.
+
+*C#, SQL, Agile*
+
+## Skills
+
+**Languages:** Python (primary), Java, C#, C++, Swift, SQL, Haskell, Prolog
+
+**Machine learning and NLP:** PyTorch, TensorFlow/Keras, scikit-learn, Pandas, NumPy, NLTK, TF-IDF, VADER sentiment, RNN/LSTM and Transformer models
+
+**Reinforcement learning:** Unity ML-Agents, TorchRL, VMAS, PPO, SAC, POCA, MAPPO, multi-agent systems, sequential social dilemmas
+
+**Robotics:** Webots, sensor fusion, colour-based object detection, path planning
+
+**Tools:** Git and GitHub, TensorBoard, Xcode, REST APIs (YouTube, Reddit, Yahoo Finance), Agile
 
 ## Education
 
-**Bachelor of Computer Science Honours, Artificial Intelligence and Machine Learning Stream**  
-Carleton University, Ottawa, ON, Canada | Graduated 2024
-* **CGPA:** 10.92/12.0 (A- Average)
-* **Scholarships:** Recipient of the Harry S. Southam Scholarship and President's Scholarship, and recognized on the Dean's Honour List (2020-2022).
+**Bachelor of Computer Science Honours**, Artificial Intelligence and Machine Learning stream  
+Carleton University, Ottawa · 2020–2024
 
-## Let's Work Together
+- CGPA 10.92/12 (A)
+- Harry S. Southam Scholarship, $9,000 for academic achievement (2020–2023)
+- President's Scholarship
+- Dean's Honour List (2020–2022)
+- Honours project: [Can agent elimination improve cooperation in MARL?](/projects/marl-elimination/)
 
-I am actively seeking full-time roles as an **AI Developer**, **Machine Learning Engineer**, or **Data Scientist**. I thrive in environments where I can leverage my research background and proven record of delivering efficient, high-impact technical solutions.
+## Contact
 
-Feel free to connect or review my code:
-* **Email:** [morgan13white@icloud.com](mailto:morgan13white@icloud.com)
-* **LinkedIn:** [https://www.linkedin.com/in/morgan-white-95b245237](https://www.linkedin.com/in/morgan-white-95b245237)
-* **GitHub:** [https://github.com/morganwhite13](https://github.com/morganwhite13)
-* **Resume:** [Download PDF](/assets/morgan-white-resume.pdf)
+I'm looking for full-time roles as an **AI developer**, **machine learning engineer** or **data scientist**.
+
+- **Email:** [morgan13white@icloud.com](mailto:morgan13white@icloud.com)
+- **LinkedIn:** [morgan-white-95b245237](https://www.linkedin.com/in/morgan-white-95b245237)
+- **GitHub:** [morganwhite13](https://github.com/morganwhite13)
+- **Resume:** [Download PDF](/assets/morgan-white-resume.pdf)

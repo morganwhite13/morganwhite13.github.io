@@ -1,9 +1,10 @@
 # Site settings
-title: Morgan White - Software Developer
+title: Morgan White · AI Developer
 email: morgan13white@icloud.com
 description: >-
-  Computer Science Honours Graduate passionate about software development, 
-  machine learning, and building solutions that make a difference.
+  AI developer and Carleton University Computer Science Honours graduate
+  working on applied machine learning, NLP and multi-agent reinforcement learning.
+author: Morgan White
 baseurl: "" # leave empty for username.github.io
 url: "https://morganwhite13.github.io"
 
@@ -22,6 +23,18 @@ plugins:
 header_pages:
   - projects.md
   - about.md
+
+# Project write-ups use the project layout (contents list and project links);
+# every page gets the social preview image
+defaults:
+  - scope:
+      path: "projects"
+    values:
+      layout: project
+  - scope:
+      path: ""
+    values:
+      image: /assets/social-card.png
 
 # Exclude from processing
 exclude:

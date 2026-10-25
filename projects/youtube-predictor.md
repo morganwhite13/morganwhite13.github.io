@@ -1,5 +1,4 @@
 ---
-layout: page
 title: YouTube Views Prediction Using Neural Networks
 permalink: /projects/youtube-predictor/
 description: "A Transformer-based TensorFlow model that predicts YouTube view counts from titles, descriptions, channel authority and timing."
@@ -269,7 +268,7 @@ ReduceLROnPlateau(factor=0.5, patience=3)
 
 ## Key Technical Achievements
 
-✅ **Transformer Architecture** - State-of-the-art NLP with multi-head attention  
+✅ **Transformer Architecture** - Transformer encoder with multi-head attention  
 ✅ **Pretrained Embeddings** - GloVe 300D vectors for semantic understanding  
 ✅ **Feature Interactions** - 5 learned interaction types between features  
 ✅ **Log-Scale Prediction** - Handles 5+ orders of magnitude in view counts  

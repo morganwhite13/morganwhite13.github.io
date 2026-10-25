@@ -1,5 +1,4 @@
 ---
-layout: page
 title: Can Agent Elimination Improve Cooperation in MARL?
 permalink: /projects/marl-elimination/
 description: "Honours research on whether agent elimination mechanisms improve cooperation in multi-agent reinforcement learning, using a custom Unity ML-Agents environment."
@@ -10,7 +9,7 @@ description: "Honours research on whether agent elimination mechanisms improve c
 An honours research project investigating whether agent elimination mechanisms can improve cooperation in Multi-Agent Reinforcement Learning (MARL) environments where individual greediness is rewarded but group cooperation is optimal. Built a custom Unity ML-Agents environment with configurable elimination rules, testing how agents balance self-interest against the threat of being eliminated by peers.
 
 **Tech Stack:** Unity ML-Agents, C#, Python, Proximal Policy Optimization (PPO), Soft Actor-Critic (SAC)  
-**Status:** ✅ Research Complete - Published Honours Project  
+**Status:** ✅ Complete - Honours Project (Fall 2024)  
 **Supervisor:** Dr. Zinovi Rabinovich, Carleton University  
 **GitHub:** [View Source Code](https://github.com/morganwhite13/Agent-Elimination-in-Multi-Agent-Reinforcement-Learning)
 

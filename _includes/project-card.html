@@ -1,0 +1,24 @@
+{%- assign p = include.project -%}
+<article class="project-card">
+  <h3 class="project-card-title">
+    <a href="{{ p.url | relative_url }}">{% if p.emoji %}<span aria-hidden="true">{{ p.emoji }}</span> {% endif %}{{ p.title }}</a>
+  </h3>
+  {%- if p.when %}<p class="project-card-meta">{{ p.when }}</p>{% endif %}
+  <p>{{ p.summary }}</p>
+  {%- if include.highlights and p.highlights %}
+  <ul>
+    {%- for h in p.highlights %}
+    <li>{{ h }}</li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+  <ul class="tag-list" aria-label="Technologies">
+    {%- for t in p.tech %}
+    <li>{{ t }}</li>
+    {%- endfor %}
+  </ul>
+  <p class="project-card-links">
+    <a href="{{ p.url | relative_url }}">Read more<span class="visually-hidden"> about {{ p.title }}</span> →</a>
+    {%- if p.repo %} · <a href="{{ p.repo }}">Source code<span class="visually-hidden"> for {{ p.title }}</span></a>{% endif %}
+  </p>
+</article>

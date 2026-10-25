@@ -1,5 +1,4 @@
 ---
-layout: page
 title: Autonomous Robot Jar Collection System
 permalink: /projects/robot-project/
 description: "An autonomous Webots robot that uses computer vision, sensor fusion and path planning to find, collect and store honey jars in a 20×20 m warehouse."

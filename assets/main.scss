@@ -4,6 +4,7 @@
 
 $brand-color: #1f5fae;
 $content-width: 860px;
+$grey-color: #6a6a6a; // darker than minima's default so small grey text meets WCAG AA contrast
 
 @import "minima";
 
@@ -64,4 +65,212 @@ $content-width: 860px;
 .post-content table {
   display: block;
   overflow-x: auto;
+}
+
+// Screen-reader-only text
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Home page intro
+.hero {
+  margin-bottom: $spacing-unit * 1.5;
+
+  h1 {
+    @include relative-font-size(2.25);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: $spacing-unit / 2;
+  }
+
+  p {
+    @include relative-font-size(1.125);
+  }
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 18px;
+  border: 2px solid $brand-color;
+  border-radius: 6px;
+  background: $brand-color;
+  color: #fff;
+  font-weight: 600;
+
+  &:visited {
+    color: #fff;
+  }
+
+  &:hover {
+    background: darken($brand-color, 8%);
+    border-color: darken($brand-color, 8%);
+    text-decoration: none;
+  }
+}
+
+.button-secondary {
+  background: transparent;
+  color: $brand-color;
+
+  &:visited {
+    color: $brand-color;
+  }
+
+  &:hover {
+    background: lighten($brand-color, 50%);
+    color: darken($brand-color, 8%);
+  }
+}
+
+// Project cards (home page grid and projects page list)
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-unit * 0.75;
+  margin-bottom: $spacing-unit * 0.75;
+}
+
+.project-list {
+  display: grid;
+  gap: $spacing-unit;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-unit * 0.75;
+  border: 1px solid $grey-color-light;
+  border-radius: 8px;
+  background: #fff;
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  ul:not(.tag-list) {
+    margin-left: $spacing-unit * 0.75;
+  }
+}
+
+.post-content .project-card-title,
+.project-card-title {
+  @include relative-font-size(1.2);
+  margin: 0 0 4px;
+  padding: 0;
+  border: 0;
+  font-weight: 600;
+
+  a,
+  a:visited {
+    color: $text-color;
+  }
+}
+
+.project-card-meta {
+  margin-bottom: $spacing-unit / 3;
+  color: $grey-color;
+  font-size: $small-font-size;
+}
+
+.project-card-links {
+  margin-top: auto;
+  font-weight: 600;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 $spacing-unit / 2;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: lighten($brand-color, 48%);
+    color: darken($brand-color, 12%);
+    font-size: $small-font-size;
+  }
+}
+
+// Experience entries on the home page (kramdown definition lists)
+.post-content dl,
+.home dl {
+  dt {
+    margin-top: $spacing-unit / 2;
+  }
+
+  dd {
+    margin: 4px 0 $spacing-unit / 2;
+  }
+}
+
+// Project write-ups
+.breadcrumb {
+  margin-bottom: $spacing-unit / 3;
+  font-size: $small-font-size;
+}
+
+.toc {
+  margin-bottom: $spacing-unit;
+  padding: $spacing-unit / 2 $spacing-unit * 0.75;
+  border: 1px solid $grey-color-light;
+  border-radius: 8px;
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  ol {
+    margin: $spacing-unit / 3 0 0 $spacing-unit;
+  }
+}
+
+.project-pager {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: $spacing-unit / 2;
+  margin-top: $spacing-unit * 1.5;
+  padding-top: $spacing-unit;
+  border-top: 1px solid $grey-color-light;
+
+  a {
+    flex: 1 1 240px;
+    max-width: 420px;
+    padding: $spacing-unit / 2;
+    border: 1px solid $grey-color-light;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover {
+      border-color: $brand-color;
+      text-decoration: none;
+    }
+  }
+
+  span {
+    display: block;
+    color: $grey-color;
+    font-size: $small-font-size;
+    font-weight: 400;
+  }
+
+  .pager-next {
+    margin-left: auto;
+    text-align: right;
+  }
 }

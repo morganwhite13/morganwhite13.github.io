@@ -17,7 +17,7 @@ To check for broken internal links:
 
 ```sh
 bundle exec jekyll build
-bundle exec htmlproofer _site --disable-external --ignore-missing-alt
+bundle exec htmlproofer _site --disable-external
 ```
 
 This also runs in CI on every push and pull request.
@@ -30,20 +30,21 @@ This also runs in CI on every push and pull request.
 | `about.md` | About page |
 | `projects.md` | Project overview |
 | `projects/*.md` | One detailed write-up per project |
-| `assets/` | Resume PDF and other static files |
+| `_data/projects.yml` | Project list behind the home page cards, the projects page and the previous/next links |
+| `_layouts/`, `_includes/` | Overrides of the minima theme (project layout, project cards, head tags) |
+| `assets/` | Styles, resume PDF, icons and the social preview image |
 | `_config.yml` | Site settings, navigation and plugins |
 
 ## Adding a project
 
-1. Create `projects/<slug>.md` with this front matter:
+1. Create `projects/<slug>.md` with this front matter (the layout is set automatically):
 
    ```yaml
    ---
-   layout: page
    title: Project Title
    permalink: /projects/<slug>/
+   description: "One sentence for search results and link previews."
    ---
    ```
 
-2. Add a summary section to `projects.md` linking to `/projects/<slug>/`.
-3. Optionally feature it on the home page in `index.md`.
+2. Add an entry to `_data/projects.yml` with the same `url`. Set `featured: true` to show it on the home page.

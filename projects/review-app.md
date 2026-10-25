@@ -1,5 +1,4 @@
 ---
-layout: page
 title: Morgan's Reviews - iOS Entertainment Review App
 permalink: /projects/review-app/
 description: "A native Swift/UIKit iOS app for writing and browsing entertainment reviews, with a custom accessible star rating control."
