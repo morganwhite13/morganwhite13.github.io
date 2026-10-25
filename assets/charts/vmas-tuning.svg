@@ -1,18 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 332" role="img" aria-labelledby="t d">
 <title id="t">Final reward after hyperparameter tuning</title>
 <desc id="d">Original settings: ~280; Best combination: ~520; Best, but clip 0.2: ~480; Best, but batch 200: ~490; Best, but 20 epochs: ~470</desc>
 <style>
   .title { font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #111; }
   .label, .value { font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #333; }
+  .bg { fill: #fff; }
   .bar { fill: #8fb3e3; }
   .bar.hi { fill: #1f5fae; }
   @media (prefers-color-scheme: dark) {
+    .bg { fill: #1b1e23; }
     .title { fill: #e3e5e8; }
     .label, .value { fill: #c9ccd1; }
     .bar { fill: #3d5f8f; }
     .bar.hi { fill: #7cb0f5; }
   }
 </style>
+<rect class="bg" x="0" y="0" width="552" height="332" rx="8"/>
+<g transform="translate(16 16)">
 <text class="title" x="0" y="20">Final reward after hyperparameter tuning</text>
 <text class="label" x="0" y="53">Original settings</text>
 <rect class="bar" x="0" y="58" width="246" height="20" rx="3"/>
@@ -29,4 +33,5 @@
 <text class="label" x="0" y="261">Best, but 20 epochs</text>
 <rect class="bar" x="0" y="266" width="412" height="20" rx="3"/>
 <text class="value" x="420" y="281">~470</text>
+</g>
 </svg>

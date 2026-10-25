@@ -1,18 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 196" role="img" aria-labelledby="t d">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 228" role="img" aria-labelledby="t d">
 <title id="t">Cumulative reward by algorithm (3 agents to eliminate)</title>
 <desc id="d">SAC: ~11,800; PPO: ~10,500; POCA: ~10,200</desc>
 <style>
   .title { font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #111; }
   .label, .value { font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #333; }
+  .bg { fill: #fff; }
   .bar { fill: #8fb3e3; }
   .bar.hi { fill: #1f5fae; }
   @media (prefers-color-scheme: dark) {
+    .bg { fill: #1b1e23; }
     .title { fill: #e3e5e8; }
     .label, .value { fill: #c9ccd1; }
     .bar { fill: #3d5f8f; }
     .bar.hi { fill: #7cb0f5; }
   }
 </style>
+<rect class="bg" x="0" y="0" width="552" height="228" rx="8"/>
+<g transform="translate(16 16)">
 <text class="title" x="0" y="20">Cumulative reward by algorithm (3 agents to eliminate)</text>
 <text class="label" x="0" y="53">SAC</text>
 <rect class="bar hi" x="0" y="58" width="456" height="20" rx="3"/>
@@ -23,4 +27,5 @@
 <text class="label" x="0" y="157">POCA</text>
 <rect class="bar" x="0" y="162" width="394" height="20" rx="3"/>
 <text class="value" x="402" y="177">~10,200</text>
+</g>
 </svg>

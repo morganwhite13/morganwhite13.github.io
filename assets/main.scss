@@ -332,17 +332,60 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
   }
 }
 
-// Dark mode, following the visitor's system setting
-@media (prefers-color-scheme: dark) {
-  $dark-bg: #131519;
-  $dark-surface: #1b1e23;
-  $dark-text: #e3e5e8;
-  $dark-muted: #a3a8ae;
-  $dark-border: #30343b;
-  $dark-link: #7cb0f5;
+// Light/dark toggle in the header
+.theme-toggle {
+  float: right;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin: 13px 0 0 16px;
+  padding: 0;
+  border: 1px solid $grey-color-light;
+  border-radius: 6px;
+  background: transparent;
+  color: $grey-color-dark;
+  cursor: pointer;
 
-  :root {
-    color-scheme: dark;
+  svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  &:hover {
+    border-color: $brand-color;
+  }
+
+  // Stays hidden until the script runs, since it does nothing without it
+  &[hidden] {
+    display: none;
+  }
+
+  @include media-query($on-palm) {
+    position: absolute;
+    top: 13px;
+    right: 62px;
+    margin: 0;
+  }
+}
+
+// Dark theme. It applies when the system prefers dark, unless the visitor
+// picked light with the header toggle, or when the visitor picked dark.
+$dark-bg: #131519;
+$dark-surface: #1b1e23;
+$dark-text: #e3e5e8;
+$dark-muted: #a3a8ae;
+$dark-border: #30343b;
+$dark-link: #7cb0f5;
+
+@mixin dark-theme {
+  color-scheme: dark;
+
+  .theme-toggle {
+    border-color: $dark-border;
+    color: $dark-text;
   }
 
   body {
@@ -491,4 +534,18 @@ $grey-color: #6a6a6a; // darker than minima's default so small grey text meets W
     .gd { color: #ffa198; background-color: rgba(248, 81, 73, 0.15); }
     .gi { color: #7ee787; background-color: rgba(46, 160, 67, 0.15); }
   }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    @include dark-theme;
+  }
+}
+
+:root[data-theme="dark"] {
+  @include dark-theme;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
 }
