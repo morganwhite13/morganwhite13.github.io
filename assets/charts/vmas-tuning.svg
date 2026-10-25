@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 552 332" role="img" aria-labelledby="t d">
-<title id="t">Final reward after hyperparameter tuning</title>
-<desc id="d">Original settings: ~280; Best combination: ~520; Best, but clip 0.2: ~480; Best, but batch 200: ~490; Best, but 20 epochs: ~470</desc>
+<title id="t">Final reward by PPO settings (re-run, mean of 3 seeds)</title>
+<desc id="d">Original settings: 34.2; Reported best: 45.3; Reported best, but clip 0.2: 46.1; Reported best, but batch 200: 55.6; Reported best, but 20 epochs: 52.4</desc>
 <style>
   .title { font: 600 16px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #111; }
   .label, .value { font: 14px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; fill: #333; }
@@ -17,21 +17,21 @@
 </style>
 <rect class="bg" x="0" y="0" width="552" height="332" rx="8"/>
 <g transform="translate(16 16)">
-<text class="title" x="0" y="20">Final reward after hyperparameter tuning</text>
+<text class="title" x="0" y="20">Final reward by PPO settings (re-run, mean of 3 seeds)</text>
 <text class="label" x="0" y="53">Original settings</text>
-<rect class="bar" x="0" y="58" width="246" height="20" rx="3"/>
-<text class="value" x="254" y="73">~280</text>
-<text class="label" x="0" y="105">Best combination</text>
-<rect class="bar hi" x="0" y="110" width="456" height="20" rx="3"/>
-<text class="value" x="464" y="125">~520</text>
-<text class="label" x="0" y="157">Best, but clip 0.2</text>
-<rect class="bar" x="0" y="162" width="421" height="20" rx="3"/>
-<text class="value" x="429" y="177">~480</text>
-<text class="label" x="0" y="209">Best, but batch 200</text>
-<rect class="bar" x="0" y="214" width="430" height="20" rx="3"/>
-<text class="value" x="438" y="229">~490</text>
-<text class="label" x="0" y="261">Best, but 20 epochs</text>
-<rect class="bar" x="0" y="266" width="412" height="20" rx="3"/>
-<text class="value" x="420" y="281">~470</text>
+<rect class="bar" x="0" y="58" width="280" height="20" rx="3"/>
+<text class="value" x="288" y="73">34.2</text>
+<text class="label" x="0" y="105">Reported best</text>
+<rect class="bar" x="0" y="110" width="372" height="20" rx="3"/>
+<text class="value" x="380" y="125">45.3</text>
+<text class="label" x="0" y="157">Reported best, but clip 0.2</text>
+<rect class="bar" x="0" y="162" width="378" height="20" rx="3"/>
+<text class="value" x="386" y="177">46.1</text>
+<text class="label" x="0" y="209">Reported best, but batch 200</text>
+<rect class="bar hi" x="0" y="214" width="456" height="20" rx="3"/>
+<text class="value" x="464" y="229">55.6</text>
+<text class="label" x="0" y="261">Reported best, but 20 epochs</text>
+<rect class="bar" x="0" y="266" width="430" height="20" rx="3"/>
+<text class="value" x="438" y="281">52.4</text>
 </g>
 </svg>

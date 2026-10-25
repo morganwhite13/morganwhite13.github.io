@@ -12,15 +12,15 @@ OUT = Path(__file__).resolve().parent.parent / "assets" / "charts"
 
 CHARTS = {
     "vmas-tuning": {
-        "title": "Final reward after hyperparameter tuning",
+        "title": "Final reward by PPO settings (re-run, mean of 3 seeds)",
         "bars": [
-            ("Original settings", 280),
-            ("Best combination", 520),
-            ("Best, but clip 0.2", 480),
-            ("Best, but batch 200", 490),
-            ("Best, but 20 epochs", 470),
+            ("Original settings", 34.2),
+            ("Reported best", 45.3),
+            ("Reported best, but clip 0.2", 46.1),
+            ("Reported best, but batch 200", 55.6),
+            ("Reported best, but 20 epochs", 52.4),
         ],
-        "highlight": [1],
+        "highlight": [3],
     },
     "marl-elimination": {
         "title": "Cumulative reward at 500K steps by agents needed to eliminate",
@@ -72,7 +72,8 @@ STYLE = """
 
 
 def fmt(v):
-    return f"~{v:,}"
+    # Floats are measured means; integers are approximate values read off old plots
+    return f"{v:.1f}" if isinstance(v, float) else f"~{v:,}"
 
 
 def chart(title, bars, highlight):

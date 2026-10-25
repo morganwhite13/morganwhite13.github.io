@@ -309,7 +309,7 @@ def train_environment_variables(env, description, norm=True,
 > - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiment 1 below has been re-run with the fixed code over 3 seeds; the other experiments are the original results and still need re-running.
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1 and 9 below have been re-run with the fixed code over 3 seeds; the other experiments are the original results and still need re-running.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -551,29 +551,21 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 
 ### Experiment 9: Best Combined Hyperparameters
 
-**Setup:** Combine all improvements from previous experiments
+**Setup:** Combine the best setting from each earlier experiment, then revert one change at a time, on the scenario where one random agent is blinded for 1–10 steps (probability 0.1)
 
-**Configurations Tested:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
 
-| Config | Norm | Clip | Batch | Epochs | Final Reward |
-|--------|------|------|-------|--------|--------------|
-| Original | False | 0.2 | 200 | 20 | ~280 |
-| **Best** | True | 0.3 | 100 | 30 | **~520** |
-| Best - Clip | True | 0.2 | 100 | 30 | ~480 |
-| Best - Batch | True | 0.3 | 200 | 30 | ~490 |
-| Best - Epochs | True | 0.3 | 100 | 20 | ~470 |
+| Config | Norm | Clip | Batch | Epochs | Final Reward | Original single seed |
+|--------|------|------|-------|--------|--------------|----------------------|
+| Original | False | 0.2 | 200 | 20 | 34.2 ± 16.1 | ~280 |
+| Reported best | True | 0.3 | 100 | 30 | 45.3 ± 6.8 | ~520 |
+| Best, but clip 0.2 | True | 0.2 | 100 | 30 | 46.1 ± 10.7 | ~480 |
+| Best, but batch 200 | True | 0.3 | 200 | 30 | **55.6 ± 1.8** | ~490 |
+| Best, but 20 epochs | True | 0.3 | 100 | 20 | 52.4 ± 6.8 | ~470 |
 
-![Bar chart of final reward: about 280 with the original settings and about 520 with the best combination (advantage normalization, clip 0.3, batch 100, 30 epochs); removing any one change drops it to 470–490](/assets/charts/vmas-tuning.svg){: .chart}
+![Bar chart of mean final reward over 3 seeds: 34.2 with the original settings, 45.3 with the reported best combination, 46.1 with clip 0.2, 55.6 with batch 200 and 52.4 with 20 epochs](/assets/charts/vmas-tuning.svg){: .chart}
 
-**Key Finding:** Combined improvements yield **+86% performance** over baseline
-
-**Optimal Hyperparameters:**
-```python
-normalize_advantage = True
-clip_epsilon = 0.3
-minibatch_size = 100
-num_epochs = 30
-```
+**Key Finding:** Tuning helps, but less than the original runs suggested. Every tuned setup beats the original settings on average (+32% for the reported best) and varies far less between seeds. The original +86% doesn't reproduce, and the "best" combination isn't the best: going back to batch 200 or 20 epochs did as well or better. With 3 seeds, the differences between the tuned setups are within noise; the gap to the original settings is the robust part.
 
 **Video Evidence:** Trained agents successfully balance platform and move ball to goal despite random multi-step blindness events
 
@@ -834,7 +826,7 @@ If I were to extend this research, I would:
 - Suggests potential for real autonomous systems
 
 **2. Hyperparameters Matter More Than Expected:**
-- Optimal config: +86% performance over default
+- Tuned settings beat the defaults by about a third on a 3-seed re-run, and cut the spread between seeds (the original single-seed runs reported +86%)
 - Normalization absolutely essential (not optional)
 - Clipping sweet spot (0.3) specific to stochasticity level
 
@@ -928,7 +920,7 @@ with torch.no_grad():
     )
 ```
 
-**Key Hyperparameters (Optimal):**
+**Key Hyperparameters (best in the 3-seed re-run of Experiment 9):**
 ```python
 # Sampling
 frames_per_batch = 6_000
@@ -938,7 +930,7 @@ num_vmas_envs = 30
 
 # Training
 num_epochs = 30          # ← Increased from 20
-minibatch_size = 100     # ← Decreased from 200
+minibatch_size = 200     # Unchanged (100 did no better in the re-run)
 lr = 3e-4
 
 # PPO
@@ -982,4 +974,4 @@ The research highlights critical gaps in MARL tooling (VMAS documentation, libra
 
 Most importantly, the results suggest that **robustness can be learned, not just engineered**—agents discover emergent compensation strategies when teammates go blind, suggesting promising avenues for deploying cooperative AI in real-world scenarios where sensor reliability cannot be guaranteed.
 
-The 86% performance improvement through hyperparameter optimization (normalization + optimal clip/batch/epochs) shows how much tuning matters for MARL in stochastic environments with partial observability. Each configuration was trained once with a fixed random seed, so repeating the runs across several seeds would be the next step to confirm the size of the effect. This finding has direct implications for practitioners building real autonomous systems.
+Hyperparameter tuning mattered, but re-running it is the more useful lesson. The original single-seed runs reported +86%; repeating them over 3 seeds with the fixed code gave about +32%, and showed that the "best" combination wasn't actually the best. Single-seed hyperparameter comparisons in MARL are noisy enough to mislead, so several seeds per setting should be the default.
