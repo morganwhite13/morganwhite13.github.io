@@ -312,7 +312,7 @@ def train_environment_variables(env, description, norm=True,
 > - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1, 2 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes after 25 and 100 training iterations; the other experiments are the original results and still need re-running.
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1, 2, 8 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes after 25 and 100 training iterations; the other experiments are the original results and still need re-running.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -539,10 +539,27 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 
 ### Experiment 8: Number of Agents
 
-**Setup:** n_agents = [2, 3, 4, 5, 7, 10]  
+**Setup:** n_agents = [2, 3, 5, 7, 10]  
 **Environment:** Blind 1 random agent randomly (10% prob, 1-10 steps)
 
-**Results:**
+More agents also make the balance task itself easier, so raw reward can't show whether a bigger team copes better with blindness. The re-run therefore trains every team size twice, with and without blindness, and compares the share of reward kept.
+
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
+
+| Agents | No blindness | With blindness | Share kept |
+|--------|--------------|----------------|------------|
+| 2 | 7.4 ± 19.5 | 13.9 ± 12.2 | (didn't learn in 25 iterations) |
+| 3 | 43.8 ± 10.9 | 21.3 ± 7.6 | 48% |
+| 5 | 76.7 ± 5.0 | 62.4 ± 5.2 | 81% |
+| 7 | 81.5 ± 2.9 | 91.9 ± 3.3 | 113% |
+| 10 | 94.5 ± 8.9 | 95.5 ± 6.4 | 101% |
+
+![Line chart of final reward by team size with and without blindness, over 3 seeds. Both lines rise with team size, from near 10 for 2 agents to about 95 for 10. The blindness line is well below the no-blindness line for 3 and 5 agents, crosses above it at 7, and meets it at 10](/assets/charts/vmas-exp8-agents.png){: .chart .chart-wide}
+
+**Key Finding:** Redundancy helps. A 3-agent team loses about half its reward when one agent goes blind, a 5-agent team about a fifth, and from 7 agents nothing. But there's no sweet spot at 5–7: 10 agents scored highest with and without blindness, with no sign of coordination overhead.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 | Agents | Final Reward | Observations |
 |--------|--------------|--------------|
@@ -563,6 +580,8 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 **Sweet Spot:** 5-7 agents
 - Enough redundancy to handle blindness
 - Not so many that coordination becomes bottleneck
+
+</details>
 
 ---
 
@@ -846,7 +865,7 @@ This project taught me:
 
 **Robustness & Real-World AI**
 - Partial observability is realistic and challenging
-- Systems need redundancy (more agents help)
+- Systems need redundancy: with more agents, one blind teammate costs less
 - Robustness has to be measured on separate evaluation episodes, not training curves, and after enough training
 - Generalization doesn't come free (scenario-specific policies)
 
@@ -891,10 +910,10 @@ If I were to extend this research, I would:
 - Normalization made runs more consistent, not better: the original "essential" claim didn't hold over 3 seeds
 - Clipping sweet spot (0.3) specific to stochasticity level
 
-**3. Redundancy Helps (Up to a Point):**
-- 5-7 agents optimal for Balance scenario
-- Too few = no redundancy, too many = coordination overhead
-- Real-world implication: design for sweet spot
+**3. Redundancy Helps:**
+- One blind agent costs a 3-agent team about half its reward, a 5-agent team about a fifth, and a 7-agent team nothing
+- No sweet spot: 10 agents scored highest, with and without blindness
+- Real-world implication: spare capacity is what absorbs sensor failures
 
 **4. Generalization Fails:**
 - Balance-trained policies don't transfer to other tasks
