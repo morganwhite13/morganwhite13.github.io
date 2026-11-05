@@ -54,7 +54,7 @@
     colour-based vision, picks them up and stores them, with no human input.
   highlights:
     - Collected all 5 jars in the original runs
-    - v2 rewrite kept v1 intact and fixed 9 bugs, with tests covering 96% of its logic
+    - v2 rewrite kept v1 intact and fixed 9 bugs, with tests covering 99% of its logic
     - Measured on a robot model, v2 scans a full circle (v1 about 271°) and ends long legs within 1 cm (v1 27 cm)
   glance:
     problem: Find, pick up and store jars in a 20×20 m simulated warehouse with no human input.

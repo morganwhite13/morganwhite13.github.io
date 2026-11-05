@@ -37,7 +37,7 @@ v2 keeps every waypoint, gripper timing and vision threshold from v1, and change
 | "360°" jar scan | Turns about 271° (fixed time) | Turns a full circle, measured by the compass |
 | End of a 530 cm leg started 2.9° off | 26.8 cm from the waypoint | 1.1 cm |
 | No jar can be found | Retries forever | Stops after 3 attempts with a mission report |
-| Tests and CI | None | JUnit tests covering 96% of v2's logic; static analysis; GitHub Actions |
+| Tests and CI | None | JUnit tests covering 99% of v2's logic and catching 95% of injected bugs (mutation testing); static analysis; GitHub Actions |
 
 These numbers come from a kinematic model of the Pioneer 3-DX (no box physics), not from Webots. A script that runs both versions headless in Webots and compares them is ready, and that run is the next step. The full write-up, with each fix and the original line numbers, is in the [repository's pull request](https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System/pull/2).
 
@@ -227,7 +227,7 @@ If I were to extend this project, I would:
 **Tools & Technologies:**
 - Webots R2025a - Professional robotics simulator
 - Java - Control system implementation
-- JUnit 5, JaCoCo, SpotBugs, GitHub Actions - testing and CI
+- JUnit 5, JaCoCo, PIT, SpotBugs, GitHub Actions - testing and CI
 - Git - Version control
 
 **How to Run:**
