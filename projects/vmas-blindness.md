@@ -203,13 +203,15 @@ entropy_eps = 1e-4        # Entropy bonus coefficient
 loss_module = ClipPPOLoss(
     actor_network=policy,
     critic_network=critic,
-    normalize_advantage=True  # Critical for blindness scenarios
+    normalize_advantage=True
 )
 ```
 
-**Impact:**
+**Impact (expected):**
 - Prevents blinded agents from dominating gradient updates
 - Stabilizes learning despite observation variance
+
+The 3-seed re-run of Experiment 2 found the second effect but not a better result: with normalization, seeds agreed more, but final reward wasn't consistently higher.
 - Essential for scenarios with random blindness events
 
 ### 4. GAE (Generalized Advantage Estimation)
@@ -292,7 +294,7 @@ def train_environment_variables(env, description, norm=True,
 
 ✅ **6 Custom Blindness Scenarios** - Probabilistic, duration-based, single/multi-agent  
 ✅ **MAPPO Implementation** - Centralized critic with decentralized execution  
-✅ **Advantage Normalization** - Critical for handling observation variance  
+✅ **Advantage Normalization** - Tested on and off across all 7 scenarios over 3 seeds  
 ✅ **Extensive Hyperparameter Study** - 50+ experiments across 7 dimensions  
 ✅ **Vectorized Simulation** - 30 parallel environments for efficient data collection  
 ✅ **Parameter Sharing** - Single policy shared across all agents (swarm behavior)  
@@ -310,7 +312,7 @@ def train_environment_variables(env, description, norm=True,
 > - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes after 25 and 100 training iterations; the other experiments are the original results and still need re-running.
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1, 2 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes after 25 and 100 training iterations; the other experiments are the original results and still need re-running.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -353,9 +355,26 @@ The re-run's rewards are on a different scale from the original single-seed resu
 
 ### Experiment 2: Normalization Impact
 
-**Setup:** All 7 scenarios × 2 conditions (normalized vs. non-normalized)
+**Setup:** All 7 scenarios × 2 conditions (advantage normalization on vs. off)
 
-**Results:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation. The normalization-off column is Experiment 1's re-run; the on column repeats it with normalization on, everything else identical.
+
+| Environment | Normalization off | Normalization on |
+|-------------|-------------------|------------------|
+| Normal (no blindness) | 49.2 ± 4.8 | 43.8 ± 10.9 |
+| Blind 1 random agent every step | 5.5 ± 12.9 | 16.6 ± 6.0 |
+| Blind all agents every step | −11.8 ± 1.9 | −10.8 ± 2.4 |
+| Blind 1 random agent with probability 0.1 | 40.5 ± 11.6 | 36.8 ± 8.0 |
+| Blind each agent with probability 0.1 | 37.8 ± 15.6 | 33.2 ± 6.3 |
+| Blind 1 random agent for 1–10 steps | 34.2 ± 16.1 | 21.3 ± 7.6 |
+| Blind each agent for 1–10 steps | 10.7 ± 9.2 | −0.2 ± 5.9 |
+
+![Horizontal bar chart of final reward per scenario with normalization off and on, mean and standard deviation over 3 seeds with each seed shown as a dot. The two conditions overlap in most scenarios; normalization on is clearly higher only with one agent blinded every step, and its seeds are more tightly grouped in most scenarios](/assets/charts/vmas-exp2-norm.png){: .chart .chart-wide}
+
+**Key Finding:** Normalization isn't essential. The original single-seed runs reported +40–60 reward from it; the re-run finds a lower mean in 5 of 7 scenarios, with per-seed differences that mostly change sign. Its one consistent gain is with one agent blinded every step (+11, better in all 3 seeds). What it does do is make seeds agree more: the spread is smaller in 5 of 7 scenarios.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Normalized Advantage (True):**
 - Blind 1 agent randomly (1 step): **~420** (↑ 40 from baseline)
@@ -367,12 +386,9 @@ The re-run's rewards are on a different scale from the original single-seed resu
 - Lower final performance across all scenarios
 - More unstable learning (sudden drops)
 
-**Conclusion:** **Normalization is essential** for blindness scenarios
-- Deals with variance from agents experiencing different observation states
-- Prevents blinded agents from dominating gradient updates with large errors
-- Stabilizes training even in extreme conditions
+The original conclusion was that normalization is essential, and all later experiments used it.
 
-**All future experiments use normalization enabled.**
+</details>
 
 ---
 
@@ -807,14 +823,14 @@ This project taught me:
 **Multi-Agent Reinforcement Learning**
 - MAPPO algorithm and centralized training, decentralized execution
 - Parameter sharing for swarm-like homogeneous policies
-- Advantage normalization critical for variance management
+- Advantage normalization reduces variance between runs, but didn't raise final reward here
 - GAE for smooth advantage estimation in stochastic environments
 
 **Hyperparameter Sensitivity**
 - Clipping value has non-monotonic relationship with performance
 - Batch size sweet spot (too large = overfitting, too small = noise)
 - Epochs: diminishing returns after threshold
-- Normalization: not optional for partial observability
+- Normalization: a smaller effect than single runs suggested
 
 **VMAS Framework (Despite Frustration)**
 - Vectorized simulation for parallel data collection
@@ -872,7 +888,7 @@ If I were to extend this research, I would:
 
 **2. Hyperparameters Matter More Than Expected:**
 - Tuned settings beat the defaults by about a third on a 3-seed re-run, and cut the spread between seeds (the original single-seed runs reported +86%)
-- Normalization absolutely essential (not optional)
+- Normalization made runs more consistent, not better: the original "essential" claim didn't hold over 3 seeds
 - Clipping sweet spot (0.3) specific to stochasticity level
 
 **3. Redundancy Helps (Up to a Point):**
@@ -980,7 +996,7 @@ lr = 3e-4
 
 # PPO
 clip_epsilon = 0.3       # ← Increased from 0.2
-normalize_advantage = True  # ← Critical!
+normalize_advantage = True  # More consistent across seeds
 gamma = 0.9
 lmbda = 0.9
 ```
