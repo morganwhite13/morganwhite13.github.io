@@ -32,14 +32,20 @@ v2 keeps every waypoint, gripper timing and vision threshold from v1, and change
 
 | Situation | v1 (original) | v2 (rewrite) |
 |---|---|---|
+| Whole mission on the robot model (20 variants of motor lag and wheel slip) | Never finishes (at most 2 of 5 jars delivered) | Delivers all 5 jars every time |
 | After a failed search for jars 2-5 | Drives a 17.8 m straight line through 4 immovable boxes | Returns 0.8 m to the search point |
 | Robot blocked while driving | Pushes forever | Detects the stall in about 4 s and moves on |
 | "360°" jar scan | Turns about 271° (fixed time) | Turns a full circle, measured by the compass |
 | End of a 530 cm leg started 2.9° off | 26.8 cm from the waypoint | 1.1 cm |
 | No jar can be found | Retries forever | Stops after 3 attempts with a mission report |
-| Tests and CI | None | JUnit tests covering 99% of v2's logic and catching 95% of injected bugs (mutation testing); static analysis; GitHub Actions |
+| A jar slips out of the gripper | Reports success and carries nothing to the drop-off | Optional grip check notices and grabs again |
+| Tests and CI | None | JUnit tests covering 99% of v2's logic and catching 94% of injected bugs (mutation testing); static analysis; GitHub Actions |
 
-These numbers come from a kinematic model of the Pioneer 3-DX (no box physics), not from Webots. A script that runs both versions headless in Webots and compares them is ready, and that run is the next step. The full write-up, with each fix and the original line numbers, is in the [repository's pull request](https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System/pull/2).
+Here are both versions running the whole mission on that model, at 30x speed. v1 drifts off its route while clearing boxes, drives into a wooden box and keeps pushing; v2 delivers all five jars:
+
+![Animated replay of v1 and v2 running the whole mission on the robot model: v1 drifts off its route while clearing boxes and pushes against a wooden box from 47 s; v2 delivers all five jars in 864 s](/assets/charts/robot-mission-replay.svg){: .chart .chart-wide}
+
+These numbers come from a kinematic model of the Pioneer 3-DX (no box physics), not from Webots. The original Webots runs in the videos did collect all five jars. The model has no inertia, so it's harsher on v1's full-speed turns than the simulator may be. It's also not yet known whether those runs used v1 or an older version of the controller found in the repository. A script that runs both versions headless in Webots and compares them is ready, and that run is the next step. The full write-up, with each fix and the original line numbers, is in the [repository's pull request](https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System/pull/2).
 
 ---
 
@@ -207,7 +213,7 @@ If I were to extend this project, I would:
 
 1. **Run the Webots comparison** of v1 and v2 and tune v2 from the results
 2. **Dynamic Pathfinding** - Replace hardcoded waypoints with A* or Dijkstra algorithm. A first A* analysis finds routes about 13-14% shorter than the hand-tuned ones once the boxes are cleared, and no route at all without clearing. v2 can already use them as an option, to be compared in Webots
-3. **Obstacle detection** - Use the distance sensors to slow down before hitting something
+3. **Obstacle detection** - v2 can now use the front sonars to slow down and stop short of something in its way (an option until it's tuned in Webots); the next step is planning a way around it
 4. **SLAM Implementation** - Add simultaneous localization and mapping for unknown environments
 5. **Machine Learning** - Train CNN for robust object detection in variable lighting
 6. **Multi-Robot Coordination** - Enable swarm behavior for collaborative collection
