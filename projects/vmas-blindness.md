@@ -325,7 +325,7 @@ def train_environment_variables(env, description, norm=True,
 | Is advantage normalization essential? | No: it made runs more consistent, not better | [Experiment 2](#experiment-2-normalization-impact) |
 | Which PPO settings help? | Clip 0.3, smaller minibatches, more epochs | [Experiments 3–5](#experiment-3-ppo-clipping-value) |
 | Does tuning give +86%? | About +32% | [Experiment 9](#experiment-9-best-combined-hyperparameters) |
-| Does it carry over to other VMAS scenarios? | Blindness works in all five; where agents learn, it costs between 8% and half the reward | [Other scenarios](#other-vmas-scenarios) |
+| Does it carry over to other VMAS scenarios? | Blindness works in all five. Where agents learn, it costs 6–16% after 100 iterations; two scenarios don't learn even then | [Other scenarios](#other-vmas-scenarios) |
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -689,7 +689,21 @@ More agents also make the balance task itself easier, so raw reward can't show w
 | wheel | 3 | −9.21 ± 0.57 | −9.29 ± 0.24 | No |
 | ball_passage | 2 | −0.01 ± 0.02 | 0.03 ± 0.03 | No |
 
-**Key Finding:** The blindness transforms work in every scenario. Where agents learn, blindness costs them, by very different amounts: about half the reward in balance, 8% in give_way. Wheel and ball_passage don't learn at all in 25 iterations, with or without blindness, so they can't show anything about blindness yet. Some scenarios also fix their own team size (2 agents in give_way and ball_passage, 4 in multi_give_way), which the original setup assumed was 3.
+**Key Finding:** The blindness transforms work in every scenario. At 25 iterations, blindness costs about half the reward in balance and 8% in give_way, while wheel and ball_passage don't learn at all. Some scenarios also fix their own team size (2 agents in give_way and ball_passage, 4 in multi_give_way), which the original setup assumed was 3.
+
+**With 100 training iterations** (4× longer, same seeds):
+
+[![Five bar charts, one per VMAS scenario, comparing final reward with and without blindness after 100 training iterations. Balance is about 64 without blindness and 60 with; give_way 4.5 and 3.7; wheel and ball_passage are about the same in both conditions and near their starting reward; multi_give_way varies widely without blindness and sits near 3 with it](/assets/charts/vmas-scenarios-100.png){: .chart .chart-wide width="1800" height="480" loading="lazy" decoding="async"}](/assets/charts/vmas-scenarios-100.png)
+
+| Scenario | No blindness | With blindness | Cost of blindness |
+|---|---|---|---|
+| balance | 64.0 ± 1.0 | 60.5 ± 2.3 | 6% (52% at 25 iterations) |
+| give_way | 4.45 ± 0.39 | 3.72 ± 0.07 | 16% (8% at 25 iterations) |
+| multi_give_way | 0.19 ± 3.09 | 2.89 ± 0.48 | None; too noisy to call |
+| wheel | −8.57 ± 0.61 | −8.62 ± 0.34 | None measurable; barely learns |
+| ball_passage | 0.01 ± 0.04 | −0.01 ± 0.02 | None measurable; doesn't learn |
+
+Most of balance's cost at 25 iterations was slower learning, as the robustness test also found: trained longer, the blinded team gets within 6% of the unblinded one. In give_way the cost grows instead. Wheel and ball_passage don't learn even with 4× the training; their rewards are sparse, so they need different settings rather than more iterations.
 
 ---
 
@@ -988,7 +1002,7 @@ This project taught me:
 
 If I were to extend this research, I would:
 
-1. **Train the Other Scenarios Longer** - Blindness now works in every scenario, but Wheel and Ball Passage don't learn in 25 iterations
+1. **Get Wheel and Ball Passage Learning** - Blindness works in every scenario, but these two don't learn even in 100 iterations; their sparse rewards likely need different settings or reward shaping
 2. **Implement MADDPG/QMIX Properly** - Use BenchMARL for fair algorithm comparison
 3. **Communication Protocols** - Allow agents to signal "I'm blind, help!"
 4. **Partial Blindness** - Noisy observations instead of complete zeros
