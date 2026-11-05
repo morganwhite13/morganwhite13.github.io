@@ -16,6 +16,7 @@ on:
 jobs:
   external-links:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       LANG: C.UTF-8
       LC_ALL: C.UTF-8

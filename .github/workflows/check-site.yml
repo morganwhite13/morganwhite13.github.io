@@ -5,9 +5,16 @@ on:
     branches: [main]
   pull_request:
 
+# A newer push to the same branch makes an older run pointless
+concurrency:
+  group: check-site-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-and-proof:
     runs-on: ubuntu-latest
+    # The job normally takes about a minute; fail fast if a download hangs
+    timeout-minutes: 20
     env:
       LANG: C.UTF-8
       LC_ALL: C.UTF-8
@@ -26,6 +33,7 @@ jobs:
           node-version: "22"
           cache: npm
       - name: Install accessibility check tools
+        timeout-minutes: 10
         run: |
           npm ci
           npx playwright install --with-deps chromium
