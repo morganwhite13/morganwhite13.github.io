@@ -40,7 +40,7 @@
   glance:
     problem: Robot swarms need to keep cooperating when some agents' sensors fail.
     approach: Six "blindness" scenarios in VMAS that randomly zero out agents' observations, trained with MAPPO in TorchRL, plus a 50+ run hyperparameter study.
-    result: After fixing bugs found in a code review, a 3-seed re-run confirms the core result. Agents still learn under occasional blindness (40 ± 12 reward vs 49 ± 5 with none), while blinding every agent prevents learning (−12). Tuned PPO settings beat the defaults by about a third (45 ± 7 vs 34 ± 16), well short of the original single-seed +86%.
+    result: After fixing bugs found in a code review, a 3-seed re-run confirms the core result. Agents still learn under occasional blindness (40 ± 12 reward vs 49 ± 5 with none), while blinding every agent prevents learning (−12). A new robustness test found that training with blindness didn't make agents more robust at this budget, and tuned PPO settings beat the defaults by about a third, well short of the original +86%.
 
 - title: Autonomous Robot Jar Collection System
   url: /projects/robot-project/
