@@ -1,16 +1,41 @@
 ---
 title: YouTube Views Prediction Using Neural Networks
 permalink: /projects/youtube-predictor/
-description: "A multi-input TensorFlow model with bidirectional LSTMs that predicts YouTube view counts from a video's title, description, channel, category, subscriber count and age."
+description: "Predicting YouTube view counts before publishing: a TensorFlow course project with bidirectional LSTMs, rewritten as a tested PyTorch package with calibrated ranges, baselines and leak-free evaluation."
 ---
 
 ## Quick Summary
 
-A deep learning system that predicts how many views a YouTube video will get from its title, description, channel name, category, subscriber count and age. It collects its own data through the YouTube Data API, preprocesses the text with NLTK, and builds up a multi-input neural network in six stages, adding one feature at a time, with a bidirectional LSTM for each text field.
+Predicts how many views a YouTube video will get from what's known before it's published. The project has two versions:
 
-**Tech Stack:** Python, TensorFlow/Keras, YouTube Data API, NLTK, scikit-learn  
-**Status:** ✅ Complete (course project, COMP 3106 Introduction to AI)  
-**GitHub:** [View Source Code](https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks)
+- **v1, the course project:** a TensorFlow script that collects its own data through the YouTube Data API, preprocesses the text with NLTK, and builds a multi-input neural network in six stages, with a bidirectional LSTM for each text field. Most of this page describes v1.
+- **v2, the rewrite:** an installable Python package, `ytviews`, that fixes v1's evaluation problems and predicts a calibrated range instead of a single number. See [v2: Rewritten as a Package](#v2-rewritten-as-a-package).
+
+**Tech Stack:** v1: Python, TensorFlow/Keras, YouTube Data API, NLTK, scikit-learn. v2: PyTorch, LightGBM, sentence-transformers, CLIP, FastAPI, Streamlit  
+**Status:** v1 complete (course project, COMP 3106 Introduction to AI); v2 rewrite tested on synthetic data, awaiting real data  
+**GitHub:** [View Source Code](https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks) (v1 is in `legacy/`)
+
+---
+
+## v2: Rewritten as a Package
+
+v1's weaknesses were in evaluation more than in the model: a raw view-count target, a random split that put the same channels in training and test, preprocessing fit before splitting, and no baselines. The rewrite starts from those:
+
+| Aspect | v1 | v2 |
+|---|---|---|
+| **Target** | Raw view count, MSE loss | `log(1 + views)`, quantile loss with a calibrated p10–p90 range |
+| **Evaluation** | Random split, no baselines | Split by time or by unseen channel, everything fit on training rows only, four baselines |
+| **Text** | Embeddings trained from scratch on a few hundred videos | Pretrained sentence-transformer embeddings |
+| **Channel signal** | Subscriber count | Subscribers plus a past-only prior from the channel's earlier uploads |
+| **Video age** | Measured at training time, so cached data silently aged | Measured when views were fetched; predictions can only rise as a video ages |
+| **Data collection** | Two API calls per video | 50 videos per call, quota budget, SQLite snapshots |
+| **Usability** | Edit the script | CLI, web app, HTTP API, tests and CI |
+
+It also adds thumbnails (CLIP), explanations of each prediction (Shapley values over feature groups), and forecasts for live videos from their early views.
+
+**Results so far are on synthetic data only**, because no API key was available during development. On a held-out test set, a blend of the network and LightGBM reached a log-scale MAE of 0.669, against 0.698 for both LightGBM and ridge regression, with about 80% of outcomes inside the p10–p90 range. Real-data results will come once data has been collected.
+
+`legacy/projectFinal_fixed.py` is a copy of v1 with its bugs fixed, for comparing the two fairly.
 
 ---
 
@@ -26,6 +51,8 @@ View counts depend on far more than anything visible in a video's metadata: the 
 Two things make this hard. View counts span several orders of magnitude, from a thousand to hundreds of millions, and every training example has to be collected through a rate-limited API.
 
 ---
+
+*The rest of this page describes v1, the original course project.*
 
 ## Data Collection Pipeline
 
@@ -206,28 +233,28 @@ projectFinal.py (about 1,400 lines)
 
 ## Future Improvements
 
-1. **Predict `log(views)`** and report error in that space
-2. **Add baselines**: subscriber count alone, and a linear model on the same features
-3. **Use pretrained word embeddings** (such as GloVe) with a much smaller vocabulary
-4. **Collect more data** and keep a separate validation split for early stopping
-5. **Try a Transformer encoder or a pretrained language model** for the text fields
-6. **Add thumbnails** with a CNN, since they strongly influence clicks
+v2 now does most of what this list used to propose: a log-scale target, baselines, pretrained text embeddings and thumbnails. What's left:
+
+1. **Collect real data** and report v2's results on it, against the same baselines
+2. **Compare v1 and v2 on the same data**, using `legacy/projectFinal_fixed.py`
+3. **Check the live-video forecasts** against videos fetched at several ages
 
 ---
 
 ## Files & Resources
 
 **Project files:**
-- `projectFinal.py`: data collection, preprocessing and all six models
-- `*.json`: cached datasets, created on first run
+- `src/ytviews/`: the v2 package; `ytviews demo` runs the whole pipeline offline on synthetic data
+- `legacy/projectFinal.py`: the original v1 script, unchanged
+- `legacy/projectFinal_fixed.py`: v1 with its bugs fixed
 
-**To run it:**
-1. `pip install -r requirements.txt`
-2. Replace `INSERTAPIKEY` in `projectFinal.py` with a YouTube Data API v3 key
-3. `python projectFinal.py` (it downloads the NLTK data it needs on first run, then runs `neuralAllModel`; uncomment another stage at the bottom of the file to run it instead)
+**To run v1:**
+1. `pip install -r legacy/requirements.txt`
+2. Replace `INSERTAPIKEY` in `legacy/projectFinal.py` with a YouTube Data API v3 key
+3. `python legacy/projectFinal.py` (it downloads the NLTK data it needs on first run, then runs `neuralAllModel`; uncomment another stage at the bottom of the file to run it instead)
 
 ---
 
 ## Takeaway
 
-This project covers the full machine learning loop on real, messy data: collecting it through a rate-limited API, cleaning the text, and building a multi-input neural network one feature at a time. Its biggest lesson was about evaluation. With a heavy-tailed target, a small dataset and no baseline, the honest next step isn't a bigger model but a log-scale target, a simple baseline to beat, and a model sized to the data.
+This project covers the full machine learning loop on real, messy data: collecting it through a rate-limited API, cleaning the text, and building a multi-input neural network one feature at a time. Its biggest lesson was about evaluation. With a heavy-tailed target, a small dataset and no baseline, the honest next step wasn't a bigger model but a log-scale target, a simple baseline to beat, and a test on channels the model hasn't seen. The v2 rewrite is built around exactly those.

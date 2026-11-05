@@ -66,20 +66,20 @@
   emoji: 🎬
   when: Course project (Intro to AI)
   featured: true
-  tech: [Python, TensorFlow, Bidirectional LSTMs, YouTube Data API, NLTK]
+  tech: [Python, TensorFlow, PyTorch, LightGBM, YouTube Data API]
   repo: https://github.com/morganwhite13/YouTube-Views-Prediction-Using-Neural-Networks
   summary: >-
-    Predicts a video's view count from its title, description, channel, category, subscriber
-    count and age. I collected the data through the YouTube API and built the model up in six
-    stages, adding one input at a time, with a bidirectional LSTM per text field.
+    Predicts a video's view count before it's published. Started as a TensorFlow course project
+    with a bidirectional LSTM per text field, then rewritten as a tested Python package that
+    predicts a calibrated range and evaluates on channels it hasn't seen.
   highlights:
-    - Data collection with five sampling strategies, caching and English-only filtering
-    - Six model stages to compare what each input adds
-    - What-if predictions that vary one input at a time
+    - v1 course project, data collected through the YouTube API, model built up in six stages
+    - v2 rewrite, a calibrated p10–p90 range, baselines, and splits by time or unseen channel
+    - CLI, web app and HTTP API, with thumbnail features and per-prediction explanations
   glance:
     problem: Predict how many views a YouTube video will get from its title, description, channel, category, subscriber count and age.
-    approach: Data collected with the YouTube Data API, NLTK preprocessing, and a Keras multi-input model with a bidirectional LSTM for each text field, built up in six stages.
-    result: The full pipeline runs end to end, from API collection to what-if predictions. Test error wasn't recorded, and the write-up explains what I'd change first (log-scale target, a baseline, a smaller model).
+    approach: "v1: a Keras multi-input model with a bidirectional LSTM per text field. v2: a PyTorch network blended with LightGBM, pretrained text and thumbnail embeddings, and quantile outputs."
+    result: v1 runs end to end but never recorded test error. v2 fixes its evaluation and, on synthetic data, beats ridge and LightGBM baselines (log MAE 0.669 vs 0.698). Real-data results are still to come.
 
 - title: Stock Price Changes from Reddit Sentiment
   url: /projects/stock-predictor/
