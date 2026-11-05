@@ -37,7 +37,7 @@ v2 keeps every waypoint, gripper timing and vision threshold from v1, and change
 | "360°" jar scan | Turns about 271° (fixed time) | Turns a full circle, measured by the compass |
 | End of a 530 cm leg started 2.9° off | 26.8 cm from the waypoint | 1.1 cm |
 | No jar can be found | Retries forever | Stops after 3 attempts with a mission report |
-| Tests and CI | None | 66 JUnit tests covering 96% of v2's logic; static analysis; GitHub Actions |
+| Tests and CI | None | JUnit tests covering 96% of v2's logic; static analysis; GitHub Actions |
 
 These numbers come from a kinematic model of the Pioneer 3-DX (no box physics), not from Webots. A script that runs both versions headless in Webots and compares them is ready, and that run is the next step. The full write-up, with each fix and the original line numbers, is in the [repository's pull request](https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System/pull/2).
 
@@ -206,7 +206,7 @@ This project taught me:
 If I were to extend this project, I would:
 
 1. **Run the Webots comparison** of v1 and v2 and tune v2 from the results
-2. **Dynamic Pathfinding** - Replace hardcoded waypoints with A* or Dijkstra algorithm. A first A* analysis finds routes about 14% shorter than the hand-tuned ones once the boxes are cleared, and no route at all without clearing
+2. **Dynamic Pathfinding** - Replace hardcoded waypoints with A* or Dijkstra algorithm. A first A* analysis finds routes about 13-14% shorter than the hand-tuned ones once the boxes are cleared, and no route at all without clearing. v2 can already use them as an option, to be compared in Webots
 3. **Obstacle detection** - Use the distance sensors to slow down before hitting something
 4. **SLAM Implementation** - Add simultaneous localization and mapping for unknown environments
 5. **Machine Learning** - Train CNN for robust object detection in variable lighting
