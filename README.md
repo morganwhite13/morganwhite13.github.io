@@ -42,7 +42,7 @@ Raster plots, such as the matplotlib output copied from the VMAS project, go in 
 python3 scripts/prepare_plots.py
 ```
 
-It quantizes each PNG to 256 colours (about a third of the size, with no visible change). It also gives every Markdown image that uses one a width, height and lazy loading, so pages don't jump while they load. Wide plots (`.chart-wide`) also link to the full-size image, since multi-panel plots are hard to read at phone width.
+It quantizes each PNG to 256 colours (about a third of the size, with no visible change). It also gives every Markdown image that uses one, and every generated SVG chart, a width, height and lazy loading, so pages don't jump while they load. Wide plots (`.chart-wide`) also link to the full-size image, since multi-panel plots are hard to read at phone width.
 
 ## Layout
 
@@ -56,7 +56,7 @@ It quantizes each PNG to 256 colours (about a third of the size, with no visible
 | `_layouts/`, `_includes/` | Overrides of the minima theme (project layout, project cards, head tags) |
 | `assets/` | Styles, resume PDF, icons, charts and the social preview image |
 | `scripts/make_charts.py` | Generates the SVG charts in `assets/charts/` |
-| `scripts/prepare_plots.py` | Shrinks the PNG plots in `assets/charts/` and sizes their images |
+| `scripts/prepare_plots.py` | Shrinks the PNG plots in `assets/charts/` and sizes every chart image |
 | `scripts/check-a11y.js` | Accessibility audit of the built site |
 | `_config.yml` | Site settings, navigation and plugins |
 

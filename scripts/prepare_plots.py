@@ -8,9 +8,10 @@ assets/charts/:
 1. Every PNG that isn't already palette-based is quantized to 256 colours.
    Plots use few colours, so this cuts them to about a third of the size
    with no visible change.
-2. Every Markdown image that points at one of these PNGs gets width and
-   height (so the page doesn't jump while it loads) and lazy loading, in
-   its kramdown attribute list: ![alt](/assets/charts/x.png){: .chart ...}
+2. Every Markdown image that points at a chart in assets/charts/ (PNG, or
+   SVG sized from its viewBox) gets width and height (so the page doesn't
+   jump while it loads) and lazy loading, in its kramdown attribute list:
+   ![alt](/assets/charts/x.png){: .chart ...}
 3. Wide plots (.chart-wide) are wrapped in a link to the full-size image,
    since multi-panel plots are hard to read at phone width.
 
@@ -33,7 +34,12 @@ for png in sorted(CHARTS.glob("*.png")):
         print(f"quantized {png.name}: {before // 1024} KB -> {png.stat().st_size // 1024} KB")
     sizes[png.name] = im.size
 
-IMAGE = re.compile(r"(!\[[^\]]*\]\(/assets/charts/([\w.-]+\.png)\))\{:([^}]*)\}")
+for svg in sorted(CHARTS.glob("*.svg")):
+    m = re.search(r'viewBox="\s*[\d.]+\s+[\d.]+\s+([\d.]+)\s+([\d.]+)\s*"', svg.read_text())
+    if m:
+        sizes[svg.name] = (round(float(m.group(1))), round(float(m.group(2))))
+
+IMAGE = re.compile(r"(!\[[^\]]*\]\(/assets/charts/([\w.-]+\.(?:png|svg))\))\{:([^}]*)\}")
 UNLINKED_WIDE = re.compile(r"(?<!\[)(!\[[^\]]*\]\((/assets/charts/[\w.-]+\.png)\)\{:[^}]*chart-wide[^}]*\})")
 
 

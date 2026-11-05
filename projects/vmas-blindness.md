@@ -707,7 +707,7 @@ More agents also make the balance task itself easier, so raw reward can't show w
 | Best, but batch 200 | True | 0.3 | 200 | 30 | **55.6 ± 1.8** | ~490 |
 | Best, but 20 epochs | True | 0.3 | 100 | 20 | 52.4 ± 6.8 | ~470 |
 
-![Bar chart of mean final reward over 3 seeds: 34.2 with the original settings, 45.3 with the reported best combination, 46.1 with clip 0.2, 55.6 with batch 200 and 52.4 with 20 epochs](/assets/charts/vmas-tuning.svg){: .chart}
+![Bar chart of mean final reward over 3 seeds: 34.2 with the original settings, 45.3 with the reported best combination, 46.1 with clip 0.2, 55.6 with batch 200 and 52.4 with 20 epochs](/assets/charts/vmas-tuning.svg){: .chart width="552" height="332" loading="lazy" decoding="async"}
 
 **Key Finding:** Tuning helps, but less than the original runs suggested. Every tuned setup beats the original settings on average (+32% for the reported best) and varies far less between seeds. The original +86% doesn't reproduce, and the "best" combination isn't the best: going back to batch 200 or 20 epochs did as well or better. With 3 seeds, the differences between the tuned setups are within noise; the gap to the original settings is the robust part.
 

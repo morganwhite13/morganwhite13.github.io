@@ -311,7 +311,7 @@ num_layers: 2
 - 3 Agents to Eliminate: ~9,500
 - 4 Agents to Eliminate: ~9,000
 
-![Bar chart of cumulative reward at 500K steps: about 12,000 with no elimination, falling to about 9,000 when 4 agents are needed to eliminate](/assets/charts/marl-elimination.svg){: .chart}
+![Bar chart of cumulative reward at 500K steps: about 12,000 with no elimination, falling to about 9,000 when 4 agents are needed to eliminate](/assets/charts/marl-elimination.svg){: .chart width="552" height="332" loading="lazy" decoding="async"}
 
 **Why This Happened:**
 - Firing cost nothing: the firing penalty is loaded from settings but never applied in the code. Combined with permanent elimination, removing rivals early was a cheap way to secure more food.
@@ -334,7 +334,7 @@ num_layers: 2
 - **PPO:** ~10,500 cumulative reward
 - **POCA:** ~10,200 cumulative reward
 
-![Bar chart of cumulative reward by algorithm: SAC about 11,800, PPO about 10,500, POCA about 10,200](/assets/charts/marl-algorithms.svg){: .chart}
+![Bar chart of cumulative reward by algorithm: SAC about 11,800, PPO about 10,500, POCA about 10,200](/assets/charts/marl-algorithms.svg){: .chart width="552" height="228" loading="lazy" decoding="async"}
 
 **Why SAC Won:**
 - **Entropy maximization** → explored diverse elimination strategies
