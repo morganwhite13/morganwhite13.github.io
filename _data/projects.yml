@@ -45,21 +45,21 @@
 - title: Autonomous Robot Jar Collection System
   url: /projects/robot-project/
   emoji: 🤖
-  when: Fall 2021, updated 2025
+  when: Fall 2021, updated 2025, v2 rewrite 2026
   featured: true
-  tech: [Webots, Java, Computer Vision, Sensor Fusion]
+  tech: [Webots, Java, Computer Vision, Sensor Fusion, JUnit]
   repo: https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System
   summary: >-
     A mobile robot that navigates a 20×20 m simulated warehouse, finds honey jars with
     colour-based vision, picks them up and stores them, with no human input.
   highlights:
-    - Collected all 5 jars in every trial
-    - ±3° heading and ±10 cm position accuracy using compass-based navigation
-    - Camera-based jar detection with fallback search logic, plus touch-sensor grasp checks
+    - Collected all 5 jars in the original runs
+    - v2 rewrite kept v1 intact and fixed 9 bugs, with 61 tests covering 96% of its logic
+    - Measured on a robot model, v2 scans a full circle (v1 about 271°) and ends long legs within 1 cm (v1 27 cm)
   glance:
     problem: Find, pick up and store jars in a 20×20 m simulated warehouse with no human input.
     approach: Colour-threshold vision and a touch sensor to find and grab jars, plus hand-tuned waypoint routes driven with the compass and the simulator's position data, in a phased Java controller for Webots.
-    result: All 5 jars collected in every trial, with ±3° heading and ±10 cm position accuracy.
+    result: All 5 jars collected in the original runs. A tested v2 rewrite fixes 9 bugs, including a failed-search route through immovable boxes, measured against the original on the same robot model.
 
 - title: YouTube Views Prediction with Neural Networks
   url: /projects/youtube-predictor/
