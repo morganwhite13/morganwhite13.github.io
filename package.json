@@ -1,0 +1,12 @@
+{
+  "name": "morganwhite13-site-checks",
+  "private": true,
+  "description": "Tooling for checking the built site; the site itself is built with Jekyll",
+  "scripts": {
+    "check:a11y": "node scripts/check-a11y.js"
+  },
+  "devDependencies": {
+    "axe-core": "4.10.2",
+    "playwright": "1.56.1"
+  }
+}

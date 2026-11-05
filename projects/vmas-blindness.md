@@ -1,14 +1,12 @@
 ---
-layout: page
 title: Improving MARL Robustness for Agent Blindness in VMAS
 permalink: /projects/vmas-blindness/
+description: "Research on how MAPPO-trained swarm agents in VMAS cope with random sensor blindness, with custom scenarios and a hyperparameter study."
 ---
-
-# Improving MARL Robustness for Agent Blindness in VMAS
 
 ## Quick Summary
 
-A Multi-Agent Reinforcement Learning research project investigating how swarm agents handle partial observability through random "blindness" events. Built custom blindness scenarios in VMAS (Vectorized Multi-Agent Simulator) where agents lose sensory input unpredictably, testing whether cooperative strategies can emerge despite information loss. Applied MAPPO (Multi-Agent Proximal Policy Optimization) with extensive hyperparameter tuning to achieve robust performance even when agents randomly lose observations.
+A Multi-Agent Reinforcement Learning research project investigating how swarm agents handle partial observability through random "blindness" events. Built custom blindness scenarios in VMAS (Vectorized Multi-Agent Simulator) where agents lose sensory input unpredictably, testing whether cooperative strategies can emerge despite information loss. Applied MAPPO (Multi-Agent Proximal Policy Optimization) with extensive hyperparameter tuning, then tested on separate evaluation episodes whether training with blindness makes the team more robust to it. It does, once trained long enough.
 
 **Tech Stack:** Python, PyTorch, TorchRL, VMAS, MAPPO, Multi-Agent Deep RL  
 **Status:** ✅ Complete - Course Capstone Project  
@@ -133,8 +131,8 @@ class BlindOneRandomAgentIfProbabilityForJSteps(Transform):
 ### 1. MAPPO (Multi-Agent Proximal Policy Optimization)
 
 **Why MAPPO?**
-- State-of-the-art for cooperative MARL benchmarks
-- Outperforms many off-policy methods (MADDPG, QMIX)
+- A strong, widely used baseline on cooperative MARL benchmarks (Yu et al., 2022, "The Surprising Effectiveness of PPO in Cooperative Multi-Agent Games")
+- Competitive with off-policy methods such as MADDPG and QMIX in that study
 - Stable training with centralized critic, decentralized execution
 - Parameter sharing enables swarm-like behavior
 
@@ -205,13 +203,15 @@ entropy_eps = 1e-4        # Entropy bonus coefficient
 loss_module = ClipPPOLoss(
     actor_network=policy,
     critic_network=critic,
-    normalize_advantage=True  # Critical for blindness scenarios
+    normalize_advantage=True
 )
 ```
 
-**Impact:**
+**Impact (expected):**
 - Prevents blinded agents from dominating gradient updates
 - Stabilizes learning despite observation variance
+
+The 3-seed re-run of Experiment 2 found the second effect but not a better result: with normalization, seeds agreed more, but final reward wasn't consistently higher.
 - Essential for scenarios with random blindness events
 
 ### 4. GAE (Generalized Advantage Estimation)
@@ -294,22 +294,63 @@ def train_environment_variables(env, description, norm=True,
 
 ✅ **6 Custom Blindness Scenarios** - Probabilistic, duration-based, single/multi-agent  
 ✅ **MAPPO Implementation** - Centralized critic with decentralized execution  
-✅ **Advantage Normalization** - Critical for handling observation variance  
+✅ **Advantage Normalization** - Tested on and off across all 7 scenarios over 3 seeds  
 ✅ **Extensive Hyperparameter Study** - 50+ experiments across 7 dimensions  
 ✅ **Vectorized Simulation** - 30 parallel environments for efficient data collection  
 ✅ **Parameter Sharing** - Single policy shared across all agents (swarm behavior)  
 ✅ **GAE Value Estimation** - Smooth advantage calculation for uncertain states  
 ✅ **Automated Experimentation** - Configurable training function for rapid iteration  
+✅ **Robustness Evaluation** - Deterministic policies scored on separately seeded episodes across blindness levels, 3 seeds each  
 
 ---
 
 ## Experimental Results
 
+> **Known issues in the original code.** A later review of the training script found bugs that affect several of the experiments below:
+> - The "blind all agents" scenario picked a random agent per slot with replacement, so it blinded about two of the three agents per step, not all of them.
+> - The blindness-probability and blindness-duration sweeps (Experiments 6 and 7) wrapped each new blindness setting on top of the previous ones instead of starting from a clean environment, so later settings also carried the earlier blindness.
+> - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
+> - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
+>
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Every experiment below has been re-run with the fixed code over 3 seeds: Experiments 1–5 and 7–9, the other-scenarios comparison, and Experiment 6 via a new robustness test (after Experiment 9) that evaluates policies on fresh episodes. Each section keeps the original results in a collapsed block.
+
+**Results at a glance** (3 seeds each, with the fixed code):
+
+| Question | Answer | Details |
+|---|---|---|
+| Does training with blindness make a team more robust? | Yes, after 100 training iterations: 86% vs 43% of reward kept at 10% blindness. After 25 iterations, not yet | [Robustness test](#robustness-test-does-training-with-blindness-help) |
+| How much does blindness cost? | One agent at a time costs little; blinding every agent prevents learning | [Experiment 1](#experiment-1-baseline-comparison-across-blindness-scenarios) |
+| Do longer blind spells hurt? | Steadily, and steeply when every agent can go blind | [Experiment 7](#experiment-7-maximum-blindness-duration) |
+| Do bigger teams cope better? | Yes, with no 5–7 sweet spot: 10 agents scored highest | [Experiment 8](#experiment-8-number-of-agents) |
+| Is advantage normalization essential? | No: it made runs more consistent, not better | [Experiment 2](#experiment-2-normalization-impact) |
+| Which PPO settings help? | Clip 0.3, smaller minibatches, more epochs | [Experiments 3–5](#experiment-3-ppo-clipping-value) |
+| Does tuning give +86%? | About +32% | [Experiment 9](#experiment-9-best-combined-hyperparameters) |
+| Does it carry over to other VMAS scenarios? | Blindness works in all five. Where agents learn, it costs 6–16% after 100 iterations; two scenarios don't learn even then | [Other scenarios](#other-vmas-scenarios) |
+
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
 **Setup:** 7 environments, 25 iterations, no normalization, clip=0.2
 
-**Results:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
+
+| Environment | Final Reward |
+|-------------|--------------|
+| Normal (no blindness) | 49.2 ± 4.8 |
+| Blind 1 random agent with probability 0.1 | 40.5 ± 11.6 |
+| Blind each agent with probability 0.1 | 37.8 ± 15.6 |
+| Blind 1 random agent for 1–10 steps (probability 0.1) | 34.2 ± 16.1 |
+| Blind each agent for 1–10 steps (probability 0.1) | 10.7 ± 9.2 |
+| Blind 1 random agent every step | 5.5 ± 12.9 |
+| Blind all agents every step | −11.8 ± 1.9 |
+
+[![Line chart of reward over 25 training iterations for the seven blindness scenarios, averaged over 3 seeds with shaded spread. No blindness ends highest at about 49; blinding all agents stays flat at about −12; the other scenarios fall in between, with wide overlapping spreads](/assets/charts/vmas-exp1-rerun.png){: .chart .chart-wide width="1200" height="720" loading="lazy" decoding="async"}](/assets/charts/vmas-exp1-rerun.png)
+
+**Key Finding:** No blindness does best, and blinding every agent prevents learning entirely. Occasional, short blindness costs relatively little; persistent blindness (every step, or several agents for several steps) hurts much more. The spread between seeds is as large as the gaps between the middle scenarios, so their exact order isn't meaningful, and most curves are still rising at 25 iterations.
+
+The re-run's rewards are on a different scale from the original single-seed results (about 50 rather than about 450 for no blindness). It used pinned library versions; the original runs may have used different versions or reported reward differently.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 | Environment | Final Reward | Difficulty |
 |-------------|--------------|------------|
@@ -319,22 +360,34 @@ def train_environment_variables(env, description, norm=True,
 | Blind 1 agent random duration | ~280 | Hard |
 | Blind random agents randomly | ~240 | Very Hard |
 | Blind random agents random duration | ~180 | Extreme |
-| Blind all agents every step | ~50 | Nearly Impossible |
+| Blind all agents every step (about 2 of 3 agents in practice) | ~50 | Nearly Impossible |
 
-**Key Finding:** Agents can learn despite blindness, but performance degrades with:
-- Increased blindness frequency
-- Longer blindness duration
-- More agents affected simultaneously
-
-**Surprising Result:** Random 1-step blindness performs reasonably well (380/450 = 84% of baseline) → suggests robust cooperative strategies
+</details>
 
 ---
 
 ### Experiment 2: Normalization Impact
 
-**Setup:** All 7 scenarios × 2 conditions (normalized vs. non-normalized)
+**Setup:** All 7 scenarios × 2 conditions (advantage normalization on vs. off)
 
-**Results:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation. The normalization-off column is Experiment 1's re-run; the on column repeats it with normalization on, everything else identical.
+
+| Environment | Normalization off | Normalization on |
+|-------------|-------------------|------------------|
+| Normal (no blindness) | 49.2 ± 4.8 | 43.8 ± 10.9 |
+| Blind 1 random agent every step | 5.5 ± 12.9 | 16.6 ± 6.0 |
+| Blind all agents every step | −11.8 ± 1.9 | −10.8 ± 2.4 |
+| Blind 1 random agent with probability 0.1 | 40.5 ± 11.6 | 36.8 ± 8.0 |
+| Blind each agent with probability 0.1 | 37.8 ± 15.6 | 33.2 ± 6.3 |
+| Blind 1 random agent for 1–10 steps | 34.2 ± 16.1 | 21.3 ± 7.6 |
+| Blind each agent for 1–10 steps | 10.7 ± 9.2 | −0.2 ± 5.9 |
+
+[![Horizontal bar chart of final reward per scenario with normalization off and on, mean and standard deviation over 3 seeds with each seed shown as a dot. The two conditions overlap in most scenarios; normalization on is clearly higher only with one agent blinded every step, and its seeds are more tightly grouped in most scenarios](/assets/charts/vmas-exp2-norm.png){: .chart .chart-wide width="1200" height="660" loading="lazy" decoding="async"}](/assets/charts/vmas-exp2-norm.png)
+
+**Key Finding:** Normalization isn't essential. The original single-seed runs reported +40–60 reward from it; the re-run finds a lower mean in 5 of 7 scenarios, with per-seed differences that mostly change sign. Its one consistent gain is with one agent blinded every step (+11, better in all 3 seeds). What it does do is make seeds agree more: the spread is smaller in 5 of 7 scenarios.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Normalized Advantage (True):**
 - Blind 1 agent randomly (1 step): **~420** (↑ 40 from baseline)
@@ -346,12 +399,9 @@ def train_environment_variables(env, description, norm=True,
 - Lower final performance across all scenarios
 - More unstable learning (sudden drops)
 
-**Conclusion:** **Normalization is essential** for blindness scenarios
-- Deals with variance from agents experiencing different observation states
-- Prevents blinded agents from dominating gradient updates with large errors
-- Stabilizes training even in extreme conditions
+The original conclusion was that normalization is essential, and all later experiments used it.
 
-**All future experiments use normalization enabled.**
+</details>
 
 ---
 
@@ -359,6 +409,22 @@ def train_environment_variables(env, description, norm=True,
 
 **Setup:** Clip values = [0.01, 0.1, 0.2, 0.3, 0.5, 0.75]  
 **Environment:** Blind 1 random agent for random duration (hardest single-agent scenario)
+
+**Re-run with the fixed code (3 seeds), Experiments 3–5 together:** each sweep changes one setting from the default (clip 0.2, batch 200, 20 epochs).
+
+[![Three line charts of final reward, one each for clip value, minibatch size and epochs, changing one setting at a time from the default. Reward peaks at clip 0.3 and falls at 0.1 and 0.5; it falls as minibatches grow from 50 to 500; and it rises steadily with epochs from 10 to 50](/assets/charts/vmas-sweep.png){: .chart .chart-wide width="1560" height="504" loading="lazy" decoding="async"}](/assets/charts/vmas-sweep.png)
+
+| Clip Value | Final Reward |
+|------------|--------------|
+| 0.1 | −3.5 ± 5.0 |
+| 0.2 (default) | 21.3 ± 7.6 |
+| **0.3** | **45.2 ± 10.0** |
+| 0.5 | 30.8 ± 30.0 |
+
+**Key Finding:** Clip 0.3 is best of those tested, as the original found, and by more (about double the default rather than +28%). 0.1 doesn't learn, and 0.5 varies wildly between seeds. In the Experiment 9 re-run, which changed several settings together, clip 0.2 and 0.3 did about the same, so the gain depends on the other settings.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results:**
 
@@ -381,11 +447,27 @@ def train_environment_variables(env, description, norm=True,
 - Still prevents catastrophic updates from outlier experiences
 - Sweet spot for this level of environment stochasticity
 
+</details>
+
 ---
 
 ### Experiment 4: Minibatch Size
 
 **Setup:** Batch sizes = [10, 50, 100, 200, 300, 500, 1000]
+
+**Re-run with the fixed code (3 seeds):** see the chart under Experiment 3.
+
+| Batch Size | Final Reward |
+|------------|--------------|
+| **50** | **42.3 ± 6.1** |
+| 100 | 38.8 ± 19.9 |
+| 200 (default) | 21.3 ± 7.6 |
+| 500 | 14.5 ± 19.8 |
+
+**Key Finding:** Smaller minibatches do better, as the original found: 50 and 100 beat the default 200.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results:**
 
@@ -410,11 +492,29 @@ def train_environment_variables(env, description, norm=True,
 - Batch=100: Slightly slower per iteration but better final performance
 - Batch=200: Faster iteration but lower asymptotic reward
 
+</details>
+
 ---
 
 ### Experiment 5: Number of Epochs
 
 **Setup:** Epochs = [5, 10, 15, 20, 30, 50]
+
+**Re-run with the fixed code (3 seeds):** see the chart under Experiment 3.
+
+| Epochs | Final Reward |
+|--------|--------------|
+| 10 | 4.6 ± 10.6 |
+| 20 (default) | 21.3 ± 7.6 |
+| 30 | 40.5 ± 9.2 |
+| **50** | **49.9 ± 3.6** |
+
+**Key Finding:** More epochs keep helping. The original reported diminishing returns after 30; here 50 scored highest and was the most consistent across seeds.
+
+**The common thread in Experiments 3–5:** every change that helped means more or bigger policy updates per iteration (smaller minibatches, more epochs, a wider clip). With only 25 training iterations, the default settings undertrain, which matches what the robustness test found when training went from 25 to 100 iterations.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results:**
 
@@ -436,12 +536,19 @@ def train_environment_variables(env, description, norm=True,
 
 **Recommendation:** Use 30 epochs for best time/performance tradeoff
 
+</details>
+
 ---
 
 ### Experiment 6: Blindness Probability Sensitivity
 
 **Setup:** Probability = [0.01, 0.05, 0.10, 0.20, 0.30, 0.50]  
-**Environment:** Blind 1 random agent for random duration
+**Environment:** Blind 1 random agent for random duration (affected by the stacking issue noted above). The robustness test below measures the same question more directly.
+
+**Re-run:** answered by the robustness test below, which trains policies once and evaluates them on separate episodes at blindness probabilities from 0 to 0.5, rather than retraining for each probability and rescaling the rewards. After 100 training iterations, a policy trained without blindness keeps 86% of its reward at probability 0.1 when one agent is blind at a time and 62% at 0.5; when every agent can go blind, it keeps 43% at 0.1 and 22% at 0.2.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results (Normalized by Blindness Probability):**
 
@@ -468,12 +575,30 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 - When blindness becomes dominant (>30%), cooperation breaks down
 - Similar to human teams: tolerate occasional member unavailability, fail under chronic absences
 
+</details>
+
 ---
 
 ### Experiment 7: Maximum Blindness Duration
 
 **Setup:** Max blind steps = [1, 2, 3, 5, 7, 10, 20]  
-**Environment:** P(blind) = 0.1 fixed
+**Environment:** P(blind) = 0.1 fixed (affected by the stacking issue noted above)
+
+**Re-run, redesigned (3 seeds):** instead of retraining for every duration and scoring the training rollouts, two policies per seed are trained for 100 iterations (without blindness, and with one-agent blindness of 1–10 steps), then evaluated on separate episodes at blindness probability 0.1 with blind spells of up to 1–20 steps.
+
+[![Two line charts of evaluation reward against maximum blind spell length, one with one agent blind at a time and one with every agent able to go blind. With one agent blind, both policies decline gently from about 70 to about 56 to 62 at 20 steps. With every agent able to go blind, both fall steeply, the policy trained without blindness to about 15 at 20 steps and the blindness-trained policy to about 35](/assets/charts/vmas-duration.png){: .chart .chart-wide width="1440" height="552" loading="lazy" decoding="async"}](/assets/charts/vmas-duration.png)
+
+| Trained with | Evaluated with | No blindness | 3 steps | 10 steps | 20 steps |
+|---|---|---|---|---|---|
+| No blindness | One agent blind | 69.7 ± 2.5 | 66.3 ± 1.9 | 59.7 ± 5.7 | 55.9 ± 8.7 |
+| One agent blind | One agent blind | 72.3 ± 4.6 | 68.1 ± 2.6 | 65.4 ± 3.8 | 61.8 ± 5.6 |
+| No blindness | Each agent blind | 69.7 ± 2.5 | 56.2 ± 8.8 | 30.0 ± 21.3 | 15.0 ± 18.1 |
+| One agent blind | Each agent blind | 72.3 ± 4.6 | 64.9 ± 5.7 | 51.5 ± 7.5 | 35.4 ± 8.6 |
+
+**Key Finding:** Longer blind spells hurt steadily: gently when one agent is blind at a time (80% of reward kept even at 20 steps), steeply when every agent can go blind (22% at 20 steps). Training with blindness helps more the longer the spells, and it carries beyond what it was trained on: trained on spells up to 10 steps, the policy keeps 49% at 20 steps against 22% without blindness training.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results (Normalized):**
 
@@ -498,14 +623,33 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 - Brief sensor glitch (1-5s): Vehicle can coast safely
 - Extended failure (10-20s): Requires pulling over or emergency protocols
 
+</details>
+
 ---
 
 ### Experiment 8: Number of Agents
 
-**Setup:** n_agents = [2, 3, 4, 5, 7, 10]  
+**Setup:** n_agents = [2, 3, 5, 7, 10]  
 **Environment:** Blind 1 random agent randomly (10% prob, 1-10 steps)
 
-**Results:**
+More agents also make the balance task itself easier, so raw reward can't show whether a bigger team copes better with blindness. The re-run therefore trains every team size twice, with and without blindness, and compares the share of reward kept.
+
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
+
+| Agents | No blindness | With blindness | Share kept |
+|--------|--------------|----------------|------------|
+| 2 | 7.4 ± 19.5 | 13.9 ± 12.2 | (didn't learn in 25 iterations) |
+| 3 | 43.8 ± 10.9 | 21.3 ± 7.6 | 48% |
+| 5 | 76.7 ± 5.0 | 62.4 ± 5.2 | 81% |
+| 7 | 81.5 ± 2.9 | 91.9 ± 3.3 | 113% |
+| 10 | 94.5 ± 8.9 | 95.5 ± 6.4 | 101% |
+
+[![Line chart of final reward by team size with and without blindness, over 3 seeds. Both lines rise with team size, from near 10 for 2 agents to about 95 for 10. The blindness line is well below the no-blindness line for 3 and 5 agents, crosses above it at 7, and meets it at 10](/assets/charts/vmas-exp8-agents.png){: .chart .chart-wide width="960" height="600" loading="lazy" decoding="async"}](/assets/charts/vmas-exp8-agents.png)
+
+**Key Finding:** Redundancy helps. A 3-agent team loses about half its reward when one agent goes blind, a 5-agent team about a fifth, and from 7 agents nothing. But there's no sweet spot at 5–7: 10 agents scored highest with and without blindness, with no sign of coordination overhead.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 | Agents | Final Reward | Observations |
 |--------|--------------|--------------|
@@ -527,33 +671,105 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 - Enough redundancy to handle blindness
 - Not so many that coordination becomes bottleneck
 
+</details>
+
+---
+
+### Other VMAS Scenarios
+
+**Setup:** One agent blinded for 1–10 steps (probability 0.1) on five VMAS scenarios, each trained with and without blindness (3 seeds, 25 iterations). The original run had no no-blindness control, so it couldn't separate the cost of blindness from how hard each scenario is.
+
+[![Five bar charts, one per VMAS scenario, comparing final reward with and without blindness. Balance drops from about 44 to 21 with blindness; give_way drops slightly from 4.0 to 3.7; wheel and ball_passage stay near their starting reward in both conditions; multi_give_way varies widely between seeds](/assets/charts/vmas-scenarios.png){: .chart .chart-wide width="1800" height="480" loading="lazy" decoding="async"}](/assets/charts/vmas-scenarios.png)
+
+| Scenario | Agents | No blindness | With blindness | Learned in 25 iterations? |
+|---|---|---|---|---|
+| balance | 3 | 43.8 ± 10.9 | 21.3 ± 7.6 | Yes |
+| give_way | 2 | 3.97 ± 0.05 | 3.66 ± 0.01 | Yes |
+| multi_give_way | 4 | −1.42 ± 3.17 | 4.11 ± 2.07 | Partly, unstable |
+| wheel | 3 | −9.21 ± 0.57 | −9.29 ± 0.24 | No |
+| ball_passage | 2 | −0.01 ± 0.02 | 0.03 ± 0.03 | No |
+
+**Key Finding:** The blindness transforms work in every scenario. At 25 iterations, blindness costs about half the reward in balance and 8% in give_way, while wheel and ball_passage don't learn at all. Some scenarios also fix their own team size (2 agents in give_way and ball_passage, 4 in multi_give_way), which the original setup assumed was 3.
+
+**With 100 training iterations** (4× longer, same seeds):
+
+[![Five bar charts, one per VMAS scenario, comparing final reward with and without blindness after 100 training iterations. Balance is about 64 without blindness and 60 with; give_way 4.5 and 3.7; wheel and ball_passage are about the same in both conditions and near their starting reward; multi_give_way varies widely without blindness and sits near 3 with it](/assets/charts/vmas-scenarios-100.png){: .chart .chart-wide width="1800" height="480" loading="lazy" decoding="async"}](/assets/charts/vmas-scenarios-100.png)
+
+| Scenario | No blindness | With blindness | Cost of blindness |
+|---|---|---|---|
+| balance | 64.0 ± 1.0 | 60.5 ± 2.3 | 6% (52% at 25 iterations) |
+| give_way | 4.45 ± 0.39 | 3.72 ± 0.07 | 16% (8% at 25 iterations) |
+| multi_give_way | 0.19 ± 3.09 | 2.89 ± 0.48 | None; too noisy to call |
+| wheel | −8.57 ± 0.61 | −8.62 ± 0.34 | None measurable; barely learns |
+| ball_passage | 0.01 ± 0.04 | −0.01 ± 0.02 | None measurable; doesn't learn |
+
+Most of balance's cost at 25 iterations was slower learning, as the robustness test also found: trained longer, the blinded team gets within 6% of the unblinded one. In give_way the cost grows instead. Wheel and ball_passage don't learn even with 4× the training; their rewards are sparse, so they need different settings rather than more iterations.
+
 ---
 
 ### Experiment 9: Best Combined Hyperparameters
 
-**Setup:** Combine all improvements from previous experiments
+**Setup:** Combine the best setting from each earlier experiment, then revert one change at a time, on the scenario where one random agent is blinded for 1–10 steps (probability 0.1)
 
-**Configurations Tested:**
+**Re-run with the fixed code (3 seeds):** final episode reward, mean ± standard deviation
 
-| Config | Norm | Clip | Batch | Epochs | Final Reward |
-|--------|------|------|-------|--------|--------------|
-| Original | False | 0.2 | 200 | 20 | ~280 |
-| **Best** | True | 0.3 | 100 | 30 | **~520** |
-| Best - Clip | True | 0.2 | 100 | 30 | ~480 |
-| Best - Batch | True | 0.3 | 200 | 30 | ~490 |
-| Best - Epochs | True | 0.3 | 100 | 20 | ~470 |
+| Config | Norm | Clip | Batch | Epochs | Final Reward | Original single seed |
+|--------|------|------|-------|--------|--------------|----------------------|
+| Original | False | 0.2 | 200 | 20 | 34.2 ± 16.1 | ~280 |
+| Reported best | True | 0.3 | 100 | 30 | 45.3 ± 6.8 | ~520 |
+| Best, but clip 0.2 | True | 0.2 | 100 | 30 | 46.1 ± 10.7 | ~480 |
+| Best, but batch 200 | True | 0.3 | 200 | 30 | **55.6 ± 1.8** | ~490 |
+| Best, but 20 epochs | True | 0.3 | 100 | 20 | 52.4 ± 6.8 | ~470 |
 
-**Key Finding:** Combined improvements yield **+86% performance** over baseline
+![Bar chart of mean final reward over 3 seeds: 34.2 with the original settings, 45.3 with the reported best combination, 46.1 with clip 0.2, 55.6 with batch 200 and 52.4 with 20 epochs](/assets/charts/vmas-tuning.svg){: .chart width="552" height="332" loading="lazy" decoding="async"}
 
-**Optimal Hyperparameters:**
-```python
-normalize_advantage = True
-clip_epsilon = 0.3
-minibatch_size = 100
-num_epochs = 30
-```
+**Key Finding:** Tuning helps, but less than the original runs suggested. Every tuned setup beats the original settings on average (+32% for the reported best) and varies far less between seeds. The original +86% doesn't reproduce, and the "best" combination isn't the best: going back to batch 200 or 20 epochs did as well or better. With 3 seeds, the differences between the tuned setups are within noise; the gap to the original settings is the robust part.
 
 **Video Evidence:** Trained agents successfully balance platform and move ball to goal despite random multi-step blindness events
+
+---
+
+### Robustness Test: Does Training With Blindness Help?
+
+Every experiment above scores a policy on its own training rollouts, in the conditions it was trained in. That can't say whether training *with* blindness makes a team more robust *to* blindness, which is the project's real question. So I added a test that does:
+
+1. **Train** three policies, 3 seeds each: with no blindness, with one random agent blinded for 1–10 steps, and with each agent independently blinded for 1–10 steps (probability 0.1 for both).
+2. **Evaluate** every policy with deterministic actions on fresh, separately seeded episodes, at blindness probabilities from 0 to 0.5, under both kinds of blindness.
+
+I ran it twice: with the experiments' usual 25 training iterations, then with 100.
+
+[![Two line charts of evaluation reward against blindness probability after 100 training iterations, one per kind of blindness at evaluation. All three policies start at about 70 to 72 with no blindness. As blindness increases, the policy trained with each-agent blindness stays highest, the one-agent-trained policy is in the middle, and the policy trained without blindness falls fastest, to about 30 at 10% each-agent blindness against about 62 for the each-agent-trained policy](/assets/charts/vmas-robustness-100.png){: .chart .chart-wide width="1440" height="576" loading="lazy" decoding="async"}](/assets/charts/vmas-robustness-100.png)
+
+**After 100 training iterations** (mean episode reward ± std over 3 seeds):
+
+| Trained with | Evaluated with | p = 0 | 0.1 | 0.2 | 0.5 |
+|---|---|---|---|---|---|
+| No blindness | One agent blind | 69.7 ± 2.5 | 59.7 ± 5.7 | 54.4 ± 8.9 | 43.2 ± 16.9 |
+| One agent blind | One agent blind | 72.3 ± 4.6 | 65.4 ± 3.8 | 62.7 ± 4.5 | 58.2 ± 7.1 |
+| Each agent blind | One agent blind | 71.8 ± 2.6 | 69.5 ± 0.9 | 67.7 ± 1.6 | 65.0 ± 3.7 |
+| No blindness | Each agent blind | 69.7 ± 2.5 | 30.0 ± 21.3 | 15.4 ± 20.2 | −1.9 ± 9.3 |
+| One agent blind | Each agent blind | 72.3 ± 4.6 | 51.5 ± 7.5 | 32.2 ± 11.6 | 3.4 ± 2.6 |
+| Each agent blind | Each agent blind | 71.8 ± 2.6 | 61.7 ± 4.5 | 43.1 ± 8.5 | 5.7 ± 1.4 |
+
+**Key Finding:** Training with blindness makes the team markedly more robust, at no cost when everyone can see. The more blindness a policy saw in training, the better it holds up: at 10% each-agent blindness, the each-agent-trained policy keeps 86% of its reward against 43% for the policy trained without blindness, and it varies far less between seeds. Many blind agents at once is still hard: from 30% each-agent blindness, every policy keeps less than a third of its reward.
+
+**The training budget changes the answer.** After 25 iterations, the blindness-trained policies were still well behind and the test pointed the other way: blindness training looked harmful. It slows learning, but once trained, the policies are better. Judging robustness from a short run would have given the wrong conclusion.
+
+<details markdown="1">
+<summary>Results after 25 training iterations</summary>
+
+[![Two line charts of evaluation reward against blindness probability after 25 training iterations. The policy trained without blindness starts highest at about 56; the blindness-trained policies start lower and stay below it at most blindness levels](/assets/charts/vmas-robustness.png){: .chart .chart-wide width="1440" height="576" loading="lazy" decoding="async"}](/assets/charts/vmas-robustness.png)
+
+| Trained with | Evaluated with | p = 0 | 0.1 | 0.2 | 0.5 |
+|---|---|---|---|---|---|
+| No blindness | One agent blind | 56.3 ± 12.9 | 51.6 ± 10.3 | 47.5 ± 9.5 | 41.1 ± 12.0 |
+| One agent blind | One agent blind | 38.5 ± 12.3 | 41.3 ± 13.0 | 41.5 ± 13.6 | 35.9 ± 13.3 |
+| Each agent blind | One agent blind | 15.2 ± 11.3 | 14.2 ± 11.9 | 12.8 ± 11.1 | 10.8 ± 10.4 |
+| No blindness | Each agent blind | 56.3 ± 12.9 | 31.6 ± 17.2 | 8.3 ± 13.7 | −5.4 ± 7.1 |
+| One agent blind | Each agent blind | 38.5 ± 12.3 | 30.9 ± 9.0 | 17.6 ± 6.8 | −2.5 ± 1.6 |
+| Each agent blind | Each agent blind | 15.2 ± 11.3 | 8.8 ± 11.4 | 4.5 ± 7.7 | −3.0 ± 5.4 |
+
+</details>
 
 ---
 
@@ -661,7 +877,7 @@ env = TransformedEnv(env, RewardSum(...))
 ### Main Components
 
 ```
-Morgans4900Project.py (1,500+ lines)
+MARL Robustness for Agent Blindness in VMAS.py (about 930 lines)
 ├── Imports & Setup
 │   ├── PyTorch, TorchRL, VMAS
 │   ├── Device configuration (GPU/CPU)
@@ -748,14 +964,13 @@ This project taught me:
 **Multi-Agent Reinforcement Learning**
 - MAPPO algorithm and centralized training, decentralized execution
 - Parameter sharing for swarm-like homogeneous policies
-- Advantage normalization critical for variance management
+- Advantage normalization reduces variance between runs, but didn't raise final reward here
 - GAE for smooth advantage estimation in stochastic environments
 
 **Hyperparameter Sensitivity**
-- Clipping value has non-monotonic relationship with performance
-- Batch size sweet spot (too large = overfitting, too small = noise)
-- Epochs: diminishing returns after threshold
-- Normalization: not optional for partial observability
+- Clipping value has a non-monotonic relationship with performance (0.3 best of 0.1–0.5)
+- Smaller minibatches and more epochs both helped: within 25 iterations, more updates per iteration is what mattered
+- Normalization: a smaller effect than single runs suggested
 
 **VMAS Framework (Despite Frustration)**
 - Vectorized simulation for parallel data collection
@@ -771,8 +986,8 @@ This project taught me:
 
 **Robustness & Real-World AI**
 - Partial observability is realistic and challenging
-- Systems need redundancy (more agents help)
-- Performance gracefully degrades until threshold
+- Systems need redundancy: with more agents, one blind teammate costs less
+- Robustness has to be measured on separate evaluation episodes, not training curves, and after enough training
 - Generalization doesn't come free (scenario-specific policies)
 
 **Soft Skills**
@@ -787,7 +1002,7 @@ This project taught me:
 
 If I were to extend this research, I would:
 
-1. **Fix Other Scenarios** - Debug blindness implementation for Wheel, Give Way, etc.
+1. **Get Wheel and Ball Passage Learning** - Blindness works in every scenario, but these two don't learn even in 100 iterations; their sparse rewards likely need different settings or reward shaping
 2. **Implement MADDPG/QMIX Properly** - Use BenchMARL for fair algorithm comparison
 3. **Communication Protocols** - Allow agents to signal "I'm blind, help!"
 4. **Partial Blindness** - Noisy observations instead of complete zeros
@@ -806,20 +1021,20 @@ If I were to extend this research, I would:
 
 ### Key Findings Summary
 
-**1. Robustness is Learnable:**
-- Agents can cooperate despite 10-20% blindness probability
-- Performance degrades gracefully until ~30% threshold
-- Suggests potential for real autonomous systems
+**1. Robustness Is Learnable, Given Enough Training:**
+- Policies trained with blindness keep up to 86% of their reward at 10% blindness, against 43% for a policy trained without it
+- Blindness training costs nothing when everyone can see, but it slows learning: after 25 iterations it still looked harmful
+- Many blind agents at once is still hard: from 30% each-agent blindness, every policy keeps less than a third of its reward
 
 **2. Hyperparameters Matter More Than Expected:**
-- Optimal config: +86% performance over default
-- Normalization absolutely essential (not optional)
-- Clipping sweet spot (0.3) specific to stochasticity level
+- Tuned settings beat the defaults by about a third on a 3-seed re-run, and cut the spread between seeds (the original single-seed runs reported +86%)
+- Normalization made runs more consistent, not better: the original "essential" claim didn't hold over 3 seeds
+- Clip 0.3, smaller minibatches and more epochs each helped on their own; together they all point to the defaults undertraining in 25 iterations
 
-**3. Redundancy Helps (Up to a Point):**
-- 5-7 agents optimal for Balance scenario
-- Too few = no redundancy, too many = coordination overhead
-- Real-world implication: design for sweet spot
+**3. Redundancy Helps:**
+- One blind agent costs a 3-agent team about half its reward, a 5-agent team about a fifth, and a 7-agent team nothing
+- No sweet spot: 10 agents scored highest, with and without blindness
+- Real-world implication: spare capacity is what absorbs sensor failures
 
 **4. Generalization Fails:**
 - Balance-trained policies don't transfer to other tasks
@@ -857,7 +1072,7 @@ If I were to extend this research, I would:
 ## Files & Resources
 
 **Project Files:**
-- `Morgans4900Project.py` - Complete implementation (1,500+ lines)
+- `MARL Robustness for Agent Blindness in VMAS.py` - Complete implementation (about 930 lines)
 - `COMP 4900 Project doc.pdf` - Presentation slides and documentation
 - Training logs and plots (generated during experiments)
 
@@ -906,7 +1121,7 @@ with torch.no_grad():
     )
 ```
 
-**Key Hyperparameters (Optimal):**
+**Key Hyperparameters (best in the 3-seed re-run of Experiment 9):**
 ```python
 # Sampling
 frames_per_batch = 6_000
@@ -916,12 +1131,12 @@ num_vmas_envs = 30
 
 # Training
 num_epochs = 30          # ← Increased from 20
-minibatch_size = 100     # ← Decreased from 200
+minibatch_size = 200     # Unchanged (100 did no better in the re-run)
 lr = 3e-4
 
 # PPO
 clip_epsilon = 0.3       # ← Increased from 0.2
-normalize_advantage = True  # ← Critical!
+normalize_advantage = True  # More consistent across seeds
 gamma = 0.9
 lmbda = 0.9
 ```
@@ -932,7 +1147,7 @@ lmbda = 0.9
 
 **Key Papers:**
 
-1. **Bettini et al. (2023)** - "VMAS: A Vectorized Multi-Agent Simulator for Collective Robot Learning"
+1. **Bettini et al. (2022)** - "VMAS: A Vectorized Multi-Agent Simulator for Collective Robot Learning"
    - Framework foundation
    - Balance scenario design
 
@@ -954,10 +1169,10 @@ lmbda = 0.9
 
 ## Takeaway
 
-This project demonstrates that Multi-Agent Reinforcement Learning systems can be trained to handle realistic sensor failures through careful environment design and hyperparameter optimization. While agents don't achieve perfect robustness, they learn cooperative strategies that gracefully degrade under partial observability—exhibiting resilience patterns similar to human teams.
+This project tests whether Multi-Agent Reinforcement Learning teams can keep cooperating through realistic sensor failures. Measured properly, on separate evaluation episodes, the answer is yes: a team trained with blindness holds up far better when agents go blind, and loses nothing when they don't.
 
 The research highlights critical gaps in MARL tooling (VMAS documentation, library compatibility) that consume researcher time, underscoring the need for better infrastructure in the MARL community. Despite these challenges and the constraint of working solo on a group project, the systematic hyperparameter study provides actionable insights for building robust multi-agent systems.
 
-Most importantly, this work validates that **robustness can be learned, not just engineered**—agents discover emergent compensation strategies when teammates go blind, suggesting promising avenues for deploying cooperative AI in real-world scenarios where sensor reliability cannot be guaranteed.
+The original write-up concluded that **robustness can be learned**. The robustness test now backs that up, with a caveat that matters: training with blindness slows learning, so after 25 iterations it looked harmful, and only after 100 did its advantage show. The same experiment, stopped early, gives the opposite answer.
 
-The 86% performance improvement through hyperparameter optimization (normalization + optimal clip/batch/epochs) proves that careful tuning is not just beneficial but **essential** for MARL in stochastic environments with partial observability. This finding has direct implications for practitioners building real autonomous systems.
+Hyperparameter tuning mattered, but re-running it is the more useful lesson. The original single-seed runs reported +86%; repeating them over 3 seeds with the fixed code gave about +32%, and showed that the "best" combination wasn't actually the best. Single-seed hyperparameter comparisons in MARL are noisy enough to mislead, so several seeds per setting should be the default.

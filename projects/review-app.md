@@ -1,7 +1,7 @@
 ---
-layout: page
 title: Morgan's Reviews - iOS Entertainment Review App
 permalink: /projects/review-app/
+description: "A native Swift/UIKit iOS app for writing and browsing entertainment reviews, with a custom accessible star rating control."
 ---
 
 ## Quick Summary
@@ -17,7 +17,7 @@ A native iOS review application built in Swift that allows a reviewer to create,
 
 ## Video Demo
 
-<iframe width="100%" height="450" src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Robot Project Demo 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div class="video-embed" data-url="https://youtu.be/sYmV_4kQiN8"><iframe src="https://www.youtube.com/embed/sYmV_4kQiN8" title="Morgan's Reviews iOS App Demo" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
 
 ---
 
@@ -40,7 +40,7 @@ The app needed to provide:
 
 ### Application Structure
 
-The app follows the Model-View-Controller (MVC) pattern with seven main components:
+The app follows the Model-View-Controller (MVC) pattern with eight main components:
 
 **Models:**
 - `Review.swift` - Core data model with validation logic
@@ -371,22 +371,22 @@ func textFieldDidEndEditing(_ textField: UITextField) {
 
 ## Code Architecture
 
-### File Structure (600+ lines total)
+### File Structure (about 620 lines total)
 
 ```
 morgansreview/
 ├── Models/
 │   └── Review.swift (30 lines)
 ├── Views/
-│   ├── RatingControl.swift (130 lines)
-│   └── ReviewTableViewCell.swift (25 lines)
+│   ├── RatingControl.swift (107 lines)
+│   └── ReviewTableViewCell.swift (27 lines)
 ├── Controllers/
-│   ├── ReviewTableViewController.swift (140 lines)
-│   ├── ReviewUserrViewController.swift (50 lines)
-│   ├── ReviewViewController.swift (140 lines)
-│   ├── SigninViewController.swift (45 lines)
-│   └── SigninUserViewController.swift (50 lines)
-└── AppDelegate.swift (40 lines)
+│   ├── ReviewTableViewController.swift (129 lines)
+│   ├── ReviewUserrViewController.swift (48 lines)
+│   ├── ReviewViewController.swift (135 lines)
+│   ├── SigninViewController.swift (43 lines)
+│   └── SigninUserViewController.swift (52 lines)
+└── AppDelegate.swift (46 lines)
 ```
 
 ### Design Patterns Used
