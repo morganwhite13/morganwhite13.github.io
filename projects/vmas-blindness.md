@@ -312,7 +312,7 @@ def train_environment_variables(env, description, norm=True,
 > - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1–5 and 7–9 below have been re-run with the fixed code over 3 seeds, Experiment 6 is answered by a new robustness test (after Experiment 9) that evaluates policies on fresh episodes, and each section keeps the original results in a collapsed block. Only the VMAS scenarios comparison hasn't been re-run.
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Every experiment below has been re-run with the fixed code over 3 seeds: Experiments 1–5 and 7–9, the other-scenarios comparison, and Experiment 6 via a new robustness test (after Experiment 9) that evaluates policies on fresh episodes. Each section keeps the original results in a collapsed block.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -662,6 +662,24 @@ More agents also make the balance task itself easier, so raw reward can't show w
 
 ---
 
+### Other VMAS Scenarios
+
+**Setup:** One agent blinded for 1–10 steps (probability 0.1) on five VMAS scenarios, each trained with and without blindness (3 seeds, 25 iterations). The original run had no no-blindness control, so it couldn't separate the cost of blindness from how hard each scenario is.
+
+[![Five bar charts, one per VMAS scenario, comparing final reward with and without blindness. Balance drops from about 44 to 21 with blindness; give_way drops slightly from 4.0 to 3.7; wheel and ball_passage stay near their starting reward in both conditions; multi_give_way varies widely between seeds](/assets/charts/vmas-scenarios.png){: .chart .chart-wide width="1800" height="480" loading="lazy" decoding="async"}](/assets/charts/vmas-scenarios.png)
+
+| Scenario | Agents | No blindness | With blindness | Learned in 25 iterations? |
+|---|---|---|---|---|
+| balance | 3 | 43.8 ± 10.9 | 21.3 ± 7.6 | Yes |
+| give_way | 2 | 3.97 ± 0.05 | 3.66 ± 0.01 | Yes |
+| multi_give_way | 4 | −1.42 ± 3.17 | 4.11 ± 2.07 | Partly, unstable |
+| wheel | 3 | −9.21 ± 0.57 | −9.29 ± 0.24 | No |
+| ball_passage | 2 | −0.01 ± 0.02 | 0.03 ± 0.03 | No |
+
+**Key Finding:** The blindness transforms work in every scenario. Where agents learn, blindness costs them, by very different amounts: about half the reward in balance, 8% in give_way. Wheel and ball_passage don't learn at all in 25 iterations, with or without blindness, so they can't show anything about blindness yet. Some scenarios also fix their own team size (2 agents in give_way and ball_passage, 4 in multi_give_way), which the original setup assumed was 3.
+
+---
+
 ### Experiment 9: Best Combined Hyperparameters
 
 **Setup:** Combine the best setting from each earlier experiment, then revert one change at a time, on the scenario where one random agent is blinded for 1–10 steps (probability 0.1)
@@ -957,7 +975,7 @@ This project taught me:
 
 If I were to extend this research, I would:
 
-1. **Fix Other Scenarios** - Debug blindness implementation for Wheel, Give Way, etc.
+1. **Train the Other Scenarios Longer** - Blindness now works in every scenario, but Wheel and Ball Passage don't learn in 25 iterations
 2. **Implement MADDPG/QMIX Properly** - Use BenchMARL for fair algorithm comparison
 3. **Communication Protocols** - Allow agents to signal "I'm blind, help!"
 4. **Partial Blindness** - Noisy observations instead of complete zeros
