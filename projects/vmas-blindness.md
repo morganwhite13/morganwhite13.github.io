@@ -6,7 +6,7 @@ description: "Research on how MAPPO-trained swarm agents in VMAS cope with rando
 
 ## Quick Summary
 
-A Multi-Agent Reinforcement Learning research project investigating how swarm agents handle partial observability through random "blindness" events. Built custom blindness scenarios in VMAS (Vectorized Multi-Agent Simulator) where agents lose sensory input unpredictably, testing whether cooperative strategies can emerge despite information loss. Applied MAPPO (Multi-Agent Proximal Policy Optimization) with extensive hyperparameter tuning, then tested on separate evaluation episodes whether training with blindness makes the team more robust to it.
+A Multi-Agent Reinforcement Learning research project investigating how swarm agents handle partial observability through random "blindness" events. Built custom blindness scenarios in VMAS (Vectorized Multi-Agent Simulator) where agents lose sensory input unpredictably, testing whether cooperative strategies can emerge despite information loss. Applied MAPPO (Multi-Agent Proximal Policy Optimization) with extensive hyperparameter tuning, then tested on separate evaluation episodes whether training with blindness makes the team more robust to it. It does, once trained long enough.
 
 **Tech Stack:** Python, PyTorch, TorchRL, VMAS, MAPPO, Multi-Agent Deep RL  
 **Status:** ✅ Complete - Course Capstone Project  
@@ -310,7 +310,7 @@ def train_environment_variables(env, description, norm=True,
 > - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes; the other experiments are the original results and still need re-running.
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes after 25 and 100 training iterations; the other experiments are the original results and still need re-running.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -579,19 +579,40 @@ Every experiment above scores a policy on its own training rollouts, in the cond
 1. **Train** three policies, 3 seeds each: with no blindness, with one random agent blinded for 1–10 steps, and with each agent independently blinded for 1–10 steps (probability 0.1 for both).
 2. **Evaluate** every policy with deterministic actions on fresh, separately seeded episodes, at blindness probabilities from 0 to 0.5, under both kinds of blindness.
 
-![Two line charts of evaluation reward against blindness probability, one per kind of blindness at evaluation, with one line per training condition. The policy trained without blindness starts highest at about 56 and stays highest under one-agent blindness; under each-agent blindness it falls to about 8 at probability 0.2, slightly below the one-agent-trained policy. The policy trained with each-agent blindness stays lowest throughout](/assets/charts/vmas-robustness.png){: .chart .chart-wide}
+I ran it twice: with the experiments' usual 25 training iterations, then with 100.
+
+![Two line charts of evaluation reward against blindness probability after 100 training iterations, one per kind of blindness at evaluation. All three policies start at about 70 to 72 with no blindness. As blindness increases, the policy trained with each-agent blindness stays highest, the one-agent-trained policy is in the middle, and the policy trained without blindness falls fastest, to about 30 at 10% each-agent blindness against about 62 for the each-agent-trained policy](/assets/charts/vmas-robustness-100.png){: .chart .chart-wide}
+
+**After 100 training iterations** (mean episode reward ± std over 3 seeds):
+
+| Trained with | Evaluated with | p = 0 | 0.1 | 0.2 | 0.5 |
+|---|---|---|---|---|---|
+| No blindness | One agent blind | 69.7 ± 2.5 | 59.7 ± 5.7 | 54.4 ± 8.9 | 43.2 ± 16.9 |
+| One agent blind | One agent blind | 72.3 ± 4.6 | 65.4 ± 3.8 | 62.7 ± 4.5 | 58.2 ± 7.1 |
+| Each agent blind | One agent blind | 71.8 ± 2.6 | 69.5 ± 0.9 | 67.7 ± 1.6 | 65.0 ± 3.7 |
+| No blindness | Each agent blind | 69.7 ± 2.5 | 30.0 ± 21.3 | 15.4 ± 20.2 | −1.9 ± 9.3 |
+| One agent blind | Each agent blind | 72.3 ± 4.6 | 51.5 ± 7.5 | 32.2 ± 11.6 | 3.4 ± 2.6 |
+| Each agent blind | Each agent blind | 71.8 ± 2.6 | 61.7 ± 4.5 | 43.1 ± 8.5 | 5.7 ± 1.4 |
+
+**Key Finding:** Training with blindness makes the team markedly more robust, at no cost when everyone can see. The more blindness a policy saw in training, the better it holds up: at 10% each-agent blindness, the each-agent-trained policy keeps 86% of its reward against 43% for the policy trained without blindness, and it varies far less between seeds. Many blind agents at once is still hard: from 30% each-agent blindness, every policy keeps less than a third of its reward.
+
+**The training budget changes the answer.** After 25 iterations, the blindness-trained policies were still well behind and the test pointed the other way: blindness training looked harmful. It slows learning, but once trained, the policies are better. Judging robustness from a short run would have given the wrong conclusion.
+
+<details markdown="1">
+<summary>Results after 25 training iterations</summary>
+
+![Two line charts of evaluation reward against blindness probability after 25 training iterations. The policy trained without blindness starts highest at about 56; the blindness-trained policies start lower and stay below it at most blindness levels](/assets/charts/vmas-robustness.png){: .chart .chart-wide}
 
 | Trained with | Evaluated with | p = 0 | 0.1 | 0.2 | 0.5 |
 |---|---|---|---|---|---|
 | No blindness | One agent blind | 56.3 ± 12.9 | 51.6 ± 10.3 | 47.5 ± 9.5 | 41.1 ± 12.0 |
 | One agent blind | One agent blind | 38.5 ± 12.3 | 41.3 ± 13.0 | 41.5 ± 13.6 | 35.9 ± 13.3 |
+| Each agent blind | One agent blind | 15.2 ± 11.3 | 14.2 ± 11.9 | 12.8 ± 11.1 | 10.8 ± 10.4 |
 | No blindness | Each agent blind | 56.3 ± 12.9 | 31.6 ± 17.2 | 8.3 ± 13.7 | −5.4 ± 7.1 |
 | One agent blind | Each agent blind | 38.5 ± 12.3 | 30.9 ± 9.0 | 17.6 ± 6.8 | −2.5 ± 1.6 |
 | Each agent blind | Each agent blind | 15.2 ± 11.3 | 8.8 ± 11.4 | 4.5 ± 7.7 | −3.0 ± 5.4 |
 
-**Key Finding:** At this training budget, training with blindness did **not** make the team more robust. The policy trained without blindness scores as high or higher almost everywhere; only under frequent each-agent blindness does the one-agent-trained policy pull ahead, and the seed spreads overlap. Blindness during training mostly slowed learning: after 25 iterations the blindness-trained policies are still well behind, so a longer run, or comparing policies at equal training reward, is the fairer next test.
-
-**What does hold up:** one blind agent at a time is survivable. The no-blindness policy keeps 73% of its reward even when one agent is blinded half the time. When every agent can go blind independently, it keeps 56% at probability 0.1 and almost nothing from 0.2.
+</details>
 
 ---
 
@@ -810,7 +831,7 @@ This project taught me:
 **Robustness & Real-World AI**
 - Partial observability is realistic and challenging
 - Systems need redundancy (more agents help)
-- Robustness has to be measured on separate evaluation episodes, not training curves
+- Robustness has to be measured on separate evaluation episodes, not training curves, and after enough training
 - Generalization doesn't come free (scenario-specific policies)
 
 **Soft Skills**
@@ -844,10 +865,10 @@ If I were to extend this research, I would:
 
 ### Key Findings Summary
 
-**1. One Blind Agent Is Survivable, Many Are Not:**
-- With one agent blinded at a time, a policy keeps most of its reward even at 50% blindness probability
-- When every agent can go blind independently, performance collapses from about 20%
-- Training *with* blindness didn't improve robustness at this training budget; it mostly slowed learning
+**1. Robustness Is Learnable, Given Enough Training:**
+- Policies trained with blindness keep up to 86% of their reward at 10% blindness, against 43% for a policy trained without it
+- Blindness training costs nothing when everyone can see, but it slows learning: after 25 iterations it still looked harmful
+- Many blind agents at once is still hard: from 30% each-agent blindness, every policy keeps less than a third of its reward
 
 **2. Hyperparameters Matter More Than Expected:**
 - Tuned settings beat the defaults by about a third on a 3-seed re-run, and cut the spread between seeds (the original single-seed runs reported +86%)
@@ -992,10 +1013,10 @@ lmbda = 0.9
 
 ## Takeaway
 
-This project tests whether Multi-Agent Reinforcement Learning teams can keep cooperating through realistic sensor failures. Measured properly, on separate evaluation episodes, a team copes well when one agent at a time goes blind and breaks down when several can.
+This project tests whether Multi-Agent Reinforcement Learning teams can keep cooperating through realistic sensor failures. Measured properly, on separate evaluation episodes, the answer is yes: a team trained with blindness holds up far better when agents go blind, and loses nothing when they don't.
 
 The research highlights critical gaps in MARL tooling (VMAS documentation, library compatibility) that consume researcher time, underscoring the need for better infrastructure in the MARL community. Despite these challenges and the constraint of working solo on a group project, the systematic hyperparameter study provides actionable insights for building robust multi-agent systems.
 
-The original write-up concluded that **robustness can be learned**. The robustness test doesn't support that yet: training with blindness made agents learn more slowly without making them more robust within 25 iterations. Whether it pays off with longer training is the open question this project now sets up, with the tests and evaluation code to answer it.
+The original write-up concluded that **robustness can be learned**. The robustness test now backs that up, with a caveat that matters: training with blindness slows learning, so after 25 iterations it looked harmful, and only after 100 did its advantage show. The same experiment, stopped early, gives the opposite answer.
 
 Hyperparameter tuning mattered, but re-running it is the more useful lesson. The original single-seed runs reported +86%; repeating them over 3 seeds with the fixed code gave about +32%, and showed that the "best" combination wasn't actually the best. Single-seed hyperparameter comparisons in MARL are noisy enough to mislead, so several seeds per setting should be the default.
