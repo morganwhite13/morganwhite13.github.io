@@ -28,7 +28,7 @@ The video shows the original controller.
 
 v2 keeps every waypoint, gripper timing and vision threshold from v1, and changes how the robot moves between waypoints and recovers when something goes wrong. Both versions were measured on the same model of the robot:
 
-![Bar and line charts comparing v1 and v2: the jar scan turns 271 degrees in v1 (188 with wheel slip) and 371 in v2; a 530 cm leg started 2.9 degrees off ends 26.8 cm from the waypoint in v1 and 1.1 cm in v2; after a failed search v1 drives 41.4 m and v2 0.8 m](/assets/charts/robot-before-after.svg){: .chart .chart-wide}
+![Bar and line charts comparing v1 and v2: the jar scan turns 271 degrees in v1 (188 with wheel slip) and 371 in v2; a 530 cm leg started 2.9 degrees off ends 26.8 cm from the waypoint in v1 and 1.1 cm in v2; after a failed search v1 drives 41.4 m and v2 0.8 m](/assets/charts/robot-before-after.svg){: .chart .chart-wide width="1200" height="395" loading="lazy" decoding="async"}
 
 | Situation | v1 (original) | v2 (rewrite) |
 |---|---|---|
@@ -43,7 +43,7 @@ v2 keeps every waypoint, gripper timing and vision threshold from v1, and change
 
 Here are both versions running the whole mission on that model, at 30x speed. v1 drifts off its route while clearing boxes, drives into a wooden box and keeps pushing; v2 delivers all five jars:
 
-![Animated replay of v1 and v2 running the whole mission on the robot model: v1 drifts off its route while clearing boxes and pushes against a wooden box from 47 s; v2 delivers all five jars in 864 s](/assets/charts/robot-mission-replay.svg){: .chart .chart-wide}
+![Animated replay of v1 and v2 running the whole mission on the robot model: v1 drifts off its route while clearing boxes and pushes against a wooden box from 47 s; v2 delivers all five jars in 864 s](/assets/charts/robot-mission-replay.svg){: .chart .chart-wide width="2020" height="1500" loading="lazy" decoding="async"}
 
 These numbers come from a kinematic model of the Pioneer 3-DX (no box physics), not from Webots. The original Webots runs in the videos did collect all five jars. The model has no inertia, so it's harsher on v1's full-speed turns than the simulator may be. It's also not yet known whether those runs used v1 or an older version of the controller found in the repository. A script that runs both versions headless in Webots and compares them is ready, and that run is the next step. The full write-up, with each fix and the original line numbers, is in the [repository's pull request](https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System/pull/2).
 
