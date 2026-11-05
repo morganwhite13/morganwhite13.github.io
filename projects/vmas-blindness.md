@@ -330,7 +330,7 @@ def train_environment_variables(env, description, norm=True,
 | Blind 1 random agent every step | 5.5 ± 12.9 |
 | Blind all agents every step | −11.8 ± 1.9 |
 
-![Line chart of reward over 25 training iterations for the seven blindness scenarios, averaged over 3 seeds with shaded spread. No blindness ends highest at about 49; blinding all agents stays flat at about −12; the other scenarios fall in between, with wide overlapping spreads](/assets/charts/vmas-exp1-rerun.png){: .chart .chart-wide}
+[![Line chart of reward over 25 training iterations for the seven blindness scenarios, averaged over 3 seeds with shaded spread. No blindness ends highest at about 49; blinding all agents stays flat at about −12; the other scenarios fall in between, with wide overlapping spreads](/assets/charts/vmas-exp1-rerun.png){: .chart .chart-wide width="1200" height="720" loading="lazy" decoding="async"}](/assets/charts/vmas-exp1-rerun.png)
 
 **Key Finding:** No blindness does best, and blinding every agent prevents learning entirely. Occasional, short blindness costs relatively little; persistent blindness (every step, or several agents for several steps) hurts much more. The spread between seeds is as large as the gaps between the middle scenarios, so their exact order isn't meaningful, and most curves are still rising at 25 iterations.
 
@@ -369,7 +369,7 @@ The re-run's rewards are on a different scale from the original single-seed resu
 | Blind 1 random agent for 1–10 steps | 34.2 ± 16.1 | 21.3 ± 7.6 |
 | Blind each agent for 1–10 steps | 10.7 ± 9.2 | −0.2 ± 5.9 |
 
-![Horizontal bar chart of final reward per scenario with normalization off and on, mean and standard deviation over 3 seeds with each seed shown as a dot. The two conditions overlap in most scenarios; normalization on is clearly higher only with one agent blinded every step, and its seeds are more tightly grouped in most scenarios](/assets/charts/vmas-exp2-norm.png){: .chart .chart-wide}
+[![Horizontal bar chart of final reward per scenario with normalization off and on, mean and standard deviation over 3 seeds with each seed shown as a dot. The two conditions overlap in most scenarios; normalization on is clearly higher only with one agent blinded every step, and its seeds are more tightly grouped in most scenarios](/assets/charts/vmas-exp2-norm.png){: .chart .chart-wide width="1200" height="660" loading="lazy" decoding="async"}](/assets/charts/vmas-exp2-norm.png)
 
 **Key Finding:** Normalization isn't essential. The original single-seed runs reported +40–60 reward from it; the re-run finds a lower mean in 5 of 7 scenarios, with per-seed differences that mostly change sign. Its one consistent gain is with one agent blinded every step (+11, better in all 3 seeds). What it does do is make seeds agree more: the spread is smaller in 5 of 7 scenarios.
 
@@ -399,7 +399,7 @@ The original conclusion was that normalization is essential, and all later exper
 
 **Re-run with the fixed code (3 seeds), Experiments 3–5 together:** each sweep changes one setting from the default (clip 0.2, batch 200, 20 epochs).
 
-![Three line charts of final reward, one each for clip value, minibatch size and epochs, changing one setting at a time from the default. Reward peaks at clip 0.3 and falls at 0.1 and 0.5; it falls as minibatches grow from 50 to 500; and it rises steadily with epochs from 10 to 50](/assets/charts/vmas-sweep.png){: .chart .chart-wide}
+[![Three line charts of final reward, one each for clip value, minibatch size and epochs, changing one setting at a time from the default. Reward peaks at clip 0.3 and falls at 0.1 and 0.5; it falls as minibatches grow from 50 to 500; and it rises steadily with epochs from 10 to 50](/assets/charts/vmas-sweep.png){: .chart .chart-wide width="1560" height="504" loading="lazy" decoding="async"}](/assets/charts/vmas-sweep.png)
 
 | Clip Value | Final Reward |
 |------------|--------------|
@@ -573,7 +573,7 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 
 **Re-run, redesigned (3 seeds):** instead of retraining for every duration and scoring the training rollouts, two policies per seed are trained for 100 iterations (without blindness, and with one-agent blindness of 1–10 steps), then evaluated on separate episodes at blindness probability 0.1 with blind spells of up to 1–20 steps.
 
-![Two line charts of evaluation reward against maximum blind spell length, one with one agent blind at a time and one with every agent able to go blind. With one agent blind, both policies decline gently from about 70 to about 56 to 62 at 20 steps. With every agent able to go blind, both fall steeply, the policy trained without blindness to about 15 at 20 steps and the blindness-trained policy to about 35](/assets/charts/vmas-duration.png){: .chart .chart-wide}
+[![Two line charts of evaluation reward against maximum blind spell length, one with one agent blind at a time and one with every agent able to go blind. With one agent blind, both policies decline gently from about 70 to about 56 to 62 at 20 steps. With every agent able to go blind, both fall steeply, the policy trained without blindness to about 15 at 20 steps and the blindness-trained policy to about 35](/assets/charts/vmas-duration.png){: .chart .chart-wide width="1440" height="552" loading="lazy" decoding="async"}](/assets/charts/vmas-duration.png)
 
 | Trained with | Evaluated with | No blindness | 3 steps | 10 steps | 20 steps |
 |---|---|---|---|---|---|
@@ -631,7 +631,7 @@ More agents also make the balance task itself easier, so raw reward can't show w
 | 7 | 81.5 ± 2.9 | 91.9 ± 3.3 | 113% |
 | 10 | 94.5 ± 8.9 | 95.5 ± 6.4 | 101% |
 
-![Line chart of final reward by team size with and without blindness, over 3 seeds. Both lines rise with team size, from near 10 for 2 agents to about 95 for 10. The blindness line is well below the no-blindness line for 3 and 5 agents, crosses above it at 7, and meets it at 10](/assets/charts/vmas-exp8-agents.png){: .chart .chart-wide}
+[![Line chart of final reward by team size with and without blindness, over 3 seeds. Both lines rise with team size, from near 10 for 2 agents to about 95 for 10. The blindness line is well below the no-blindness line for 3 and 5 agents, crosses above it at 7, and meets it at 10](/assets/charts/vmas-exp8-agents.png){: .chart .chart-wide width="960" height="600" loading="lazy" decoding="async"}](/assets/charts/vmas-exp8-agents.png)
 
 **Key Finding:** Redundancy helps. A 3-agent team loses about half its reward when one agent goes blind, a 5-agent team about a fifth, and from 7 agents nothing. But there's no sweet spot at 5–7: 10 agents scored highest with and without blindness, with no sign of coordination overhead.
 
@@ -693,7 +693,7 @@ Every experiment above scores a policy on its own training rollouts, in the cond
 
 I ran it twice: with the experiments' usual 25 training iterations, then with 100.
 
-![Two line charts of evaluation reward against blindness probability after 100 training iterations, one per kind of blindness at evaluation. All three policies start at about 70 to 72 with no blindness. As blindness increases, the policy trained with each-agent blindness stays highest, the one-agent-trained policy is in the middle, and the policy trained without blindness falls fastest, to about 30 at 10% each-agent blindness against about 62 for the each-agent-trained policy](/assets/charts/vmas-robustness-100.png){: .chart .chart-wide}
+[![Two line charts of evaluation reward against blindness probability after 100 training iterations, one per kind of blindness at evaluation. All three policies start at about 70 to 72 with no blindness. As blindness increases, the policy trained with each-agent blindness stays highest, the one-agent-trained policy is in the middle, and the policy trained without blindness falls fastest, to about 30 at 10% each-agent blindness against about 62 for the each-agent-trained policy](/assets/charts/vmas-robustness-100.png){: .chart .chart-wide width="1440" height="576" loading="lazy" decoding="async"}](/assets/charts/vmas-robustness-100.png)
 
 **After 100 training iterations** (mean episode reward ± std over 3 seeds):
 
@@ -713,7 +713,7 @@ I ran it twice: with the experiments' usual 25 training iterations, then with 10
 <details markdown="1">
 <summary>Results after 25 training iterations</summary>
 
-![Two line charts of evaluation reward against blindness probability after 25 training iterations. The policy trained without blindness starts highest at about 56; the blindness-trained policies start lower and stay below it at most blindness levels](/assets/charts/vmas-robustness.png){: .chart .chart-wide}
+[![Two line charts of evaluation reward against blindness probability after 25 training iterations. The policy trained without blindness starts highest at about 56; the blindness-trained policies start lower and stay below it at most blindness levels](/assets/charts/vmas-robustness.png){: .chart .chart-wide width="1440" height="576" loading="lazy" decoding="async"}](/assets/charts/vmas-robustness.png)
 
 | Trained with | Evaluated with | p = 0 | 0.1 | 0.2 | 0.5 |
 |---|---|---|---|---|---|
