@@ -54,12 +54,12 @@
     colour-based vision, picks them up and stores them, with no human input.
   highlights:
     - Collected all 5 jars in the original runs
-    - v2 rewrite kept v1 intact and fixed 9 bugs, with tests covering 99% of its logic
-    - Measured on a robot model, v2 scans a full circle (v1 about 271°) and ends long legs within 1 cm (v1 27 cm)
+    - v2 rewrite kept v1 intact and fixed 10 bugs, with tests covering 99% of its logic
+    - In Webots, v2 delivers all 5 jars in under 15 minutes; on the same reconstructed robot, v1 delivers none
   glance:
     problem: Find, pick up and store jars in a 20×20 m simulated warehouse with no human input.
     approach: Colour-threshold vision and a touch sensor to find and grab jars, plus hand-tuned waypoint routes driven with the compass and the simulator's position data, in a phased Java controller for Webots.
-    result: All 5 jars collected in the original runs. A tested v2 rewrite fixes 9 bugs, including a failed-search route through immovable boxes, measured against the original on the same robot model.
+    result: All 5 jars collected in the original runs. A tested v2 rewrite fixes 10 bugs and delivers all 5 jars in Webots, where the original delivers none on the same reconstructed robot.
 
 - title: YouTube Views Prediction with Neural Networks
   url: /projects/youtube-predictor/
