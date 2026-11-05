@@ -314,6 +314,19 @@ def train_environment_variables(env, description, norm=True,
 >
 > All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Every experiment below has been re-run with the fixed code over 3 seeds: Experiments 1–5 and 7–9, the other-scenarios comparison, and Experiment 6 via a new robustness test (after Experiment 9) that evaluates policies on fresh episodes. Each section keeps the original results in a collapsed block.
 
+**Results at a glance** (3 seeds each, with the fixed code):
+
+| Question | Answer | Details |
+|---|---|---|
+| Does training with blindness make a team more robust? | Yes, after 100 training iterations: 86% vs 43% of reward kept at 10% blindness. After 25 iterations, not yet | [Robustness test](#robustness-test-does-training-with-blindness-help) |
+| How much does blindness cost? | One agent at a time costs little; blinding every agent prevents learning | [Experiment 1](#experiment-1-baseline-comparison-across-blindness-scenarios) |
+| Do longer blind spells hurt? | Steadily, and steeply when every agent can go blind | [Experiment 7](#experiment-7-maximum-blindness-duration) |
+| Do bigger teams cope better? | Yes, with no 5–7 sweet spot: 10 agents scored highest | [Experiment 8](#experiment-8-number-of-agents) |
+| Is advantage normalization essential? | No: it made runs more consistent, not better | [Experiment 2](#experiment-2-normalization-impact) |
+| Which PPO settings help? | Clip 0.3, smaller minibatches, more epochs | [Experiments 3–5](#experiment-3-ppo-clipping-value) |
+| Does tuning give +86%? | About +32% | [Experiment 9](#experiment-9-best-combined-hyperparameters) |
+| Does it carry over to other VMAS scenarios? | Blindness works in all five; where agents learn, it costs between 8% and half the reward | [Other scenarios](#other-vmas-scenarios) |
+
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
 **Setup:** 7 environments, 25 iterations, no normalization, clip=0.2
