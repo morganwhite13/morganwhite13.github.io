@@ -312,7 +312,7 @@ def train_environment_variables(env, description, norm=True,
 > - Each step's random blindness choice was shared by all 30 parallel environments, and blind countdowns weren't reset between episodes.
 > - Each configuration was trained once with a fixed seed, and scored on its own training rollouts rather than a separate evaluation.
 >
-> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1, 2, 8 and 9 below have been re-run with the fixed code over 3 seeds, and a new robustness test (after Experiment 9) evaluates policies on fresh episodes after 25 and 100 training iterations; the other experiments are the original results and still need re-running.
+> All of these are now fixed in the [code repository](https://github.com/morganwhite13/Improving-MARL-Robustness-for-Agent-Blindness-in-VMAS), where the blindness transforms have tests. Experiments 1–5 and 7–9 below have been re-run with the fixed code over 3 seeds, Experiment 6 is answered by a new robustness test (after Experiment 9) that evaluates policies on fresh episodes, and each section keeps the original results in a collapsed block. Only the VMAS scenarios comparison hasn't been re-run.
 
 ### Experiment 1: Baseline Comparison Across Blindness Scenarios
 
@@ -397,6 +397,22 @@ The original conclusion was that normalization is essential, and all later exper
 **Setup:** Clip values = [0.01, 0.1, 0.2, 0.3, 0.5, 0.75]  
 **Environment:** Blind 1 random agent for random duration (hardest single-agent scenario)
 
+**Re-run with the fixed code (3 seeds), Experiments 3–5 together:** each sweep changes one setting from the default (clip 0.2, batch 200, 20 epochs).
+
+![Three line charts of final reward, one each for clip value, minibatch size and epochs, changing one setting at a time from the default. Reward peaks at clip 0.3 and falls at 0.1 and 0.5; it falls as minibatches grow from 50 to 500; and it rises steadily with epochs from 10 to 50](/assets/charts/vmas-sweep.png){: .chart .chart-wide}
+
+| Clip Value | Final Reward |
+|------------|--------------|
+| 0.1 | −3.5 ± 5.0 |
+| 0.2 (default) | 21.3 ± 7.6 |
+| **0.3** | **45.2 ± 10.0** |
+| 0.5 | 30.8 ± 30.0 |
+
+**Key Finding:** Clip 0.3 is best of those tested, as the original found, and by more (about double the default rather than +28%). 0.1 doesn't learn, and 0.5 varies wildly between seeds. In the Experiment 9 re-run, which changed several settings together, clip 0.2 and 0.3 did about the same, so the gain depends on the other settings.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
+
 **Results:**
 
 | Clip Value | Final Reward | Observations |
@@ -418,11 +434,27 @@ The original conclusion was that normalization is essential, and all later exper
 - Still prevents catastrophic updates from outlier experiences
 - Sweet spot for this level of environment stochasticity
 
+</details>
+
 ---
 
 ### Experiment 4: Minibatch Size
 
 **Setup:** Batch sizes = [10, 50, 100, 200, 300, 500, 1000]
+
+**Re-run with the fixed code (3 seeds):** see the chart under Experiment 3.
+
+| Batch Size | Final Reward |
+|------------|--------------|
+| **50** | **42.3 ± 6.1** |
+| 100 | 38.8 ± 19.9 |
+| 200 (default) | 21.3 ± 7.6 |
+| 500 | 14.5 ± 19.8 |
+
+**Key Finding:** Smaller minibatches do better, as the original found: 50 and 100 beat the default 200.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results:**
 
@@ -447,11 +479,29 @@ The original conclusion was that normalization is essential, and all later exper
 - Batch=100: Slightly slower per iteration but better final performance
 - Batch=200: Faster iteration but lower asymptotic reward
 
+</details>
+
 ---
 
 ### Experiment 5: Number of Epochs
 
 **Setup:** Epochs = [5, 10, 15, 20, 30, 50]
+
+**Re-run with the fixed code (3 seeds):** see the chart under Experiment 3.
+
+| Epochs | Final Reward |
+|--------|--------------|
+| 10 | 4.6 ± 10.6 |
+| 20 (default) | 21.3 ± 7.6 |
+| 30 | 40.5 ± 9.2 |
+| **50** | **49.9 ± 3.6** |
+
+**Key Finding:** More epochs keep helping. The original reported diminishing returns after 30; here 50 scored highest and was the most consistent across seeds.
+
+**The common thread in Experiments 3–5:** every change that helped means more or bigger policy updates per iteration (smaller minibatches, more epochs, a wider clip). With only 25 training iterations, the default settings undertrain, which matches what the robustness test found when training went from 25 to 100 iterations.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results:**
 
@@ -473,12 +523,19 @@ The original conclusion was that normalization is essential, and all later exper
 
 **Recommendation:** Use 30 epochs for best time/performance tradeoff
 
+</details>
+
 ---
 
 ### Experiment 6: Blindness Probability Sensitivity
 
 **Setup:** Probability = [0.01, 0.05, 0.10, 0.20, 0.30, 0.50]  
 **Environment:** Blind 1 random agent for random duration (affected by the stacking issue noted above). The robustness test below measures the same question more directly.
+
+**Re-run:** answered by the robustness test below, which trains policies once and evaluates them on separate episodes at blindness probabilities from 0 to 0.5, rather than retraining for each probability and rescaling the rewards. After 100 training iterations, a policy trained without blindness keeps 86% of its reward at probability 0.1 when one agent is blind at a time and 62% at 0.5; when every agent can go blind, it keeps 43% at 0.1 and 22% at 0.2.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results (Normalized by Blindness Probability):**
 
@@ -505,12 +562,30 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 - When blindness becomes dominant (>30%), cooperation breaks down
 - Similar to human teams: tolerate occasional member unavailability, fail under chronic absences
 
+</details>
+
 ---
 
 ### Experiment 7: Maximum Blindness Duration
 
 **Setup:** Max blind steps = [1, 2, 3, 5, 7, 10, 20]  
 **Environment:** P(blind) = 0.1 fixed (affected by the stacking issue noted above)
+
+**Re-run, redesigned (3 seeds):** instead of retraining for every duration and scoring the training rollouts, two policies per seed are trained for 100 iterations (without blindness, and with one-agent blindness of 1–10 steps), then evaluated on separate episodes at blindness probability 0.1 with blind spells of up to 1–20 steps.
+
+![Two line charts of evaluation reward against maximum blind spell length, one with one agent blind at a time and one with every agent able to go blind. With one agent blind, both policies decline gently from about 70 to about 56 to 62 at 20 steps. With every agent able to go blind, both fall steeply, the policy trained without blindness to about 15 at 20 steps and the blindness-trained policy to about 35](/assets/charts/vmas-duration.png){: .chart .chart-wide}
+
+| Trained with | Evaluated with | No blindness | 3 steps | 10 steps | 20 steps |
+|---|---|---|---|---|---|
+| No blindness | One agent blind | 69.7 ± 2.5 | 66.3 ± 1.9 | 59.7 ± 5.7 | 55.9 ± 8.7 |
+| One agent blind | One agent blind | 72.3 ± 4.6 | 68.1 ± 2.6 | 65.4 ± 3.8 | 61.8 ± 5.6 |
+| No blindness | Each agent blind | 69.7 ± 2.5 | 56.2 ± 8.8 | 30.0 ± 21.3 | 15.0 ± 18.1 |
+| One agent blind | Each agent blind | 72.3 ± 4.6 | 64.9 ± 5.7 | 51.5 ± 7.5 | 35.4 ± 8.6 |
+
+**Key Finding:** Longer blind spells hurt steadily: gently when one agent is blind at a time (80% of reward kept even at 20 steps), steeply when every agent can go blind (22% at 20 steps). Training with blindness helps more the longer the spells, and it carries beyond what it was trained on: trained on spells up to 10 steps, the policy keeps 49% at 20 steps against 22% without blindness training.
+
+<details markdown="1">
+<summary>Original single-seed results (before the bug fixes)</summary>
 
 **Results (Normalized):**
 
@@ -534,6 +609,8 @@ Reward_normalized = Reward × P(blind) × E[blind_steps]
 **Real-World Parallel:** 
 - Brief sensor glitch (1-5s): Vehicle can coast safely
 - Extended failure (10-20s): Requires pulling over or emergency protocols
+
+</details>
 
 ---
 
@@ -846,9 +923,8 @@ This project taught me:
 - GAE for smooth advantage estimation in stochastic environments
 
 **Hyperparameter Sensitivity**
-- Clipping value has non-monotonic relationship with performance
-- Batch size sweet spot (too large = overfitting, too small = noise)
-- Epochs: diminishing returns after threshold
+- Clipping value has a non-monotonic relationship with performance (0.3 best of 0.1–0.5)
+- Smaller minibatches and more epochs both helped: within 25 iterations, more updates per iteration is what mattered
 - Normalization: a smaller effect than single runs suggested
 
 **VMAS Framework (Despite Frustration)**
@@ -908,7 +984,7 @@ If I were to extend this research, I would:
 **2. Hyperparameters Matter More Than Expected:**
 - Tuned settings beat the defaults by about a third on a 3-seed re-run, and cut the spread between seeds (the original single-seed runs reported +86%)
 - Normalization made runs more consistent, not better: the original "essential" claim didn't hold over 3 seeds
-- Clipping sweet spot (0.3) specific to stochasticity level
+- Clip 0.3, smaller minibatches and more epochs each helped on their own; together they all point to the defaults undertraining in 25 iterations
 
 **3. Redundancy Helps:**
 - One blind agent costs a 3-agent team about half its reward, a 5-agent team about a fifth, and a 7-agent team nothing
