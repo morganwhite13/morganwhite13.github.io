@@ -45,21 +45,21 @@
 - title: Autonomous Robot Jar Collection System
   url: /projects/robot-project/
   emoji: 🤖
-  when: Fall 2021, updated 2025
+  when: Fall 2021, updated 2025, v2 rewrite 2026
   featured: true
-  tech: [Webots, Java, Computer Vision, Sensor Fusion]
+  tech: [Webots, Java, Computer Vision, Sensor Fusion, JUnit]
   repo: https://github.com/morganwhite13/Autonomous-Robot-Jar-Collection-System
   summary: >-
     A mobile robot that navigates a 20×20 m simulated warehouse, finds honey jars with
     colour-based vision, picks them up and stores them, with no human input.
   highlights:
-    - Collected all 5 jars in every trial
-    - ±3° heading and ±10 cm position accuracy using compass-based navigation
-    - Camera-based jar detection with fallback search logic, plus touch-sensor grasp checks
+    - Collected all 5 jars in the original runs
+    - v2 rewrite kept v1 intact and fixed 14 bugs, with tests covering 99% of its logic
+    - In Webots, v2 delivers all 30 jars across six shuffled worlds, each in under 13 minutes; on the same reconstructed robot, v1 delivers none
   glance:
     problem: Find, pick up and store jars in a 20×20 m simulated warehouse with no human input.
-    approach: Colour-threshold vision and a touch sensor to find and grab jars, plus hand-tuned waypoint routes driven with the compass and the simulator's position data, in a phased Java controller for Webots.
-    result: All 5 jars collected in every trial, with ±3° heading and ±10 cm position accuracy.
+    approach: Colour-threshold vision and a touch sensor to find and grab jars, plus waypoint routes driven with the compass and the simulator's position data, in a phased Java controller for Webots. The v2 rewrite adds A*-planned routes and detours, a jar map from the camera geometry, and grip checks.
+    result: All 5 jars collected in the original runs. A tested v2 rewrite fixes 14 bugs and delivers all 30 jars across six shuffled Webots worlds, where the original delivers none on the same reconstructed robot.
 
 - title: YouTube Views Prediction with Neural Networks
   url: /projects/youtube-predictor/
